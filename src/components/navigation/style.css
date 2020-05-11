@@ -1,0 +1,29 @@
+.navigation--bar {
+    padding: 24px 0;
+    height: 24px;
+    line-height: 24px;
+    width: 100%;
+    text-align: center;
+    flex-shrink: 0;
+    background-color: #ffffff;
+}
+
+.btns--box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+}
+
+.back--btn {
+    width: 16px;
+}
+
+.back--icon, .create--icon {
+    width: 100%;
+}
+
+.create--btn {
+    width: 30px;
+}

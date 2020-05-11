@@ -1,0 +1,12 @@
+.home--page {
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.search--link {
+    height: 50px;
+    line-height: 50px;
+    border-radius: 6px;
+    background-color: #eeeeee;
+    text-align: center;
+}

@@ -1,0 +1,30 @@
+.step--form {
+    margin: 20px;
+    padding: 20px;
+    flex-grow: 1;
+    max-width: 300px;
+    border-radius: 4px;
+    background-color: #ffffff;
+}
+
+.add-image--btn {
+    padding: 5px 10px;
+    border-radius: 4px;
+    text-align: center;
+    color: #333333;
+    font-size: 14px;
+    border: 1px solid #999999;
+}
+
+.step--btn {
+    height: 40px;
+    line-height: 40px;
+    border-radius: 4px;
+    text-align: center;
+    color: #ffffff;
+    background-color: #1296db;
+}
+
+.step--btn.cancel--btn {
+    background-color: #cccccc;
+}
