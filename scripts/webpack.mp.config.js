@@ -86,6 +86,13 @@ module.exports = {
                 ],
             },
             {
+                test: /\.css$/,
+                exclude: /micro-design/,
+                use: [
+                    'postcss-loader'
+                ],
+            },
+            {
                 test: /\.[t|j]sx?$/,
                 loader: 'babel-loader',
                 exclude: /node_modules/,
