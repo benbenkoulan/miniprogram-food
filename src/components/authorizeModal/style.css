@@ -1,0 +1,22 @@
+.authorize--box {
+    margin: 20px;
+    padding: 20px;
+    flex: 1;
+    max-width: 240px;
+    background-color: #ffffff;
+    border-radius: 4px;
+}
+
+.authorize--box .authorize-tip--text {
+    margin: 16px 0;
+    font-size: 14px;
+}
+
+.authorize--btn {
+    padding: 0 10px;
+    height: 36px;
+    line-height: 36px;
+    border-radius: 40px;
+    text-align: center;
+    border: 1px solid #1296db;
+}

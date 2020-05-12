@@ -1,24 +1,24 @@
 import { combineReducers } from 'redux';
+import { handleActions } from 'redux-actions-helper';
 
-const initialState = {
+import { authorize, getSetting } from '../action/user';
+
+const getInitialState = () => ({
     setting: {
         userInfo: false,
     },
-}
+});
 
-const setting = (state, action) => {
-    switch (action.type) {
-        case 'GetSetting': return {
-            ...action.payload
-        };
-        case 'Authorized': return {
-            ...state,
-            userInfo: true,
-        };
-        default:
-            return initialState.setting;
-    }
-}
+const setting = handleActions({
+    [authorize]: (state) => ({
+        ...state,
+        userInfo: true,
+    }),
+    [getSetting.success]: (state, action) => ({
+        ...state,
+        ...action.payload,
+    }),
+}, getInitialState().setting);
 
 export default combineReducers({
     setting,

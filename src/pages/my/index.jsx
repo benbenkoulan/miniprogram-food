@@ -8,6 +8,7 @@ import 'micro-design/dist/es/components/flex/style.css';
 import 'micro-design/dist/es/components/layout/style.css';
 
 import { settingSelector } from '../../store/selector';
+import { showAuthorizeModal } from '../../store/action/app';
 
 import { getStatisticsInfo, upsertUserInfo } from '../../api';
 
@@ -56,6 +57,7 @@ function My() {
         //         console.log('setting: ', res);
         //     }
         // });
+        dispatch(showAuthorizeModal());
         return () => {
             // getUserInfoButton.current.removeEventListener('getuserinfo', handleGetUserInfo);
         }
