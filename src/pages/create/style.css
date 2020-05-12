@@ -9,6 +9,15 @@
     flex-shrink: 0;
 }
 
+.add--btn {
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-align: center;
+    color: #333333;
+    font-size: 14px;
+    border: 1px solid #999999;
+}
+
 .form-input--box {
     padding: 10px;
     width: 200px;
@@ -27,7 +36,7 @@
     margin: -10px -10px -10px 0;
 }
 
-.garnish--box {
+.garnish--box, .step--box {
     position: relative;
     margin: 10px 10px 10px 0;
     padding: 5px;
@@ -36,7 +45,7 @@
 }
 
 
-.garnish-text--box {
+.garnish-text--box, .step-text--box {
     max-width: 60px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -45,19 +54,13 @@
     
 }
 
-.garnish-close--icon {
+.garnish-close--icon, .step-close--icon {
     position: absolute;
     right: -20px;
     top: -20px;
     width: 16px;
     height: 16px;
     border: 10px solid transparent;
-}
-
-.add--icon {
-    width: 24px;
-    height: 24px;
-    border: 5px solid transparent;
 }
 
 .save--btn {

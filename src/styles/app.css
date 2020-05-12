@@ -4,6 +4,10 @@ page, .h5-body, .h5-body>*, #app, #modalRoot, .page {
     overflow: hidden;
 }
 
+#modalRoot {
+    z-index: 10;
+}
+
 .h5-p {
     margin: 0;
     padding: 0;

@@ -8,8 +8,6 @@ import useFormItem from '../form/formItem';
 import './style.css';
 
 function GarnishForm(props) {
-    console.log(props);
-
     const name = useFormItem('name', {
         initialValue: props.name,
     });

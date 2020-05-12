@@ -21,7 +21,6 @@ function Index() {
     return (
         <div className="page home--page">
             <div className="search--link" onClick={handleSearchLink}>今天想吃点什么?</div>
-            这是首页{settings.userInfo ? '已授权': '未授权'}
         </div>
     );
 }
