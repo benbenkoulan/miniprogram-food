@@ -1,66 +1,33 @@
-import React, { useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-// import { Menu } from 'antd';
-// import 'antd/es/menu/style/css';
-
+import React, { useEffect } from 'react';
 import { Row, Col, Layout, Sider, Content, useList } from 'micro-design';
 import 'micro-design/dist/es/components/flex/style.css';
 import 'micro-design/dist/es/components/layout/style.css';
 
-import { settingSelector } from '../../store/selector';
-import { showAuthorizeModal } from '../../store/action/app';
-
-import { getStatisticsInfo, upsertUserInfo } from '../../api';
+import { getStatisticsInfo, upsertUserInfo } from '~/api';
+import router from '~/router';
 
 import Menu from './components/menu';
 
 import './style.css';
 
-// const { SubMenu } = Menu;
-
 const getMenus = () => [{
     key: 'COLLECTION',
     text: '我的收藏',
-    handleClick: () => {
-
-    }
+    onClick: () => router.push('collection')
 }, {
     key: 'FOLLOW',
     text: '我的关注',
 }, {
-    key: 'MENU',
+    key: 'MYCOOKBOOK',
     text: '我的菜谱',
+    onClick: () => router.push('my_cookbook')
 }]
 
 function My() {
-    const getUserInfoButton = useRef();
-    const setting = useSelector(settingSelector);
-    const dispatch = useDispatch();
-
-    const handleGetUserInfo = (res) => {
-        dispatch({ type: 'Authorized', });
-        upsertUserInfo(res.encryptedData, res.iv);
-    };
-
     useEffect(async () => {
-        // getUserInfoButton.current.addEventListener('getuserinfo', handleGetUserInfo);
         // const res = await getStatisticsInfo();
         // console.log(res);
-        // wx.getUserInfo({
-        //     success(res) {
-        //         upsertUserInfo(res.encryptedData, res.iv);
-        //         console.log(res);
-        //     }
-        // });
-        // wx.getSetting({
-        //     success(res) {
-        //         console.log('setting: ', res);
-        //     }
-        // });
-        dispatch(showAuthorizeModal());
-        return () => {
-            // getUserInfoButton.current.removeEventListener('getuserinfo', handleGetUserInfo);
-        }
+        // dispatch(showAuthorizeModal());
     }, []);
 
     const renderMenu = (menuData) => (
@@ -69,7 +36,7 @@ function My() {
         />
     );
 
-    const [setMenuList, renderMenuList] = useList(getMenus());
+    const [, renderMenuList] = useList(getMenus());
 
     return (
         <div>

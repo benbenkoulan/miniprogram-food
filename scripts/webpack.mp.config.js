@@ -21,6 +21,9 @@ module.exports = {
         my: getPageEntry('my'),
         search: getPageEntry('search'),
         create: getPageEntry('create'),
+        my_cookbook: getPageEntry('my_cookbook'),
+        collection: getPageEntry('collection'),
+        cookbook: getPageEntry('cookbook')
     },
     output: {
         path: path.resolve(__dirname, '../build/mp/common'), // 放到小程序代码目录中的 common 目录下
@@ -115,7 +118,10 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['*', '.js', '.jsx', '.json']
+        extensions: ['*', '.js', '.jsx', '.json'],
+        alias: {
+            '~': root(''),
+        }
     },
     plugins: [
         new webpack.DefinePlugin({

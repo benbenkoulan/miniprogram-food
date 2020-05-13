@@ -5,6 +5,8 @@ import 'micro-design/dist/es/components/flex/style.css';
 import Modal from '../../../../components/modal';
 import useFormItem from '../../components/form/formItem';
 
+import requestProxy from '../../../../modules/request/proxy';
+
 import './style.css';
 
 function StepForm(props) {

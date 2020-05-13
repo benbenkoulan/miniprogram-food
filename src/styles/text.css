@@ -1,0 +1,5 @@
+.one-row--text {
+    overflow: hidden!important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

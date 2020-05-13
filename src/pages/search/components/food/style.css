@@ -1,10 +1,10 @@
-.food--icon {
+.menu--icon {
     width: 80px;
     height: 80px;
     border-radius: 4px;
 }
 
-.food-info--box {
+.menu-info--box {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -12,7 +12,7 @@
     min-height: 60px;
 }
 
-.food-title--text {
+.menu-title--text {
     font-size: 20px;
     overflow: hidden;
     height: 20px;
@@ -20,7 +20,7 @@
     text-overflow: ellipsis;
 }
 
-.food-garnish--text, .food-star--text, .food-author--text {
+.menu-garnish--text, .menu-star--text, .menu-author--text {
     font-size: 10px;
 }
 

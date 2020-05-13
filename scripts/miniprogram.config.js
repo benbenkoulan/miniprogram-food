@@ -14,6 +14,9 @@ module.exports = {
 		my: pages('my'),
 		search: pages('search'),
 		create: pages('create'),
+		my_cookbook: pages('my_cookbook'),
+		collection: pages('collection'),
+		cookbook: pages('cookbook')
 	},
 	redirect: {
 		notFound: 'home',

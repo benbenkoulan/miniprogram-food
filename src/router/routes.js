@@ -1,11 +1,18 @@
 const routes = [{
     name: 'search',
     path: '/pages/search/index',
-    tab: false,
 }, {
     name: 'create',
     path: '/pages/create/index',
-    tab: false,
+}, {
+    name: 'my_cookbook',
+    path: '/pages/my_cookbook/index',
+}, {
+    name: 'collection',
+    path: '/pages/collection/index',
+}, {
+    name: 'cookbook',
+    path: '/pages/cookbook/index',
 }];
 
 export default (pageName) => routes.find(route => route.name === pageName);

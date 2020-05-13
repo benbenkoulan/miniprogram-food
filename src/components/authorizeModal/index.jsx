@@ -16,13 +16,17 @@ function AuthorizeModal(props) {
 
     const getUserInfoButton = useRef();
 
-    const handleGetUserInfo = () => {
-        dispatch(authorize());
+    const handleAuthorizeCanceling = () => {
         dispatch(hideAuthorizeModal());
     };
 
+    const handleGetUserInfo = (res) => {
+        dispatch(authorize());
+        dispatch(hideAuthorizeModal());
+        props.onGetUserInfo(res.encryptedData, res.iv);
+    };
+
     useEffect(() => {
-        console.log('---shouldShowAuthorizeModal-----')
         if (shouldShowAuthorizeModal) {
             getUserInfoButton.current.addEventListener('getuserinfo', handleGetUserInfo);
         }
@@ -36,7 +40,7 @@ function AuthorizeModal(props) {
                     <p className="authorize-tip--text">获取你的公开信息（昵称、头像等）</p>
                     <Row gutter={10}>
                         <Col span={12}>
-                            <wx-button className="authorize-cancel--btn authorize--btn">取消</wx-button>
+                            <wx-button className="authorize-cancel--btn authorize--btn" onClick={handleAuthorizeCanceling}>取消</wx-button>
                         </Col>
                         <Col span={12}>
                             <wx-button className="authorize--btn" open-type="getUserInfo" ref={getUserInfoButton}>授权</wx-button>
@@ -46,6 +50,10 @@ function AuthorizeModal(props) {
             </Modal>
         ) : null
     );
+}
+
+AuthorizeModal.defaultProps = {
+    onGetUserInfo: () => {},
 }
 
 export default AuthorizeModal;

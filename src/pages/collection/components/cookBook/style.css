@@ -1,0 +1,36 @@
+.cookbook-del--container {
+    position: relative;
+}
+
+.cookbook-operate--btn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    color: #ffffff;
+    text-align: center;
+    font-size: 10px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.menu--box {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 8px 8px 0 0;
+}
+
+.main-menu--bar {
+    border-bottom: 10px solid #f0f0f0;
+}
+
+.menu--bar {
+    padding: 20px;
+    display: block;
+    text-align: center;
+}

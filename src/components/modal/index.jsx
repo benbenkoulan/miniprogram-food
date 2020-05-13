@@ -6,10 +6,15 @@ import './style.css';
 function Modal(props) {
     const modalRoot = document.getElementById('modalRoot');
 
+    const handleModalClick = (e) => {
+        e.stopPropagation();
+        props.onModalClick();
+    }
+
     return (
         ReactDOM.createPortal(
             (
-                <div className="modal--box">
+                <div className="modal--box" onClick={handleModalClick}>
                     {props.children}
                 </div>
             ),
@@ -17,5 +22,9 @@ function Modal(props) {
         )
     );
 }
+
+Modal.defaultProps = {
+    onModalClick: () => {},
+};
 
 export default Modal;
