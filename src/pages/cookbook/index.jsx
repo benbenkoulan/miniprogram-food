@@ -30,7 +30,8 @@ function CookBook() {
                 imageUrl: 'http://m.qpic.cn/psc?/V11rIwqj3eAlyi/U.M5PgtxS1PFgLr9JTiFCzTX36Cvg2DbyvYlj679c9GeMygzpnyI1DqDVmgmt74e99Br.hxBPXKzyrr5dA.KZg!!/b&bo=ZQR9AwAAAAARBy8!&rf=viewer_4',
                 description: '制作过程忘记拍照了，下次再做补上，喜欢芝士的可以中间加入芝士，和喜欢的坚果，果脯之类的，最后还可以挤上奶油，用水果装饰起来，会更加漂亮✌️'
             }
-        ]
+        ],
+        tips:'1. 混合蛋白质和蛋黄糊的手法一定不要打圈搅动，要用翻拌的手法\n2.纸杯倒入八分满即可\n3.6个鸡蛋大概可以做13杯左右，具体看纸杯的大小'
     }
 
     const [foodMaterials] = useState(mockData)
@@ -96,6 +97,13 @@ function CookBook() {
         ))
     )
 
+    const renderTips = (foodMaterialsData) => (
+        <div className="tip--box">
+            <wx-p className="tip--name">小贴士</wx-p>
+            <wx-p className="tip--description">{foodMaterialsData.tips}</wx-p>
+        </div>
+    )
+
     return (
         <div>
             {
@@ -109,6 +117,9 @@ function CookBook() {
             }
             {
                 renderCookSteps(foodMaterials)
+            }
+            {
+                renderTips(foodMaterials)
             }
         </div>
     )
