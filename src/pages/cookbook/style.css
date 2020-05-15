@@ -89,4 +89,11 @@
     white-space:pre-wrap
 }
 
+.cookbook-follow--text{
+    margin-left: 22px;
+    margin-bottom: 20px;
+    font-size: 10px;
+    color: #666666;
+}
+
 

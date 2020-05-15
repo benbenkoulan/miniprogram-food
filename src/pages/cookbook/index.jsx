@@ -31,7 +31,10 @@ function CookBook() {
                 description: '制作过程忘记拍照了，下次再做补上，喜欢芝士的可以中间加入芝士，和喜欢的坚果，果脯之类的，最后还可以挤上奶油，用水果装饰起来，会更加漂亮✌️'
             }
         ],
-        tips:'1. 混合蛋白质和蛋黄糊的手法一定不要打圈搅动，要用翻拌的手法\n2.纸杯倒入八分满即可\n3.6个鸡蛋大概可以做13杯左右，具体看纸杯的大小'
+        tips:'1. 混合蛋白质和蛋黄糊的手法一定不要打圈搅动，要用翻拌的手法\n2.纸杯倒入八分满即可\n3.6个鸡蛋大概可以做13杯左右，具体看纸杯的大小',
+        pageView: 3088,
+        collection: 253,
+        createdDate: '2020-4-27'
     }
 
     const [foodMaterials] = useState(mockData)
@@ -104,6 +107,14 @@ function CookBook() {
         </div>
     )
 
+    const renderFooter = (foodMaterials) => (
+        <Layout hasSider className="cookbook-follow--text">
+            <Content>
+                {foodMaterials.pageView}浏览  {foodMaterials.collection}收藏  菜谱创建于{foodMaterials.createdDate}
+            </Content>
+        </Layout>
+    )
+
     return (
         <div>
             {
@@ -120,6 +131,9 @@ function CookBook() {
             }
             {
                 renderTips(foodMaterials)
+            }
+            {
+                renderFooter(foodMaterials)
             }
         </div>
     )
