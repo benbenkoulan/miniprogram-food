@@ -2,11 +2,11 @@
 
 .cookbook-image--box {
     max-height: 300px;
+    overflow: hidden;
 }
 
 .cookbook--image {
     width: 100%;
-    overflow: hidden;
 }
 
 .cookbook-title--box {
@@ -58,7 +58,7 @@
     margin: 20px 20px 30px 20px;
 }
 
-.ingredient--title{
+.ingredient--title {
     margin-bottom: 20px;
 }
 
@@ -70,5 +70,23 @@
 
 }
 
+.step--box {
+    margin: 0 20px;
+}
+
+.step--name {
+    margin: 20px 0;
+}
+
+.step--image {
+    width: 100%;
+    border-radius: 5%;
+}
+
+.step--description {
+    font-size: 14px;
+    color: #444444;
+    margin: 20px 0;
+}
 
 
