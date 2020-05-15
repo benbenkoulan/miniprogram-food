@@ -1,0 +1,53 @@
+@import 'text.css';
+
+.cookbook-image--box {
+    max-height: 300px;
+}
+
+.cookbook--image {
+    width: 100%;
+    overflow: hidden;
+}
+
+.cookbook-title--box {
+    width: 100%;
+}
+
+.cookbook--title {
+    margin: 10px 40px 30px 40px;
+    line-height: 32px;
+    font-size: 22px;
+    text-align: center;
+    color: #444444;
+}
+
+.author-info--box {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.author--icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.author--name {
+    line-height: 60px;
+    margin-left: 10px;
+    font-size: 14px;
+    color: #444444;
+}
+
+.attention--btn {
+    margin-top: 15px;
+    margin-right: 10px;
+    width: 70px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 4px;
+    color: orangered !important;
+    text-align: center;
+    font-size: 14px;
+    border: 1px solid orangered !important;
+}
