@@ -16,7 +16,9 @@ function CookBook() {
 
     const mockData = {
         title: '小朋友可以一口吃掉4个的杯子蛋糕',
-        name: '爱做饭爱洗碗的瘦子'
+        name: '爱做饭爱洗碗的瘦子',
+        description: '零难度的小点心，没事就想折腾起来！关键是小朋友爱吃(^.^)',
+        authorUrl:'http://b93.photo.store.qq.com/psb?/V11rIwqj3eAlyi/XU8KGhBuVSzzV9.QhmljsHwa5ODdix557G.XATvDMUE!/b/YXoFgTcIYwAAYmr*gDfuYgAA&bo=*wFWAQAAAAABBIo!&rf=viewer_4'
     }
     const [foodMaterials] = useState(mockData)
 
@@ -35,8 +37,7 @@ function CookBook() {
         <div>
             <Layout hasSider className="author-info--box">
                 <Sider width="60px">
-                    <wx-image className="author--icon"
-                              src="http://b93.photo.store.qq.com/psb?/V11rIwqj3eAlyi/XU8KGhBuVSzzV9.QhmljsHwa5ODdix557G.XATvDMUE!/b/YXoFgTcIYwAAYmr*gDfuYgAA&bo=*wFWAQAAAAABBIo!&rf=viewer_4"></wx-image>
+                    <wx-image className="author--icon" src={foodMaterialsHeaderData.authorUrl}></wx-image>
                 </Sider>
                 <Content className="author--name">
                     {foodMaterialsHeaderData.name}
@@ -45,6 +46,7 @@ function CookBook() {
                     <wx-button className="attention--btn" open-type="share">关注</wx-button>
                 </Sider>
             </Layout>
+            <wx-p className="cookbook--description">{foodMaterialsHeaderData.description}</wx-p>
         </div>
     )
 
@@ -56,9 +58,6 @@ function CookBook() {
             {
                 renderFoodMaterialAuthor(foodMaterials)
             }
-            {/*{*/}
-            {/*  renderMenuList(renderFoodMaterial)*/}
-            {/*}*/}
         </div>
     )
 }
