@@ -1,0 +1,8 @@
+.search--page {
+    height: 100%;
+}
+
+.list--box {
+    margin: 20px;
+    overflow: hidden!important;
+}

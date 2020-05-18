@@ -1,6 +1,14 @@
 import request from '../request';
 import login from '../login';
 
+export const send = async (serviceName, { data = {} } = {}) => {
+    const { data: res, status } = await request(serviceName, { data });
+    if (status === 401) {
+        throw new Error({ status, message: 'not login'});
+    }
+    return res;
+}
+
 export default async (serviceName, { data = {} } = {}) => {
     wx.showLoading();
     const { data: res, status } = await request(serviceName, { data });

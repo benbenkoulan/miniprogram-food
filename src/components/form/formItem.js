@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { checkRules, getChangeEventNameByElementType } from './utils';
+import { checkRules } from './utils';
 
 function useFormItem(name, {
     change,
@@ -11,10 +11,8 @@ function useFormItem(name, {
     const [value, setValue] = useState(initialValue);
     const [dirty, setDirty] = useState(false);
     const valid = checkRules(rules, value);
-
-    const eventName = getChangeEventNameByElementType(type);
     
-    const changeHandler = (e) => {
+    const onInput = (e) => {
         const newValue = e.target.value;
         setValue(newValue);
         if (change) change(newValue);
@@ -27,7 +25,8 @@ function useFormItem(name, {
         value,
         valid,
         dirty,
-        [eventName]: changeHandler,
+        onInput,
+        setValue,
     };
 }
 

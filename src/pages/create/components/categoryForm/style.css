@@ -1,0 +1,21 @@
+.category-form--box {
+    margin: 20px;
+    padding: 20px;
+    flex-grow: 1;
+    max-width: 300px;
+    border-radius: 4px;
+    background-color: #ffffff;
+}
+
+.category-btn--box {
+    height: 40px;
+    line-height: 40px;
+    border-radius: 4px;
+    text-align: center;
+    color: #ffffff;
+    background-color: #1296db;
+}
+
+.category-btn--box.cancel-btn--box {
+    background-color: #cccccc;
+}

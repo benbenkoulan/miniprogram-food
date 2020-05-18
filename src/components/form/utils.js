@@ -1,7 +1,5 @@
 import isNill from 'lodash/isNil';
 
-import { EVENT_NAME } from './constant';
-
 function checkFixedRule(fixedRule, value) {
     const isRequiredValid = !fixedRule.required || (!isNill(value) && value !== '');
     const isLengthInvalid = (fixedRule.minLength > 0 && (isNill(value) || value.length < fixedRule.minLength))
@@ -27,5 +25,3 @@ function checkRule(rule, value) {
 export function checkRules(rules, value) {
     return rules.every(rule => checkRule(rule, value));
 }
-
-export const getChangeEventNameByElementType = (type) => EVENT_NAME[type];

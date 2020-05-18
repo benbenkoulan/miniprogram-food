@@ -1,0 +1,27 @@
+.search-form--box {
+    padding: 10px 20px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.search-input--text {
+    margin-right: 10px;
+    display: block;
+    font-size: 18px;
+}
+
+.search-btn--box {
+    justify-content: flex-end!important;
+}
+
+.search--btn, .cancel--btn {
+    font-size: 14px;
+    text-align: center;
+}
+
+.search--btn {
+    color: #1296db;
+}
+
+.cancel--btn {
+    color: #666666;
+}

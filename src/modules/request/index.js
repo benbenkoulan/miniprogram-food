@@ -1,11 +1,12 @@
 import Axios from 'axios';
 
+import { BASE_REQUEST_URL } from '~/modules/constant/network';
+
 import getService from './service';
 
-const BASE_URL = 'http://4b19a2e8.ngrok.io';
-
 const axios = Axios.create({
-    baseURL: BASE_URL,
+    baseURL: BASE_REQUEST_URL,
+    timeout: 3000,
     validateStatus: (status) => (status >= 200 && status < 300) || status === 401,
 });
 

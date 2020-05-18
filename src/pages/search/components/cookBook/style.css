@@ -1,0 +1,29 @@
+.menu--icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+}
+
+.menu-info--box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 10px;
+    min-height: 60px;
+}
+
+.menu-title--text {
+    font-size: 20px;
+    overflow: hidden;
+    height: 20px;
+    line-height: 20px;
+    text-overflow: ellipsis;
+}
+
+.menu-garnish--text, .menu-star--text, .menu-author--text {
+    font-size: 10px;
+}
+
+.food-author--text {
+    color: #b5b5b5;
+}

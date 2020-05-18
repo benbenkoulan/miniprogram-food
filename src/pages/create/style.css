@@ -29,38 +29,39 @@
     height: 60px;
 }
 
-.garnish-list--box {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    margin: -10px -10px -10px 0;
-}
+.form-item--box.step, .form-item--box.garnish, .form-item--box.category {
+    & .list--box {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        margin: -10px -10px -10px 0;
+    }
 
-.garnish--box, .step--box {
-    position: relative;
-    margin: 10px 10px 10px 0;
-    padding: 5px;
-    border: 1px solid #cccccc;
-    border-radius: 8px;
-}
+    & .selected--box {
+        position: relative;
+        margin: 10px 10px 10px 0;
+        padding: 5px;
+        border: 1px solid #cccccc;
+        border-radius: 8px;
+    }
 
-
-.garnish-text--box, .step-text--box {
-    max-width: 60px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: 12px;
+    & .text--box {
+        max-width: 60px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 12px;
+        
+    }
     
-}
-
-.garnish-close--icon, .step-close--icon {
-    position: absolute;
-    right: -20px;
-    top: -20px;
-    width: 16px;
-    height: 16px;
-    border: 10px solid transparent;
+    & .close--icon {
+        position: absolute;
+        right: -20px;
+        top: -20px;
+        width: 16px;
+        height: 16px;
+        border: 10px solid transparent;
+    }
 }
 
 .save--btn {
