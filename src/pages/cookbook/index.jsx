@@ -31,10 +31,26 @@ function CookBook() {
                 description: '制作过程忘记拍照了，下次再做补上，喜欢芝士的可以中间加入芝士，和喜欢的坚果，果脯之类的，最后还可以挤上奶油，用水果装饰起来，会更加漂亮✌️'
             }
         ],
-        tips:'1. 混合蛋白质和蛋黄糊的手法一定不要打圈搅动，要用翻拌的手法\n2.纸杯倒入八分满即可\n3.6个鸡蛋大概可以做13杯左右，具体看纸杯的大小',
+        tips: '1. 混合蛋白质和蛋黄糊的手法一定不要打圈搅动，要用翻拌的手法\n2.纸杯倒入八分满即可\n3.6个鸡蛋大概可以做13杯左右，具体看纸杯的大小',
         pageView: 3088,
         collection: 253,
-        createdDate: '2020-4-27'
+        createdDate: '2020-4-27',
+        authorOtherCookBookDetail: [
+            {
+                imageUrl: 'http://b74.photo.store.qq.com/psu?/1b8b74f0-148e-4623-991f-b9832da32379/UVWkHdymPf8Zj7m6.P2Y0knh3j*5F2nXN1Q6M1O7gyc!/b/YT2sJCz3LQAAYpEzJixsLgAA&bo=3gFkAQAAAAABBJk!&rf=viewer_4',
+                title: '轻松上手香酥小油条'
+            }, {
+                imageUrl: 'http://b73.photo.store.qq.com/psu?/1b8b74f0-148e-4623-991f-b9832da32379/1jxz96Syedglz4sKxg5lnaa8uiyZNUxhZbGMYnXPDWw!/b/YWefjSu6LgAAYoI2kiuJLwAA&bo=7QE0AQAAAAABFOo!&rf=viewer_4',
+                title: '超简单的韩式辣白菜'
+            }, {
+                imageUrl: 'http://b74.photo.store.qq.com/psu?/1b8b74f0-148e-4623-991f-b9832da32379/N5B81.F81RVUP0S4JmsoNwKS3AjON9QlO87D6wO20QU!/b/Ya5KLCwQLgAAYgzoMCxjLQAA&bo=8wF1AQAAAAABBKU!&rf=viewer_4',
+                title: '自己熬阿胶糕'
+            }, {
+                imageUrl: 'http://b74.photo.store.qq.com/psu?/1b8b74f0-148e-4623-991f-b9832da32379/ZyblHBaPi.Pl29iuklhRsINvZBuqBg.kroORk.DqhP0!/b/YfHMKizyLQAAYh62JyyRLgAA&bo=8wFJAQAAAAABFIk!&rf=viewer_4',
+                title: '爱上辣椒皮蛋'
+            }
+        ]
+
     }
 
     const [foodMaterials] = useState(mockData)
@@ -110,9 +126,33 @@ function CookBook() {
     const renderFooter = (foodMaterials) => (
         <Layout hasSider className="cookbook-follow--text">
             <Content>
-                {foodMaterials.pageView}浏览  {foodMaterials.collection}收藏  菜谱创建于{foodMaterials.createdDate}
+                {foodMaterials.pageView}浏览 {foodMaterials.collection}收藏 菜谱创建于{foodMaterials.createdDate}
             </Content>
         </Layout>
+    )
+
+    const renderAuthorOtherCookBook = (foodMaterials) => (
+        <div className="authorOtherCookBook--box">
+            <wx-p className="authorOtherCookBook--title">作者其他菜谱</wx-p>
+            <wx-scroll-view scroll-x="true" className="scroll--wrap">
+                {foodMaterials.authorOtherCookBookDetail.map(detail => (
+                    <wx-view className="cookbook--detail">
+                        <div className="authorOtherCookBook--image-box">
+                            <wx-image src={detail.imageUrl} className="authorOtherCookBook--image"/>
+                        </div>
+                        <div className="authorOther--wrap">
+                            <wx-text className="authorOther--name">
+                                {detail.title}
+                            </wx-text>
+                            <wx-image src={foodMaterials.authorUrl} className="authorOther--image"/>
+                        </div>
+                        <div className="authorOther-description--box">
+                            <wx-p className="authorOther--description">{foodMaterials.name}</wx-p>
+                        </div>
+                    </wx-view>
+                ))}
+            </wx-scroll-view>
+        </div>
     )
 
     return (
@@ -134,6 +174,9 @@ function CookBook() {
             }
             {
                 renderFooter(foodMaterials)
+            }
+            {
+                renderAuthorOtherCookBook(foodMaterials)
             }
         </div>
     )

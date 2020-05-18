@@ -68,7 +68,7 @@
 
 }
 
-.step--box, .tip--box {
+.step--box, .tip--box, .authorOtherCookBook--box {
     margin: 0 20px;
 }
 
@@ -86,14 +86,73 @@
     color: #444444;
     margin: 20px 0;
     line-height: 22px;
-    white-space:pre-wrap
+    white-space: pre-wrap
 }
 
-.cookbook-follow--text{
+.cookbook-follow--text {
     margin-left: 22px;
     margin-bottom: 20px;
     font-size: 10px;
     color: #666666;
 }
 
+.cookbook--detail {
+    display: inline-block;
+    width: 90%;
+}
+
+.scroll--wrap {
+    width: 100%;
+    white-space: nowrap;
+    margin-bottom: 30px;
+}
+
+.authorOtherCookBook--title {
+    margin: 20px 0 10px 0;
+}
+
+.authorOtherCookBook--image-box {
+    overflow: hidden;
+    width: 90%;
+    height: 160px;
+    border-radius: 5px;
+}
+
+.authorOtherCookBook--image {
+    width: 100%;
+}
+
+.authorOther--image {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    float: right;
+
+}
+
+.authorOther--name {
+    line-height: 30px;
+    color: #444444;
+}
+
+.authorOther--wrap {
+    width: 90%;
+    margin-top: 10px;
+}
+
+.authorOther-description--box {
+    margin-top: 5px;
+    width: 90%;
+}
+
+.authorOther--description {
+    width: 60px;
+    float: right;
+    text-align: right;
+    font-size: 10px;
+    color: #666666;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
