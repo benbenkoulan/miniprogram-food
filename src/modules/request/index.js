@@ -6,7 +6,7 @@ import getService from './service';
 
 const axios = Axios.create({
     baseURL: BASE_REQUEST_URL,
-    timeout: 3000,
+    timeout: 10000,
     validateStatus: (status) => (status >= 200 && status < 300) || status === 401,
 });
 

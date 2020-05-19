@@ -17,7 +17,12 @@ const push = (pageName, query) => wrapperRoute(pageName, (route) => {
 
 const back = ({ delta = 1, } = {}) => wx.navigateBack({ delta });
 
+const switchTab = (pageName) => wrapperRoute(pageName, (route) => wx.switchTab({
+    url: route.path
+}));
+
 export default {
     push,
     back,
+    switchTab,
 };

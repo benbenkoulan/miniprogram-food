@@ -23,7 +23,8 @@ module.exports = {
         create: getPageEntry('create'),
         my_cookbook: getPageEntry('my_cookbook'),
         collection: getPageEntry('collection'),
-        cookbook: getPageEntry('cookbook')
+        cookbook: getPageEntry('cookbook'),
+        my_follow: getPageEntry('my_follow')
     },
     output: {
         path: path.resolve(__dirname, '../build/mp/common'), // 放到小程序代码目录中的 common 目录下

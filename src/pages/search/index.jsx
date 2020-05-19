@@ -1,26 +1,39 @@
-import React from 'react';
-import { Form, Input } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Layout, Content, Header } from 'micro-design';
+import 'micro-design/dist/es/components/layout/style.css';
 
-import Food from './components/food';
+import List from '../../components/list';
 
-const layout = {
-    labelCol: { span: 8 },
-    wrapperCol: { span: 16 },
-};
+import CookBook from './components/cookBook';
+import SearchForm from './components/searchForm';
+
+import './style.css';
+
 
 function Search () {
-    const [form] = Form.useForm();
+    const [searchKey, setSearchKey] = useState('');
+    const [cookbookList, setCookBookList] = useState(Array(10).fill(''));
+
+    useEffect(() => {
+        console.log(window.location);
+        setSearchKey('test');
+    }, []);
 
     return (
-        <div style={{ margin: '20px' }}>
-            <div></div>
-            {/* <Form {...layout} form={form}>
-                <Form.Item name="usename">
-                    <Input />
-                </Form.Item>
-            </Form>  */}
-            <Food />
-        </div>
+        <Layout className="search--page">
+            <Header>
+                <SearchForm
+                    searchKey={searchKey}
+                />
+            </Header>
+            <Content className="list--box">
+                <List
+                    dataSource={cookbookList}
+                    renderItem={(item) => (<CookBook />)}
+                    renderLoading={() => (<div>loading</div>)}
+                />
+            </Content>            
+        </Layout>
     )
 }
 

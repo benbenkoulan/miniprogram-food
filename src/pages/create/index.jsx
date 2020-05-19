@@ -6,7 +6,8 @@ import 'micro-design/dist/es/components/layout/style.css';
 
 import { fetchCategories } from '~/store/action/cookbook';
 import { categoriesSelector } from '~/store/selector';
-import uploadFile from '~/modules/miniprogram/uploadFile';
+import { upload } from '~/modules/miniprogram/file';
+import { chooseImage } from '~/modules/miniprogram/image';
 
 import useFormItem from './components/form/formItem';
 import useFormItemList from './components/form/formItemList';
@@ -87,20 +88,14 @@ function Create(props) {
         ))
     );
 
-    const [imagePath, setImagePath] = useState();
+    const [imageId, setImageId] = useState();
 
-    const handleUpload = () => {
-        wx.chooseImage({
-            count: 1,
-            sizeType: ['original', 'compressed'],
-            success(res) {
-                const tempFilePaths = res.tempFilePaths;
-                const filePath = tempFilePaths[0];
-                const name = filePath.replace(/http:\/\/tmp\//, '');
-                uploadFile({ filePath, name, });
-                // setImagePath(imagePath);
-            },
-        });
+    const handleUpload = async () => {
+        const { tempFilePaths } = await chooseImage({ sizeType: ['original', 'compressed'] });
+        const filePath = tempFilePaths[0];
+        const name = filePath.replace(/http:\/\/tmp\//, '');
+        const result = await upload({ filePath, name, });
+        console.log(result);
     };
 
     return (
@@ -108,7 +103,7 @@ function Create(props) {
             <Content>
                 <label className="form-item--box">
                     <span className="form-item--label">菜长啥样</span>
-                    <div className="add--btn" onClick={handleUpload}>{ imagePath ? '已选择图片' : '点击上传' }</div>
+                    <div className="add--btn" onClick={handleUpload}>{ imageId ? '已选择图片' : '点击上传' }</div>
                 </label>
                 <label class="form-item--box">
                     <span className="form-item--label">菜叫啥名</span>

@@ -16,7 +16,8 @@ module.exports = {
 		create: pages('create'),
 		my_cookbook: pages('my_cookbook'),
 		collection: pages('collection'),
-		cookbook: pages('cookbook')
+		cookbook: pages('cookbook'),
+		my_follow: pages('my_follow')
 	},
 	redirect: {
 		notFound: 'home',

@@ -17,6 +17,7 @@ const getMenus = () => [{
 }, {
     key: 'FOLLOW',
     text: '我的关注',
+    onClick: () => router.push('my_follow'),
 }, {
     key: 'MYCOOKBOOK',
     text: '我的菜谱',

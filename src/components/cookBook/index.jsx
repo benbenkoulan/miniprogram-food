@@ -12,6 +12,8 @@ function CookBook(props) {
         router.push('cookbook');
     };
 
+    console.log('-----CookBook------');
+
     return (
         <div onClick={handleCookBookClick}>
             <div className="cookbook-image--box">

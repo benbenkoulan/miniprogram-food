@@ -1,4 +1,7 @@
-const routes = [{
+const routes = [ {
+    name: 'home',
+    path: '/pages/home/index'
+}, {
     name: 'search',
     path: '/pages/search/index',
 }, {
@@ -13,6 +16,9 @@ const routes = [{
 }, {
     name: 'cookbook',
     path: '/pages/cookbook/index',
-}];
+}, {
+    name: 'my_follow',
+    path: '/pages/my_follow/index',
+},];
 
 export default (pageName) => routes.find(route => route.name === pageName);
