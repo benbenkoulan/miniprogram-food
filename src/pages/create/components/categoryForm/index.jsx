@@ -8,7 +8,7 @@ import './style.css';
 
 function CategoryForm(props) {
     const { categories: allCategories, onSubmitCategoryForm, currentCategory } = props;
-    const [initialParentCategoryIndex = 0, initialCategoryIndex = 0] = currentCategory;
+    const [initialParentCategoryIndex = 0, initialCategoryIndex = 0, index] = currentCategory;
     const pickerRef = useRef();
 
     const [parentCategoryIndex, setParentCategoryIndex] = useState(initialParentCategoryIndex);
@@ -62,7 +62,7 @@ function CategoryForm(props) {
     }, [parentCategoryIndex, categoryIndex]);
 
     const handleConfirm = () => {
-        onSubmitCategoryForm([parentCategoryIndex, categoryIndex]);
+        onSubmitCategoryForm([parentCategoryIndex, categoryIndex], index);
     };
 
     return (

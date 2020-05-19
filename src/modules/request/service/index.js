@@ -3,7 +3,8 @@ const services = [
     { name: 'login', url: '/services/user/login', method: 'POST' },
     { name: 'getStatisticsInfo', url: '/services/user/statistics-info', method: 'GET' },
     { name: 'upsertUserInfo', url: '/services/user', method: 'POST' },
-    { name: 'uploadImage', url: '/services/file/image/upload', method: 'POST' }
+    { name: 'saveCookbook', url: '/services/product', method: 'POST' },
+    { name: 'getMyCookbooks', url: '/services/product/my-products', method: 'GET' },
 ];
 
 export default (serviceName) => services.find(service => service.name === serviceName);

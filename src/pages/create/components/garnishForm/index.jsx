@@ -19,7 +19,7 @@ function GarnishForm(props) {
         props.onSubmitGarnishForm({
             name: name.value,
             weight: weight.value,
-        });
+        }, props.index);
         props.onCloseGarnishForm();
     };
 

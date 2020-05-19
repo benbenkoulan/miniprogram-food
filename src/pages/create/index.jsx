@@ -8,6 +8,9 @@ import { fetchCategories } from '~/store/action/cookbook';
 import { categoriesSelector } from '~/store/selector';
 import { upload } from '~/modules/miniprogram/file';
 import { chooseImage } from '~/modules/miniprogram/image';
+import { showToast } from '~/modules/miniprogram/ui';
+import { send } from '~/modules/request/proxy';
+import router from '~/router';
 
 import useFormItem from './components/form/formItem';
 import useFormItemList from './components/form/formItemList';
@@ -17,7 +20,13 @@ import CategoryForm from './components/categoryForm';
 
 import './style.css';
 
-function Create(props) {
+function getCategoryId(allCategories, parentCategoryIndex, categoryIndex) {
+    const parentCategory = allCategories[parentCategoryIndex];
+    const category = parentCategory.children[categoryIndex];
+    return category.id;
+}
+
+function Create() {
     const dispatch = useDispatch();
     const allCategories = useSelector(categoriesSelector);
 
@@ -25,7 +34,7 @@ function Create(props) {
         dispatch(fetchCategories());
     }, []);
 
-    const name = useFormItem('name', {
+    const title = useFormItem('title', {
         rules: [{
             required: true,
             maxLength: 10, 
@@ -63,7 +72,7 @@ function Create(props) {
             const category = parentCategory.children[categoryIndex];
             return (
                 <div key={`${parentCategoryIndex}-${categoryIndex}`} className="selected--box">
-                <p className="text--box" onClick={() => editCategory(categoryIndexs)}>{parentCategory.name}-{category.name}</p>
+                <p className="text--box" onClick={() => editCategory(categoryIndexs, index)}>{parentCategory.name}-{category.name}</p>
                 <wx-image className="close--icon" src="/assets/images/create/close.svg" onClick={() => deleteCategory(index)}></wx-image>
             </div>
             );
@@ -73,7 +82,7 @@ function Create(props) {
     const renderGarnishes = () => (
         garnishes.map((garnish, index) => (
             <div key={garnish.name} className="selected--box">
-                <p className="text--box" onClick={() => editGarnish(garnish)}>{garnish.name} {garnish.weight}</p>
+                <p className="text--box" onClick={() => editGarnish(garnish, index)}>{garnish.name} {garnish.weight}</p>
                 <wx-image className="close--icon" src="/assets/images/create/close.svg" onClick={() => deleteGarnish(index)}></wx-image>
             </div>
         ))
@@ -82,20 +91,44 @@ function Create(props) {
     const renderSteps = () => (
         steps.map((step, index) => (
             <div key={index} className="selected--box">
-                <p className="text--box" onClick={() => editStep(step)}>步骤 {index + 1}</p>
+                <p className="text--box" onClick={() => editStep(step, index)}>步骤 {index + 1}</p>
                 <wx-image className="close--icon" src="/assets/images/create/close.svg" onClick={() => deleteStep(index)}></wx-image>
             </div>
         ))
     );
 
-    const [imageId, setImageId] = useState();
+    const [mainImageId, setMainImageId] = useState();
 
     const handleUpload = async () => {
         const { tempFilePaths } = await chooseImage({ sizeType: ['original', 'compressed'] });
         const filePath = tempFilePaths[0];
-        const name = filePath.replace(/http:\/\/tmp\//, '');
-        const result = await upload({ filePath, name, });
+        const { data } = await upload(filePath);
+        setMainImageId(data);
+    };
+
+    const handleSubmit = async () => {
+        const categoryProducts = categories.map((categoryIndexs) => ({ categoryId: getCategoryId(allCategories, ...categoryIndexs) }));
+        const ingredients = garnishes.map((garnish, index) => ({
+            lineNumber: index + 1,
+            ...garnish,
+        }));
+        const stepsData = steps.map((step, index) => ({
+            lineNumber: index + 1,
+            ...step,
+        }));
+        const formData = {
+            title: title.value,
+            mainImageId,
+            categoryProducts,
+            ingredients,
+            steps: stepsData,
+            description: description.value,
+            tip: tip.value,
+        };
+        const result = await send('saveCookbook', { data: formData });
         console.log(result);
+        await showToast({ title: '恭喜，美食已分享' });
+        router.switchTab('my');
     };
 
     return (
@@ -103,11 +136,11 @@ function Create(props) {
             <Content>
                 <label className="form-item--box">
                     <span className="form-item--label">菜长啥样</span>
-                    <div className="add--btn" onClick={handleUpload}>{ imageId ? '已选择图片' : '点击上传' }</div>
+                    <div className="add--btn" onClick={handleUpload}>{ mainImageId ? '已选择图片' : '点击上传' }</div>
                 </label>
                 <label class="form-item--box">
                     <span className="form-item--label">菜叫啥名</span>
-                    <input className="form-input--box input--box" {...name} />
+                    <input className="form-input--box input--box" {...title} />
                 </label>
                 <label class="category form-item--box">
                     <span className="form-item--label">菜品印象</span>
@@ -148,7 +181,7 @@ function Create(props) {
                 </label>
             </Content>
             <Footer>
-                <button className="save--btn">保存</button>
+                <button className="save--btn" onClick={handleSubmit}>保存</button>
             </Footer>
             { isShowGarnishForm && (
                 <GarnishForm

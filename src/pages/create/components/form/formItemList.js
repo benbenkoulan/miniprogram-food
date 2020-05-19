@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import isArray from 'lodash/isArray';
 
 function useFormItemList(initialFormItemList = [], initialCurrentFormItem = {}, initialIsShowForm = false) {
     const [formItemList, setFormItemList] = useState(initialFormItemList);
@@ -13,14 +14,24 @@ function useFormItemList(initialFormItemList = [], initialCurrentFormItem = {}, 
         showForm();
     };
 
-    const editFormItem = (formItem) => {
-        setCurrentFormItem(formItem);
+    const editFormItem = (formItem, index) => {
+        if (isArray(formItem)) {
+            setCurrentFormItem([
+                ...formItem,
+                index,
+            ]);
+        } else {
+            setCurrentFormItem({
+                ...formItem,
+                index,
+            });
+        }
         showForm();
     }
 
-    const saveFormItem = (upsertingFormItem) => {
-        if (upsertingFormItem.index >= 0) {
-            formItemList[upsertingFormItem.index] = upsertingFormItem;
+    const saveFormItem = (upsertingFormItem, index) => {
+        if (index >= 0) {
+            formItemList[index] = upsertingFormItem;
             setFormItemList([
                 ...formItemList,
             ]);

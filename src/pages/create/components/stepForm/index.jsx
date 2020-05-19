@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Row, Col } from 'micro-design';
 import 'micro-design/dist/es/components/flex/style.css';
 
-import Modal from '../../../../components/modal';
+import { upload } from '~/modules/miniprogram/file';
+import { chooseImage } from '~/modules/miniprogram/image';
+import Modal from '~/components/modal';
 import useFormItem from '~/components/form/formItem';
-
-import requestProxy from '../../../../modules/request/proxy';
 
 import './style.css';
 
@@ -13,28 +13,22 @@ function StepForm(props) {
     const description = useFormItem('description', {
         initialValue: props.description
     });
+    const [filePath, setFilePath] = useState();
 
-    const [filePath, setFilePath] = useState(props.filePath);
-
-    const handleConfirm = () => {
+    const handleConfirm = async () => {
+        const { data: imageId } = await upload(filePath);
         props.onSubmitStepForm({
             description: description.value,
-            index: props.index,
-            filePath,
-        });
+            imageId,
+        }, props.index);
         props.onCloseStepForm();
     };
 
-    const handleChooseImage = () => {
-        wx.chooseImage({
-            count: 1,
-            sizeType: ['original', 'compressed'],
-            success(res) {
-                const tempFilePaths = res.tempFilePaths;
-                const filePath = tempFilePaths[0];
-                setFilePath(filePath);
-            }
-        })
+    const handleChooseImage = async () => {
+        const res = await chooseImage({ sizeType: ['original', 'compressed'], });
+        const tempFilePaths = res.tempFilePaths;
+        const filePath = tempFilePaths[0];
+        setFilePath(filePath);
     };
 
     return (
@@ -62,7 +56,7 @@ function StepForm(props) {
 }
 
 StepForm.defaultProps = {
-    filePath: '',
+    imageId: '',
     description: '',
     onCloseStepForm: () => {},
     onSubmitStepForm: () => {},

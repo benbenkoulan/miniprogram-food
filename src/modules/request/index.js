@@ -6,7 +6,7 @@ import getService from './service';
 
 const axios = Axios.create({
     baseURL: BASE_REQUEST_URL,
-    timeout: 10000,
+    timeout: 30000,
     validateStatus: (status) => (status >= 200 && status < 300) || status === 401,
 });
 
@@ -16,9 +16,14 @@ export default async (serviceName, { data = {} } = {}) => {
         throw new Error(`没有${serviceName}服务`);
     }
 
+    const headers = {
+        cookie: '',
+    };
+
     const config = {
         url,
         method,
+        headers,
     }
 
     if (method === 'GET') {

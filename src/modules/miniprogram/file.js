@@ -1,22 +1,36 @@
-
+import nullSafeGet from 'lodash/get';
 import { BASE_REQUEST_URL } from '~/modules/constant/network';
+import storage from '~/modules/storage';
+import router from '~/router';
 import withLoading from '../hof/withLoading';
 import login from '../login';
-import router from '~/router';
 
-const uploadFile = ({ filePath, name, } = {}) => new Promise((resolve, reject) => {
-    console.log(document.cookie);
+const uploadFile = (filePath) => new Promise((resolve, reject) => {
+    const pageCookie = storage.get('PAGE_COOKIE')[''];
+    const sessionKey = nullSafeGet(pageCookie, '/.SESSION.key');
+    const sessionValue = nullSafeGet(pageCookie, '/.SESSION.value');
+
     wx.uploadFile({
         url: `${BASE_REQUEST_URL}/services/file/image/upload`,
-        name,
+        name: 'imageFile',
         filePath,
+        header: {
+            cookie: `${sessionKey}=${sessionValue}`,
+            'content-type': 'multipart/form-data'
+        },
         success: async (res) => {
             const { statusCode, data } = res;
             if (statusCode === 401) {
                 await login();
                 router.switchTab('home');
             }
-            resolve(data);
+            console.log(res);
+            try {
+                const result = JSON.parse(data);
+                resolve(result);
+            } catch (e) {
+                reject();
+            }            
         },
         fail: reject
     });

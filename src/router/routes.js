@@ -1,6 +1,9 @@
-const routes = [ {
+const routes = [{
     name: 'home',
     path: '/pages/home/index'
+}, {
+    name: 'my',
+    path: '/pages/my/index'
 }, {
     name: 'search',
     path: '/pages/search/index',
