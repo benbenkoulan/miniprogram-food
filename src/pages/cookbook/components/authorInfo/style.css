@@ -1,0 +1,36 @@
+@import 'text.css';
+
+.author-info--box {
+    margin: 20px 20px 0;
+}
+
+.author--icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.author--name {
+    line-height: 60px;
+    margin-left: 10px;
+    font-size: 14px;
+    color: #444444;
+}
+
+.attention--btn {
+    margin-top: 15px;
+    width: 70px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 4px;
+    color: orangered !important;
+    text-align: center;
+    font-size: 14px;
+    border: 1px solid orangered !important;
+}
+
+.cookbook--description {
+    font-size: 14px;
+    color: #444444;
+    margin: 20px 20px 30px 20px;
+}

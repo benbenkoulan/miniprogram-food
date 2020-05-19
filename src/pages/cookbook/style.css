@@ -21,58 +21,11 @@
     color: #444444;
 }
 
-.author-info--box {
-    margin: 20px 20px 0;
-}
-
-.author--icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-}
-
-.author--name {
-    line-height: 60px;
-    margin-left: 10px;
-    font-size: 14px;
-    color: #444444;
-}
-
-.attention--btn {
-    margin-top: 15px;
-    width: 70px;
-    height: 30px;
-    line-height: 30px;
-    border-radius: 4px;
-    color: orangered !important;
-    text-align: center;
-    font-size: 14px;
-    border: 1px solid orangered !important;
-}
-
-.cookbook--description {
-    font-size: 14px;
-    color: #444444;
-    margin: 20px 20px 30px 20px;
-}
-
-.ingredient--title {
-    margin-bottom: 20px;
-}
-
-.ingredient--content {
-    font-size: 14px;
-    color: #444444;
-    margin: 10px 40px 10px 0;
-    justify-content: space-between;
-
-}
-
-.step--box, .tip--box, .authorOtherCookBook--box {
+.tip--box{
     margin: 0 20px;
 }
 
-.step--name, .tip--name {
+.tip--name {
     margin: 20px 0;
 }
 
@@ -81,78 +34,10 @@
     border-radius: 5px;
 }
 
-.step--description, .tip--description {
+.tip--description {
     font-size: 14px;
     color: #444444;
     margin: 20px 0;
     line-height: 22px;
     white-space: pre-wrap
 }
-
-.cookbook-follow--text {
-    margin-left: 22px;
-    margin-bottom: 20px;
-    font-size: 10px;
-    color: #666666;
-}
-
-.cookbook--detail {
-    display: inline-block;
-    width: 90%;
-}
-
-.scroll--wrap {
-    width: 100%;
-    white-space: nowrap;
-    margin-bottom: 30px;
-}
-
-.authorOtherCookBook--title {
-    margin: 20px 0 10px 0;
-}
-
-.authorOtherCookBook--image-box {
-    overflow: hidden;
-    width: 90%;
-    height: 160px;
-    border-radius: 5px;
-}
-
-.authorOtherCookBook--image {
-    width: 100%;
-}
-
-.authorOther--image {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    float: right;
-
-}
-
-.authorOther--name {
-    line-height: 30px;
-    color: #444444;
-}
-
-.authorOther--wrap {
-    width: 90%;
-    margin-top: 10px;
-}
-
-.authorOther-description--box {
-    margin-top: 5px;
-    width: 90%;
-}
-
-.authorOther--description {
-    width: 60px;
-    float: right;
-    text-align: right;
-    font-size: 10px;
-    color: #666666;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-

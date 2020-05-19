@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import './style.css'
-import { Layout, Sider, Content } from 'micro-design'
-import { VariableSizeList as List } from 'react-window'
+import { Layout } from 'micro-design'
+import AuthorOtherCookBook from './components/authorOtherCookBook'
+import Footer from './components/footer'
+import AuthorInfo from './components/authorInfo'
+import Ingredient from './components/ingredient'
+import Step from './components/step'
 
 function CookBook() {
-
 
     const mockData = {
         title: '小朋友可以一口吃掉4个的杯子蛋糕',
@@ -55,129 +58,25 @@ function CookBook() {
 
     const [foodMaterials] = useState(mockData)
 
-    const renderFoodMaterialHeader = (foodMaterialsData) => (
-        <div>
-            <div className="cookbook-image--box">
-                <wx-image mode="aspectFill" className="cookbook--image" src={foodMaterialsData.mainImageUrl}/>
-            </div>
-            <Layout className="menu--box">
-                <wx-p className="cookbook--title">{foodMaterialsData.title}</wx-p>
-            </Layout>
-        </div>)
-
-    const renderFoodMaterialAuthor = (foodMaterialsData) => (
-        <div>
-            <Layout hasSider className="author-info--box">
-                <Sider width="60px">
-                    <wx-image className="author--icon" src={foodMaterialsData.authorUrl}/>
-                </Sider>
-                <Content className="author--name">
-                    {foodMaterialsData.name}
-                </Content>
-                <Sider width="80px" className="attention-btn--box">
-                    <wx-button className="attention--btn">关注</wx-button>
-                </Sider>
-            </Layout>
-            <wx-p className="cookbook--description">{foodMaterialsData.description}</wx-p>
-        </div>
-    )
-
-    const renderIngredient = (foodMaterialsData) => (
-        <Layout className="menu--box author-info--box">
-            <Layout className="menu--box ingredient--title">用料</Layout>
-            {renderIngredientDetail(foodMaterialsData.ingredients)}
-        </Layout>
-    )
-
-    const renderIngredientDetail = (ingredients) => (
-        ingredients.map(ingredient => (
-            <Layout hasSider className="menu--box ingredient--content">
-                <wx-text>{ingredient.food}</wx-text>
-                <wx-text className="ingredient--quantity">{ingredient.quantity}</wx-text>
-            </Layout>
-        ))
-    )
-
-    const renderCookSteps = (foodMaterialsData) => (
-        <div className="step--box">
-            {renderCookStepDedetail(foodMaterialsData.step)}
-        </div>
-    )
-
-    const renderCookStepDedetail = (foodCookSteps) => (
-        foodCookSteps.map((foodCookStep, index) => (
-            <Layout className="menu--box">
-                <wx-p className="step--name">步骤 {index + 1}</wx-p>
-                <div>
-                    <wx-image className="step--image" src={foodCookStep.imageUrl}/>
-                </div>
-                <wx-p className="step--description">{foodCookStep.description}</wx-p>
-            </Layout>
-        ))
-    )
-
-    const renderTips = (foodMaterialsData) => (
-        <div className="tip--box">
-            <wx-p className="tip--name">小贴士</wx-p>
-            <wx-p className="tip--description">{foodMaterialsData.tips}</wx-p>
-        </div>
-    )
-
-    const renderFooter = (foodMaterials) => (
-        <Layout hasSider className="cookbook-follow--text">
-            <Content>
-                {foodMaterials.pageView}浏览 {foodMaterials.collection}收藏 菜谱创建于{foodMaterials.createdDate}
-            </Content>
-        </Layout>
-    )
-
-    const renderAuthorOtherCookBook = (foodMaterials) => (
-        <div className="authorOtherCookBook--box">
-            <wx-p className="authorOtherCookBook--title">作者其他菜谱</wx-p>
-            <wx-scroll-view scroll-x="true" className="scroll--wrap">
-                {foodMaterials.authorOtherCookBookDetail.map(detail => (
-                    <wx-view className="cookbook--detail">
-                        <div className="authorOtherCookBook--image-box">
-                            <wx-image src={detail.imageUrl} className="authorOtherCookBook--image"/>
-                        </div>
-                        <div className="authorOther--wrap">
-                            <wx-text className="authorOther--name">
-                                {detail.title}
-                            </wx-text>
-                            <wx-image src={foodMaterials.authorUrl} className="authorOther--image"/>
-                        </div>
-                        <div className="authorOther-description--box">
-                            <wx-p className="authorOther--description">{foodMaterials.name}</wx-p>
-                        </div>
-                    </wx-view>
-                ))}
-            </wx-scroll-view>
-        </div>
-    )
-
     return (
         <div>
-            {
-                renderFoodMaterialHeader(foodMaterials)
-            }
-            {
-                renderFoodMaterialAuthor(foodMaterials)
-            }
-            {
-                renderIngredient(foodMaterials)
-            }
-            {
-                renderCookSteps(foodMaterials)
-            }
-            {
-                renderTips(foodMaterials)
-            }
-            {
-                renderFooter(foodMaterials)
-            }
-            {
-                renderAuthorOtherCookBook(foodMaterials)
-            }
+            <div>
+                <div className="cookbook-image--box">
+                    <wx-image mode="aspectFill" className="cookbook--image" src={foodMaterials.mainImageUrl}/>
+                </div>
+                <Layout className="menu--box">
+                    <wx-p className="cookbook--title">{foodMaterials.title}</wx-p>
+                </Layout>
+            </div>
+            <AuthorInfo {...foodMaterials}/>
+            <Ingredient {...foodMaterials}/>
+            <Step {...foodMaterials}/>
+            <div className="tip--box">
+                <wx-p className="tip--name">小贴士</wx-p>
+                <wx-p className="tip--description">{foodMaterials.tips}</wx-p>
+            </div>
+            <Footer {...foodMaterials}/>
+            <AuthorOtherCookBook {...foodMaterials}/>
         </div>
     )
 }
