@@ -1,5 +1,4 @@
 import withLoading from '~/modules/hof/withLoading';
-import storage from '~/modules/storage';
 import request from '../request';
 
 const login = () => {
@@ -8,7 +7,6 @@ const login = () => {
             success: async ({ code }) => {
                 console.log(code);
                 const res = await request('login', { data: { code } });
-                console.log(res);
                 resolve(res);
             }
         })

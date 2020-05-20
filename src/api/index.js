@@ -1,8 +1,7 @@
-import request from '../modules/request';
-import requestProxy, { send } from '../modules/request/proxy';
+import { send } from '../modules/request/proxy';
 
-export const getStatisticsInfo = () => requestProxy('getStatisticsInfo');
+export const getStatisticsInfo = () => send('getStatisticsInfo');
 
-export const upsertUserInfo = (encryptedData, iv) => requestProxy('upsertUserInfo', { data: { encryptedData, iv } });
+export const upsertUserInfo = (encryptedData, iv) => send('upsertUserInfo', { data: { encryptedData, iv } });
 
 export const getCategories = () => send('getCategories');
