@@ -1,0 +1,33 @@
+@import "text.css";
+
+.collection-and-share--box {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    border-top: #cccccc 1px solid;
+    display: inline-block;
+    background-color: white;
+    height: 50px
+}
+
+.collection--image, .share--image {
+    float: left;
+    margin-top: 13px;
+    margin-left: calc(50% - 28px);
+    margin-right: 5px;
+    width: 24px;
+    height: 24px;
+}
+
+.collection--box, .share--box {
+    float: left;
+    width: 50%;
+    height: 50px;
+}
+
+.collection-text, .share-text {
+    float: left;
+    font-size: 14px;
+    line-height: 50px;
+    height: 50px;
+}

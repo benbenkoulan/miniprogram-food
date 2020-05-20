@@ -6,6 +6,7 @@ import Footer from './components/footer'
 import AuthorInfo from './components/authorInfo'
 import Ingredient from './components/ingredient'
 import Step from './components/step'
+import CollectionAndShare from './components/collectionAndShare'
 
 function CookBook() {
 
@@ -77,6 +78,7 @@ function CookBook() {
             </div>
             <Footer {...foodMaterials}/>
             <AuthorOtherCookBook {...foodMaterials}/>
+            <CollectionAndShare/>
         </div>
     )
 }
