@@ -1,0 +1,35 @@
+@import 'mixins.css';
+@import 'text.css';
+@import 'layout.css';
+
+.follow--box {
+    padding: 10px 20px;
+    border-bottom: 1px solid #cccccc;
+}
+
+.follow-name--text {
+    margin-left: 10px;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+.follow--btn {
+    display: inline-block;
+    width: 80px;
+    @mixin height-middle 32px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #cccccc
+}
+
+.unfollowed {
+    color: #1296db;
+}
+
+.avatar--icon {
+    @mixin circle 50px;
+    vertical-align: middle;
+}

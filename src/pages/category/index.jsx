@@ -3,8 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col } from 'micro-design';
 import 'micro-design/dist/es/components/flex/style.css';
 
-import request from '../../modules/request';
-import { getCleanCategories } from '../../modules/utils/category';
+import router from '~/router';
+import { send } from '~/modules/request/proxy';
+
+import SubCategory from './components/sub-category';
 
 import './style.css';
 
@@ -70,22 +72,21 @@ const mockData = [{
 }];
 
 function Category() {
-    const [categories, setCategories] = useState(mockData);
+    const [categories, setCategories] = useState([]);
 
-    useEffect(async () => {
-        // const fetchData = async () => {
-        //     const { data: categories } = await request('getCategories');
-        //     setCategories(getCleanCategories(categories));
-        // }
-        // fetchData();
+    useEffect(() => {
+        const fetchData = async () => {
+            const { data: categories } = await send('getCategories');
+            setCategories(categories);
+        }
+        fetchData();
     }, []);
+
+    const handleClickSubCategory = (categoryId, categoryName) => router.push('search', { categoryName, categoryId, });
 
     const renderSubCategories = (subCategories) => (subCategories.map((subCategory) => (
         <Col key={subCategory.id} span={6}>
-            <div className="sub-category--box">
-                <wx-image mode="widthFix" className="sub-cateogry--icon" src="/assets/images/meishi.jpg"></wx-image>
-                <wx-text className="sub-category--title">{subCategory.name}</wx-text>
-            </div>
+            <SubCategory onClickSubCategory={() => handleClickSubCategory(subCategory.id, subCategory.name)} name={subCategory.name} imagePath="/assets/images/meishi.jpg" />
         </Col>
     )));
 
@@ -101,11 +102,6 @@ function Category() {
             </Row>
         </div>
     );
-
-    const getItemSize = (index) => {
-        const category = categories[index];
-        return Math.ceil(category.children.length / 4) * 80;
-    }
 
     return (
         <div>

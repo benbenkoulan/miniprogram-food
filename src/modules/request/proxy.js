@@ -12,4 +12,3 @@ export const send = withLoading(async (serviceName, { data = {} } = {}) => {
     }
     return res;
 });
-

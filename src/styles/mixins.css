@@ -1,0 +1,10 @@
+@define-mixin circle $size {
+    width: $size;
+    height: $size;
+    border-radius: 50%;
+}
+
+@define-mixin height-middle $height {
+    height: $height;
+    line-height: $height;
+}

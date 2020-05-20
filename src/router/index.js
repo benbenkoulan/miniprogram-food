@@ -9,7 +9,8 @@ const wrapperRoute = (pageName, callback) => {
 export const getPageCount = () => getCurrentPages().length;
 
 const push = (pageName, query) => wrapperRoute(pageName, (route) => {
-    const url = `${route.path}${ query ? '' : `?${stringify({ query, })}`}`;
+    const url = `${route.path}${ !query ? '' : `?${stringify(query)}`}`;
+    console.log(pageName, query, url);
     wx.navigateTo({
         url,
     });

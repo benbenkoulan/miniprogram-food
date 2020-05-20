@@ -10,12 +10,14 @@ import SearchForm from './components/searchForm';
 import './style.css';
 
 
-function Search () {
+function Search (props) {
+    const { categoryId, categoryName } = props;
     const [searchKey, setSearchKey] = useState('');
     const [cookbookList, setCookBookList] = useState(Array(10).fill(''));
 
+    console.log(categoryId, categoryName);
+
     useEffect(() => {
-        console.log(window.location);
         setSearchKey('test');
     }, []);
 

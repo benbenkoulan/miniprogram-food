@@ -6,7 +6,6 @@ import { BASE_REQUEST_URL } from '~/modules/constant/network';
 import CookBook from '../../components/cookBook';
 
 function MyCookBook() {
-    console.log('-----MyCookBook------');
     const [cookBooks, setCookBooks] = useState([]);
 
     useEffect(async () => {

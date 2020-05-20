@@ -5,23 +5,3 @@ image {
 .category--box {
     margin: 16px;
 }
-
-.sub-category--box {
-    position: relative;
-    font-size: 0;
-}
-
-.sub-cateogry--icon {
-    width: 100%;
-}
-
-.sub-category--title {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    font-size: 14px;
-    color: #ffffff;
-    text-align: center;
-    background-color: rgba(0, 0, 0, .5);
-}

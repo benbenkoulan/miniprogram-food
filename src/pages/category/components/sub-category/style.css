@@ -1,0 +1,19 @@
+.sub-category--box {
+    position: relative;
+    font-size: 0;
+}
+
+.sub-category--icon {
+    width: 100%;
+}
+
+.sub-category--text {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    font-size: 14px;
+    color: #ffffff;
+    text-align: center;
+    background-color: rgba(0, 0, 0, .5);
+}
