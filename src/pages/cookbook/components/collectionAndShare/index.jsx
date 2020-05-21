@@ -18,7 +18,7 @@ function CollectionAndShare(props) {
             </div>
             <div className="share--box">
                 <wx-image className="share--image" src="/assets/images/share.png"/>
-                <wx-span className="share-text">分享</wx-span>
+                <wx-button className="share-text" open-type='share'>分享</wx-button>
             </div>
         </Layout>
     )
