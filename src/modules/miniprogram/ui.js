@@ -9,7 +9,7 @@ export const showToast = ({
         icon,
         mask,
         duration,
-        success: resolve,
+        complete: resolve,
         fail: reject,
     });
 }));

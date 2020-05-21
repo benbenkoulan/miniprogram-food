@@ -7,6 +7,7 @@ const services = [
     { name: 'getMyCookbooks', url: '/services/product/my-products', method: 'GET' },
     { name: 'getCookbookDetail', url: '/services/product/11', method: 'GET'},
     { name: 'searchCookbooks', url: '/services/product', method: 'GET' },
+    { name: 'getIsAuthorized', url: '/services/user/authorization', method: 'GET' },
 ];
 
 export default (serviceName) => services.find(service => service.name === serviceName);

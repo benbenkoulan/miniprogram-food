@@ -4,28 +4,32 @@ import noop from 'lodash/noop';
 
 function List(props) {
     const scrollViewRef = useRef();
-
     const {
         dataSource,
         renderItem,
         renderEmpty,
         renderLoading,
         loadMore,
+        isLoading = true,
         hasMore = true,
     } = props;
 
     useEffect(() => {
-        scrollViewRef.current.addEventListener('scrolltolower', () => {
-            console.log('----bindscrolltolower--1--', hasMore);
-            if (hasMore) {
+        const handleScrollToLower = () => {
+            if (!isLoading && hasMore) {
                 loadMore();
             }
-        });
-    }, [hasMore, loadMore]);
+        };
+        scrollViewRef.current.addEventListener('scrolltolower', handleScrollToLower);
 
-    const renderList = () => dataSource.map(data => renderItem(data));
+        return () => {
+            scrollViewRef.current.removeEventListener('scrolltolower', handleScrollToLower);
+        };
+    }, [isLoading, hasMore, loadMore]);
 
-    const renderBottom = () => isEmpty(dataSource) && !hasMore ? (renderEmpty) : renderLoading();
+    const renderList = () => (isEmpty(dataSource) && !hasMore)
+        ? renderEmpty()
+        : dataSource.map(data => renderItem(data));
 
     return (
         <wx-scroll-view
@@ -36,11 +40,9 @@ function List(props) {
             {
                 renderList()
             }
-            <div className="bottom--box">
-                {
-                    renderBottom()
-                }
-            </div>
+            {
+                hasMore && renderLoading()
+            }
         </wx-scroll-view>
     );
 }
@@ -51,6 +53,8 @@ List.defaultProps = {
     renderItem: noop,
     loadMore: noop,
     dataSource: [],
+    isLoading: true,
+    hasMore: true,
 };
 
 export default List;

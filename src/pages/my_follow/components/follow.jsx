@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Layout, Sider, Content } from 'micro-design';
 import 'micro-design/dist/es/components/layout/style.css';
 
 import './style.css';
 
 function Follow(props) {
+    const [isFollowed, setIsFollowed] = useState(false);
+
+    const handleClick = () => {
+        setIsFollowed(!isFollowed);
+    };
+
     return (
         <Layout hasSider className="follow--box">
             <Content>
@@ -13,7 +19,9 @@ function Follow(props) {
             </Content>
             <Sider className="inline-middle--box">
                 {
-                    props.isFollowed ? (<wx-button className="follow--btn">已关注</wx-button>) : (<wx-button className="unfollowed follow--btn">关注</wx-button>)
+                    isFollowed 
+                        ? (<wx-button className="follow--btn" onClick={handleClick}>已关注</wx-button>)
+                        : (<wx-button className="unfollowed follow--btn" onClick={handleClick}>关注</wx-button>)
                 }
             </Sider>
         </Layout>

@@ -11,6 +11,7 @@ import { chooseImage } from '~/modules/miniprogram/image';
 import { showToast } from '~/modules/miniprogram/ui';
 import { send } from '~/modules/request/proxy';
 import router from '~/router';
+import { showAuthorizeModal } from '~/store/action/app';
 
 import useFormItem from './components/form/formItem';
 import useFormItemList from './components/form/formItemList';
@@ -107,6 +108,11 @@ function Create() {
     };
 
     const handleSubmit = async () => {
+        const { data: isAuthorized } = await send('checkAuthorization');
+        if (!isAuthorized) {
+            dispatch(showAuthorizeModal());
+            return;
+        }
         const categoryProducts = categories.map((categoryIndexs) => ({ categoryId: getCategoryId(allCategories, ...categoryIndexs) }));
         const ingredients = garnishes.map((garnish, index) => ({
             lineNumber: index + 1,
@@ -125,8 +131,7 @@ function Create() {
             description: description.value,
             tip: tip.value,
         };
-        const result = await send('saveCookbook', { data: formData });
-        console.log(result);
+        await send('saveCookbook', { data: formData });
         await showToast({ title: '恭喜，美食已分享' });
         router.switchTab('my');
     };

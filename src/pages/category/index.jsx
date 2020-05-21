@@ -82,7 +82,7 @@ function Category() {
         fetchData();
     }, []);
 
-    const handleClickSubCategory = (categoryId, categoryName) => router.push('search', { categoryName, categoryId, });
+    const handleClickSubCategory = (categoryId, categoryName) => router.push('search', { categoryId, });
 
     const renderSubCategories = (subCategories) => (subCategories.map((subCategory) => (
         <Col key={subCategory.id} span={6}>

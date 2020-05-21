@@ -4,14 +4,15 @@ import { Row, Col } from 'micro-design';
 import 'micro-design/dist/es/components/flex/style.css';
 
 import Modal from '../modal';
-import { authorize } from '../../store/action/user';
-import { hideAuthorizeModal } from '../../store/action/app';
-import { shouldShowAuthorizeModalSelector } from '../../store/selector';
+import { authorize } from '~/store/action/user';
+import { hideAuthorizeModal } from '~/store/action/app';
+import { shouldShowAuthorizeModalSelector } from '~/store/selector';
+import { upsertUserInfo } from '~/api';
+import router from '~/router';
 
 import './style.css';
 
-function AuthorizeModal(props) {
-    const { onGetUserInfo } = props;
+function AuthorizeModal() {
     const shouldShowAuthorizeModal = useSelector(shouldShowAuthorizeModalSelector);
     const dispatch = useDispatch();
 
@@ -23,16 +24,17 @@ function AuthorizeModal(props) {
 
     useEffect(() => {
         const addEvent = () => {
-            getUserInfoButton.current.addEventListener('getuserinfo', (res) => {
+            getUserInfoButton.current.addEventListener('getuserinfo', async (res) => {
                 dispatch(authorize());
                 dispatch(hideAuthorizeModal());
-                onGetUserInfo(res.encryptedData, res.iv);
+                await upsertUserInfo(res.encryptedData, res.iv);
+                router.switchTab('my');
             });
         }
         if (shouldShowAuthorizeModal) {
             addEvent();
         }
-    }, [dispatch, onGetUserInfo, shouldShowAuthorizeModal]);
+    }, [dispatch, shouldShowAuthorizeModal]);
 
     return (
         shouldShowAuthorizeModal ? (
@@ -52,10 +54,6 @@ function AuthorizeModal(props) {
             </Modal>
         ) : null
     );
-}
-
-AuthorizeModal.defaultProps = {
-    onGetUserInfo: () => {},
 }
 
 export default AuthorizeModal;
