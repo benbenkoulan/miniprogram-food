@@ -1,6 +1,7 @@
 import React from 'react'
 import {Layout, Sider, Content} from 'micro-design'
 import './style.css'
+import { BASE_REQUEST_URL } from '../../../../modules/constant/network'
 
 function AuthorInfo(props) {
     return (
@@ -13,7 +14,7 @@ function AuthorInfo(props) {
                     {props.name}
                 </Content>
                 <Sider width="80px" className="attention-btn--box">
-                    <wx-button className="attention--btn">关注</wx-button>
+                    <wx-button className="attention--btn" >关注</wx-button>
                 </Sider>
             </Layout>
             <wx-p className="cookbook--description">{props.description}</wx-p>

@@ -1,6 +1,7 @@
 import React from 'react'
 import {Layout} from 'micro-design'
 import './style.css'
+import { BASE_REQUEST_URL } from '../../../../modules/constant/network'
 
 function Step(props) {
 
@@ -9,7 +10,7 @@ function Step(props) {
             <Layout className="menu--box">
                 <wx-p className="step--name">步骤 {index + 1}</wx-p>
                 <div>
-                    <wx-image className="step--image" src={foodCookStep.imageUrl}/>
+                    <wx-image className="step--image" src={`${BASE_REQUEST_URL}/services/file/images/${foodCookStep.imageId}`}/>
                 </div>
                 <wx-p className="step--description">{foodCookStep.description}</wx-p>
             </Layout>
@@ -18,7 +19,7 @@ function Step(props) {
 
     return (
         <div className="step--box">
-            {renderCookStepDetail(props.step)}
+            {props && props.step && renderCookStepDetail(props.step)}
         </div>
     )
 }
