@@ -20,11 +20,9 @@ export default (Page) => () => {
     const currentPage = pages[pages.length - 1];
     const query = currentPage.query || {}; 
 
-    console.log(query);
-
     ReactDOM.render(
         <Provider store={store}>
-            <Page {...query} />
+            <Page query={query} />
             <AuthorizeModal />
         </Provider>, container)
 }
