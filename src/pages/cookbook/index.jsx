@@ -61,6 +61,22 @@ function CookBook() {
     // }
 
     const [foodMaterials, setFoodMaterials] = useState({})
+    const [isAttention, setIsAttention] = useState(foodMaterials.isAttention)
+    const [isCollection, setIsCollection] = useState(foodMaterials.isCollection)
+
+    const handleClickCollection = () => {
+        send('upsertCollection', { data: { productId: foodMaterials.id, isCollection: !isCollection } })
+            .then(() =>{
+                setIsCollection(!isCollection);
+            });
+    }
+
+    const handleCliAttention = () => {
+        send('upsertAttention', { data: { starUserId: foodMaterials.user.id, isAttention: !isAttention } })
+            .then(() =>{
+                setIsAttention(!isAttention);
+            });
+    }
 
     useEffect(async () => {
         const { data = {} } = await send('getCookbookDetail', {})
@@ -80,7 +96,9 @@ function CookBook() {
             </div>
             <AuthorInfo name={'爱做饭爱洗碗的瘦子'}
                         descrption={foodMaterials.description}
-                        authorUrl={'http://b93.photo.store.qq.com/psb?/V11rIwqj3eAlyi/XU8KGhBuVSzzV9.QhmljsHwa5ODdix557G.XATvDMUE!/b/YXoFgTcIYwAAYmr*gDfuYgAA&bo=*wFWAQAAAAABBIo!&rf=viewer_4'}/>
+                        authorUrl={'http://b93.photo.store.qq.com/psb?/V11rIwqj3eAlyi/XU8KGhBuVSzzV9.QhmljsHwa5ODdix557G.XATvDMUE!/b/YXoFgTcIYwAAYmr*gDfuYgAA&bo=*wFWAQAAAAABBIo!&rf=viewer_4'}
+                        handleCliAttention={handleCliAttention}
+                        isAttention={isAttention}/>
             <Ingredient ingredients={foodMaterials.ingredients}/>
             <Step step={foodMaterials.steps}/>
             {foodMaterials.tip && foodMaterials.tip.trim().length && (
@@ -91,11 +109,12 @@ function CookBook() {
             )}
             <Footer pageView={3083}
                     collection={20}
-                    createdTime={foodMaterials.createdTime}/>
+                    createdTime={foodMaterials.createdTime && foodMaterials.createdTime.slice(0, 10)}/>
             <AuthorOtherCookBook otherProducts={foodMaterials.otherProducts}
                                  authorUrl={'http://b93.photo.store.qq.com/psb?/V11rIwqj3eAlyi/XU8KGhBuVSzzV9.QhmljsHwa5ODdix557G.XATvDMUE!/b/YXoFgTcIYwAAYmr*gDfuYgAA&bo=*wFWAQAAAAABBIo!&rf=viewer_4'}
                                  name={'爱做饭爱洗碗的瘦子'}/>
-            <CollectionAndShare/>
+            <CollectionAndShare handleClickCollection={handleClickCollection}
+                                isCollection={isCollection}/>
         </div>
     )
 }

@@ -28,6 +28,10 @@
     font-size: 14px;
     border: 1px solid orangered !important;
 }
+.grey {
+    border: 1px solid #666666 !important;
+    color: #666666 !important;
+}
 
 .cookbook--description {
     font-size: 14px;

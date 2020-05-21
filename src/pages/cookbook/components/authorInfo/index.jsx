@@ -1,9 +1,13 @@
-import React from 'react'
-import {Layout, Sider, Content} from 'micro-design'
+import React, { useEffect, useState } from 'react'
+import { Layout, Sider, Content } from 'micro-design'
 import './style.css'
-import { BASE_REQUEST_URL } from '../../../../modules/constant/network'
 
 function AuthorInfo(props) {
+
+    const handleCliAttention = () => {
+        props.handleCliAttention()
+    }
+
     return (
         <div>
             <Layout hasSider className="author-info--box">
@@ -14,7 +18,9 @@ function AuthorInfo(props) {
                     {props.name}
                 </Content>
                 <Sider width="80px" className="attention-btn--box">
-                    <wx-button className="attention--btn" >关注</wx-button>
+                    {props.isAttention
+                        ? <div className="attention--btn grey" onClick={handleCliAttention}>已关注</div>
+                        : <div className="attention--btn" onClick={handleCliAttention}>关注</div>}
                 </Sider>
             </Layout>
             <wx-p className="cookbook--description">{props.description}</wx-p>
@@ -22,4 +28,4 @@ function AuthorInfo(props) {
     )
 }
 
-export default AuthorInfo;
+export default AuthorInfo
