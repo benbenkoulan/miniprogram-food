@@ -18,7 +18,11 @@ export default (Page) => () => {
 
     const pages = getCurrentPages();
     const currentPage = pages[pages.length - 1];
-    const query = currentPage.query || {}; 
+    const pageQuery = currentPage.query || {};
+    const query = Object.keys(pageQuery).reduce((newQuery, key) => ({
+        ...newQuery,
+        [key]: decodeURIComponent(pageQuery[key]),
+    }), {});
 
     ReactDOM.render(
         <Provider store={store}>

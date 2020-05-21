@@ -32,7 +32,7 @@ function Create() {
 
     useEffect(() => {
         dispatch(fetchCategories());
-    }, []);
+    }, [dispatch]);
 
     const title = useFormItem('title', {
         rules: [{

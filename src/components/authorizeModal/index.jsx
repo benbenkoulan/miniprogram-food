@@ -11,6 +11,7 @@ import { shouldShowAuthorizeModalSelector } from '../../store/selector';
 import './style.css';
 
 function AuthorizeModal(props) {
+    const { onGetUserInfo } = props;
     const shouldShowAuthorizeModal = useSelector(shouldShowAuthorizeModalSelector);
     const dispatch = useDispatch();
 
@@ -20,17 +21,18 @@ function AuthorizeModal(props) {
         dispatch(hideAuthorizeModal());
     };
 
-    const handleGetUserInfo = (res) => {
-        dispatch(authorize());
-        dispatch(hideAuthorizeModal());
-        props.onGetUserInfo(res.encryptedData, res.iv);
-    };
-
     useEffect(() => {
-        if (shouldShowAuthorizeModal) {
-            getUserInfoButton.current.addEventListener('getuserinfo', handleGetUserInfo);
+        const addEvent = () => {
+            getUserInfoButton.current.addEventListener('getuserinfo', (res) => {
+                dispatch(authorize());
+                dispatch(hideAuthorizeModal());
+                onGetUserInfo(res.encryptedData, res.iv);
+            });
         }
-    }, [shouldShowAuthorizeModal]);
+        if (shouldShowAuthorizeModal) {
+            addEvent();
+        }
+    }, [dispatch, onGetUserInfo, shouldShowAuthorizeModal]);
 
     return (
         shouldShowAuthorizeModal ? (

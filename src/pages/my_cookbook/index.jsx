@@ -8,13 +8,16 @@ import CookBook from '../../components/cookBook';
 function MyCookBook() {
     const [cookBooks, setCookBooks] = useState([]);
 
-    useEffect(async () => {
-        const { content = [] } = await send('getMyCookbooks', { data: { pageNumber: 0, pageSize: 20, } });
-        const cookBookList = content.map(cookBook => ({
-            title: cookBook.title,
-            imagePath: `${BASE_REQUEST_URL}/services/file/images/${cookBook.mainImageId}`,
-        }))
-        setCookBooks(cookBookList);
+    useEffect(() => {
+        const fetchData = async () => {
+            const { content = [] } = await send('getMyCookbooks', { data: { pageNumber: 0, pageSize: 20, } });
+            const cookBookList = content.map(cookBook => ({
+                title: cookBook.title,
+                imagePath: `${BASE_REQUEST_URL}/services/file/images/${cookBook.mainImageId}`,
+            }))
+            setCookBooks(cookBookList);
+        }
+        fetchData();
     }, []);
 
     const renderCookBooks = () => cookBooks.map((cookBook) => (<CookBook cookBookInfo={cookBook} />));

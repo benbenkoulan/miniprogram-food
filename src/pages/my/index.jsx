@@ -25,7 +25,7 @@ const getMenus = () => [{
 }]
 
 function My() {
-    useEffect(async () => {
+    useEffect(() => {
         // const res = await getStatisticsInfo();
         // console.log(res);
         // dispatch(showAuthorizeModal());

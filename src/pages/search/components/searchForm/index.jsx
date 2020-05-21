@@ -8,10 +8,11 @@ import useFormItem from '~/components/form/formItem';
 import './style.css';
 
 function SearchForm(props) {
+    const { keyword: initialKeyword, onSearch, } = props;
     const [shouldShowCancel, setShouldShowCancel] = useState(false);
 
-    const searchKey = useFormItem('searchKey', {
-        initialValue: props.searchKey,
+    const keyword = useFormItem('keyword', {
+        initialValue: initialKeyword,
     });
 
     const handleFocus = () => {
@@ -22,42 +23,42 @@ function SearchForm(props) {
         setShouldShowCancel(false);
     };
 
-    useEffect(() => {
-        searchKey.setValue(props.searchKey);
-    }, [props.searchKey]);
+    const handleSearch = () => onSearch(keyword.value);
+
+    // useEffect(() => {
+    //     keyword.setValue(initialKeyword);
+    // }, [keyword, initialKeyword]);
 
     return (
-        <div className="search-form--box">
-            <Layout hasSider>
-                <Content>
-                    <input
-                        className="search-input--text"
-                        onFocus={handleFocus}
-                        onBlur={handleBlur}
-                        {...searchKey}
-                    />
-                </Content>
-                <Sider width="100px">
-                    <Row className="search-btn--box">
-                        <Col span={12}>
-                            <wx-button className="search--btn" onClick={props.onSearch}>搜索</wx-button>
-                        </Col>
-                        {
-                            shouldShowCancel && (
-                                <Col span={12}>
-                                    <wx-button className="cancel--btn">取消</wx-button>
-                                </Col>
-                            )
-                        }
-                    </Row>
-                </Sider>
-            </Layout>
-        </div>
-    )
+        <Layout hasSider className="search-form--box">
+            <Content>
+                <input
+                    className="search-input--text"
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                    {...keyword}
+                />
+            </Content>
+            <Sider width="100px">
+                <Row className="search-btn--box">
+                    <Col span={12}>
+                        <wx-button className="search--btn" onClick={handleSearch}>搜索</wx-button>
+                    </Col>
+                    {
+                        shouldShowCancel && (
+                            <Col span={12}>
+                                <wx-button className="cancel--btn">取消</wx-button>
+                            </Col>
+                        )
+                    }
+                </Row>
+            </Sider>
+        </Layout>
+    );
 }
 
 SearchForm.defaultProps = {
-    searchKey: '',
+    keyword: '',
     onSearch: () => {},
 };
 
