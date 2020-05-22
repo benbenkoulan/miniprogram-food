@@ -15,15 +15,18 @@ function List(props) {
     } = props;
 
     useEffect(() => {
+        console.log('----useEffect----');
+        const scrollViewElement = scrollViewRef.current;
         const handleScrollToLower = () => {
             if (!isLoading && hasMore) {
                 loadMore();
             }
         };
-        scrollViewRef.current.addEventListener('scrolltolower', handleScrollToLower);
+
+        scrollViewElement.addEventListener('scrolltolower', handleScrollToLower);
 
         return () => {
-            scrollViewRef.current.removeEventListener('scrolltolower', handleScrollToLower);
+            scrollViewElement.removeEventListener('scrolltolower', handleScrollToLower);
         };
     }, [isLoading, hasMore, loadMore]);
 
@@ -35,7 +38,6 @@ function List(props) {
         <wx-scroll-view
             scroll-y={true}
             ref={scrollViewRef}
-            lower-threshold="100"
             style={{ height: '100%' }}>
             {
                 renderList()
