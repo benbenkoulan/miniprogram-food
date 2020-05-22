@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Layout, Content, Header } from 'micro-design';
 import 'micro-design/dist/es/components/layout/style.css';
 import nullSafeGet from 'lodash/get';
 
 import { send } from '~/modules/request/proxy';
-import { BASE_REQUEST_URL } from '~/modules/constant/network';
+import { getImageUrl } from '~/modules/utils/image';
 import router from '~/router';
 
 import List from '../../components/list';
@@ -19,12 +19,24 @@ const convertCookbooks = (cookbooks = []) => cookbooks.map(cookbook => ({
     title: cookbook.title,
     username: nullSafeGet(cookbook, 'user.username', ''),
     ingredients: cookbook.ingredients.map(ingredient => ingredient.name).join(),
-    imagePath: `${BASE_REQUEST_URL}/services/file/images/${cookbook.mainImageId}`,
+    imagePath: getImageUrl(cookbook.mainImageId),
 }));
 
+const renderEmpty = () => (<div>
+    <wx-image src="/assets/images/search/empty.svg"></wx-image>
+    <p className="empty-tip--text">抱歉～当前没有相关菜谱哦</p>
+</div>);
+
+const renderLoading = () => (<div style={{ textAlign: 'center' }}>loading...</div>);
+
+const renderItem = (item) => (<CookBook
+    key={item.id}
+    {...item}
+    onClickCookBook={() => router.push('cookbook', { id: item.id })}
+/>);
+
 function Search (props) {
-    const { query = {} } = props;
-    const { categoryName, categoryId } = query;
+    const { categoryName, categoryId } = props.query || {};
     const [searchQuery, setSearchQuery] = useState({
         categoryId,
         keyword: categoryName,
@@ -55,27 +67,16 @@ function Search (props) {
             } finally {
                 setIsLoading(false);
             }            
-        }
+        };
         fetchData();
     }, [searchQuery]);
 
-    const renderItem = (item) => (<CookBook
-        key={item.id}
-        {...item}
-        onClickCookBook={() => router.push('cookbook', { id: item.id })}
-    />);
-
-    const renderEmpty = () => (<div>
-        <wx-image src="/assets/images/search/empty.svg"></wx-image>
-        <p className="empty-tip--text">抱歉～当前没有相关菜谱哦</p>
-    </div>);
-
-    const loadMore = () => {
+    const memomizedLoadMore = useCallback(() => {
         setSearchQuery({
             ...searchQuery,
             pageNumber: searchQuery.pageNumber + 1,
         });
-    };
+    }, [searchQuery]);
 
     const handleSearch = (keyword) => {
         setHasMore(true);
@@ -99,10 +100,10 @@ function Search (props) {
                     dataSource={cookbookList}
                     hasMore={hasMore}
                     isLoading={isLoading}
-                    loadMore={loadMore}
+                    loadMore={memomizedLoadMore}
                     renderItem={renderItem}
                     renderEmpty={renderEmpty}
-                    renderLoading={() => (<div>loading...</div>)}
+                    renderLoading={renderLoading}
                 />
             </Content>            
         </Layout>

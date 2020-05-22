@@ -70,7 +70,6 @@ function My() {
             {
                 renderMenuList(renderMenu)
             }
-            {/* <wx-button open-type="getUserInfo" ref={getUserInfoButton}>保存</wx-button> */}
         </div>
     );
 }

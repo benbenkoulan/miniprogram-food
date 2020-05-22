@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { send } from '~/modules/request/proxy';
-import { BASE_REQUEST_URL } from '~/modules/constant/network';
+import { getImageUrl } from '~/modules/utils/image';
 
 import CookBook from '../../components/cookBook';
 
@@ -13,7 +13,7 @@ function MyCookBook() {
             const { content = [] } = await send('getMyCookbooks', { data: { pageNumber: 0, pageSize: 20, } });
             const cookBookList = content.map(cookBook => ({
                 title: cookBook.title,
-                imagePath: `${BASE_REQUEST_URL}/services/file/images/${cookBook.mainImageId}`,
+                imagePath: getImageUrl(cookBook.mainImageId),
             }))
             setCookBooks(cookBookList);
         }
