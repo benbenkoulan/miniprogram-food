@@ -3,12 +3,12 @@ import './style.css'
 import { Layout } from 'micro-design'
 import { send } from '~/modules/request/proxy'
 
-import AuthorOtherCookBook from './components/authorOtherCookBook'
-import Footer from './components/footer'
-import AuthorInfo from './components/authorInfo'
-import Ingredient from './components/ingredient'
-import Step from './components/step'
-import CollectionAndShare from './components/collectionAndShare'
+import AuthorOtherCookBook from './components/authorOtherCookBook/index.jsx'
+import Footer from './components/footer/index.jsx'
+import AuthorInfo from './components/authorInfo/index.jsx'
+import Ingredient from './components/ingredient/index.jsx'
+import Step from './components/step/index.jsx'
+import CollectionAndShare from './components/collectionAndShare/index.jsx'
 import { BASE_REQUEST_URL } from '../../modules/constant/network'
 
 function CookBook() {
@@ -81,6 +81,8 @@ function CookBook() {
     useEffect(async () => {
         const { data = {} } = await send('getCookbookDetail', {})
         setFoodMaterials(data)
+        setIsAttention(data.isAttention)
+        setIsCollection(data.isCollection)
     }, [])
 
     return (
