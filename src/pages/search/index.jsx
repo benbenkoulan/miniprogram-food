@@ -44,10 +44,10 @@ function Search (props) {
                 if (searchQuery.pageNumber === 0) {
                     setCookBookList(cookbooks);
                 } else {
-                    setCookBookList([
+                    setCookBookList((cookbookList) => ([
                         ...cookbookList,
                         ...cookbooks,
-                    ]);
+                    ]));
                 }
                 if (content.length < searchQuery.pageSize) {
                     setHasMore(false);
