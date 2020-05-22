@@ -108,7 +108,7 @@ function Create() {
     };
 
     const handleSubmit = async () => {
-        const { data: isAuthorized } = await send('checkAuthorization');
+        const { data: isAuthorized } = await send('getIsAuthorized');
         if (!isAuthorized) {
             dispatch(showAuthorizeModal());
             return;
