@@ -97,6 +97,12 @@ module.exports = {
                 ],
             },
             {
+                enforce: 'pre',
+                test: /\.jsx?$/,
+                exclude: /node_modules|micro-design/,
+                loader: 'eslint-loader'
+            },
+            {
                 test: /\.[t|j]sx?$/,
                 loader: 'babel-loader',
                 exclude: /node_modules/,
