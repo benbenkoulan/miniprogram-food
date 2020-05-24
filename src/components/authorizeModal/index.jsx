@@ -25,9 +25,10 @@ function AuthorizeModal() {
     useEffect(() => {
         const addEvent = () => {
             getUserInfoButton.current.addEventListener('getuserinfo', async (res) => {
+                const { encryptedData, iv } = res.detail || {};
                 dispatch(authorize());
                 dispatch(hideAuthorizeModal());
-                await upsertUserInfo(res.encryptedData, res.iv);
+                await upsertUserInfo(encryptedData, iv);
                 router.switchTab('my');
             });
         }

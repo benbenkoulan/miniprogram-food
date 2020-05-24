@@ -12,3 +12,8 @@ export const send = withLoading(async (serviceName, { data = {} } = {}) => {
     }
     return res;
 });
+
+export const fetch = async (...args) => {
+    const { data } = await request(...args);
+    return data;
+};
