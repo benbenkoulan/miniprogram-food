@@ -2,29 +2,26 @@ import React, { useState, useEffect } from 'react';
 
 import { send } from '~/modules/request/proxy';
 import { getImageUrl } from '~/modules/utils/image';
+import useDataApi from '~/hooks/useDataApi';
 
 import CookBook from '../../components/cookBook';
 
+const convertCookBook = (cookBooks) => cookBooks.map(cookBook => ({
+    id: cookBook.id,
+    title: cookBook.title,
+    imagePath: getImageUrl(cookBook.mainImageId),
+}));
+
 function MyCookBook() {
-    const [cookBooks, setCookBooks] = useState([]);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const { content = [] } = await send('getMyCookbooks', { data: { pageNumber: 0, pageSize: 20, } });
-            const cookBookList = content.map(cookBook => ({
-                title: cookBook.title,
-                imagePath: getImageUrl(cookBook.mainImageId),
-            }))
-            setCookBooks(cookBookList);
-        }
-        fetchData();
-    }, []);
-
-    const renderCookBooks = () => cookBooks.map((cookBook) => (<CookBook cookBookInfo={cookBook} />));
+    const [cookBooks] = useDataApi('getMyCookbooks', {
+        initialQuery: { pageNumber: 0, pageSize: 20, },
+        initialData: [],
+        convertData: convertCookBook,
+    });
 
     return (
         <div style={ { margin: '20px' } }>
-            {renderCookBooks()}
+            {cookBooks.map((cookBook) => (<CookBook key={cookBook.id} {...cookBook} />))}
         </div>
     )
 }
