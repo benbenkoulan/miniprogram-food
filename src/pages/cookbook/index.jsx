@@ -10,6 +10,7 @@ import Ingredient from './components/ingredient/index.jsx'
 import Step from './components/step/index.jsx'
 import CollectionAndShare from './components/collectionAndShare/index.jsx'
 import { BASE_REQUEST_URL } from '../../modules/constant/network'
+import { getImageUrl } from '../../modules/utils/image'
 
 function CookBook(props) {
 
@@ -96,9 +97,9 @@ function CookBook(props) {
                     <wx-p className="cookbook--title">{foodMaterials.title}</wx-p>
                 </Layout>
             </div>
-            <AuthorInfo name={'爱做饭爱洗碗的瘦子'}
+            <AuthorInfo name={foodMaterials.user && foodMaterials.user.username}
                         descrption={foodMaterials.description}
-                        authorUrl={'http://b93.photo.store.qq.com/psb?/V11rIwqj3eAlyi/XU8KGhBuVSzzV9.QhmljsHwa5ODdix557G.XATvDMUE!/b/YXoFgTcIYwAAYmr*gDfuYgAA&bo=*wFWAQAAAAABBIo!&rf=viewer_4'}
+                        authorUrl={foodMaterials.user && foodMaterials.user.avatarUrl}
                         handleCliAttention={handleCliAttention}
                         isAttention={isAttention}/>
             <Ingredient ingredients={foodMaterials.ingredients}/>
@@ -113,8 +114,8 @@ function CookBook(props) {
                     collection={20}
                     createdTime={foodMaterials.createdTime && foodMaterials.createdTime.slice(0, 10)}/>
             <AuthorOtherCookBook otherProducts={foodMaterials.otherProducts}
-                                 authorUrl={'http://b93.photo.store.qq.com/psb?/V11rIwqj3eAlyi/XU8KGhBuVSzzV9.QhmljsHwa5ODdix557G.XATvDMUE!/b/YXoFgTcIYwAAYmr*gDfuYgAA&bo=*wFWAQAAAAABBIo!&rf=viewer_4'}
-                                 name={'爱做饭爱洗碗的瘦子'}/>
+                                 authorUrl={foodMaterials.user && foodMaterials.user.avatarUrl}
+                                 name={foodMaterials.user && foodMaterials.user.username}/>
             <CollectionAndShare handleClickCollection={handleClickCollection}
                                 isCollection={isCollection}/>
         </div>
