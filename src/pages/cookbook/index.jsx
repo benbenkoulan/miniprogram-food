@@ -11,7 +11,7 @@ import Step from './components/step/index.jsx'
 import CollectionAndShare from './components/collectionAndShare/index.jsx'
 import { BASE_REQUEST_URL } from '../../modules/constant/network'
 
-function CookBook() {
+function CookBook(props) {
 
     // const mockData = {
     //     title: '小朋友可以一口吃掉4个的杯子蛋糕',
@@ -59,7 +59,7 @@ function CookBook() {
     //     ]
     //
     // }
-
+    const {id} = props.query || {}
     const [foodMaterials, setFoodMaterials] = useState({})
     const [isAttention, setIsAttention] = useState(foodMaterials.isAttention)
     const [isCollection, setIsCollection] = useState(foodMaterials.isCollection)
@@ -79,7 +79,7 @@ function CookBook() {
     }
 
     useEffect(async () => {
-        const { data = {} } = await send('getCookbookDetail', {})
+        const { data = {} } = await send('getCookbookDetail', {data:{id: id? id : 11}})
         setFoodMaterials(data)
         setIsAttention(data.isAttention)
         setIsCollection(data.isCollection)

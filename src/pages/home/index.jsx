@@ -29,7 +29,6 @@ function Index() {
         const fetchData = async () => {
             try {
                 const { content = [] } = await send('searchCookbooks', { data: searchQuery })
-                console.log(content)
                 const cookbooks = content
                 if (searchQuery.pageNumber === 0) {
                     setCookBookList(cookbooks)
@@ -51,7 +50,6 @@ function Index() {
 
 
     const loadMore = () => {
-        console.log('loadMore')
         setSearchQuery({
             ...searchQuery,
             pageNumber: searchQuery.pageNumber + 1
@@ -60,7 +58,6 @@ function Index() {
 
     useEffect(() => {
         const handleScrollToLower = () => {
-            console.log('!isLoading && hasMore', hasMore)
             if (!isLoading && hasMore) {
                 loadMore()
             }
@@ -74,54 +71,6 @@ function Index() {
     const handleSearchLink = () => {
         console.log(settings)
         router.push('search')
-    }
-
-    const data = {
-        imgWidth: 0, imgHeight: 0,
-        note: [
-            {
-                title: '案例名称',
-                url: '/assets/images/logo_text.jpg'
-            },
-            {
-                title: '你所不知道的红酒知识',
-                url: '/assets/images/logo.jpg'
-            },
-            {
-                title: '红酒知识',
-                url: '/assets/images/logo_text.jpg'
-            },
-            {
-                title: 'asdasd',
-                url: '/assets/images/logo.jpg'
-            },
-            {
-                title: 'dfgdfg',
-                url: '/assets/images/logo_text.jpg'
-            },
-
-            {
-                title: 'erter',
-                url: '/assets/images/logo.jpg'
-            },
-            {
-                title: '红酒知识',
-                url: '/assets/images/logo_text.jpg'
-            },
-            {
-                title: 'asdasd',
-                url: '/assets/images/logo.jpg'
-            },
-            {
-                title: 'dfgdfg',
-                url: '/assets/images/logo_text.jpg'
-            },
-
-            {
-                title: 'erter',
-                url: '/assets/images/logo.jpg'
-            }
-        ]
     }
 
     return (

@@ -44,14 +44,14 @@
 
 .list-masonry {
     column-count: 2;
-    column-gap: 20px;
+    /*column-gap: 10px;*/
 }
 
 .item-masonry {
     background-color: #fff;
     break-inside: avoid;
     box-sizing: border-box;
-    padding: 20px;
+    padding: 10px;
 }
 
 .item-masonry image {

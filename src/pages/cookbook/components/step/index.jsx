@@ -10,7 +10,9 @@ function Step(props) {
             <Layout className="menu--box">
                 <wx-p className="step--name">步骤 {index + 1}</wx-p>
                 <div>
-                    <wx-image className="step--image" src={`${BASE_REQUEST_URL}/services/file/images/${foodCookStep.imageId}`}/>
+                    {foodCookStep.imageId
+                        ? <wx-image className="step--image" src={`${BASE_REQUEST_URL}/services/file/images/${foodCookStep.imageId}`}/>
+                        : null}
                 </div>
                 <wx-p className="step--description">{foodCookStep.description}</wx-p>
             </Layout>
