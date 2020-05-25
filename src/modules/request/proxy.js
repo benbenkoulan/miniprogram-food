@@ -7,7 +7,7 @@ export const send = withLoading(async (serviceName, { data = {} } = {}) => {
     const { data: res, status } = await request(serviceName, { data });
     if (status === 401) {
         await login();
-        router.switchTab('home');
+        router.reLaunch('home');
         throw new Error({ status, message: 'not login'});
     }
     return res;

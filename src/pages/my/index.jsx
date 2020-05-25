@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
-import { Row, Col, Layout, Sider, Content, useList } from 'micro-design';
+import React from 'react';
+import { Row, Col, Layout, Sider, Content } from 'micro-design';
 import 'micro-design/dist/es/components/flex/style.css';
 import 'micro-design/dist/es/components/layout/style.css';
 
 import useDataApi from '~/hooks/useDataApi';
-
 import router from '~/router';
 
 import Menu from './components/menu';
@@ -23,7 +22,7 @@ const getMenus = () => [{
     key: 'MYCOOKBOOK',
     text: '我的菜谱',
     onClick: () => router.push('my_cookbook')
-}]
+}];
 
 function My() {
     const [statisticsInfo] = useDataApi('getStatisticsInfo', {
@@ -31,13 +30,7 @@ function My() {
         propertyName: 'data',
     });
 
-    const renderMenu = (menuData) => (
-        <Menu
-            {...menuData}
-        />
-    );
-
-    const [, renderMenuList] = useList(getMenus());
+    const menus = getMenus();
 
     return (
         <div>
@@ -50,7 +43,7 @@ function My() {
                     <wx-open-data type="userAvatarUrl" />
                 </Sider>
             </Layout>
-            <Layout hasSider={true} justify="space-between" className="section">
+            <Layout hasSider align="center" justify="space-between" className="section">
                 <Content>
                     <Row>
                         <Col span={6}>
@@ -68,7 +61,7 @@ function My() {
                 </Sider>
             </Layout>
             {
-                renderMenuList(renderMenu)
+                menus.map(menu => <Menu {...menu} />)
             }
         </div>
     );

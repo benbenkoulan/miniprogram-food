@@ -16,6 +16,14 @@ const push = (pageName, query) => wrapperRoute(pageName, (route) => {
     });
 });
 
+const reLaunch = (pageName, query) => wrapperRoute(pageName, (route) => {
+    const url = `${route.path}${ !query ? '' : `?${stringify(query)}`}`;
+    console.log(pageName, query, url);
+    wx.reLaunch({
+        url,
+    });
+});
+
 const back = ({ delta = 1, } = {}) => wx.navigateBack({ delta });
 
 const switchTab = (pageName) => wrapperRoute(pageName, (route) => wx.switchTab({
@@ -25,5 +33,6 @@ const switchTab = (pageName) => wrapperRoute(pageName, (route) => wx.switchTab({
 export default {
     push,
     back,
+    reLaunch,
     switchTab,
 };
