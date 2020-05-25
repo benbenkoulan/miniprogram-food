@@ -8,5 +8,52 @@
     line-height: 50px;
     border-radius: 6px;
     background-color: #eeeeee;
+    color: #444444;
     text-align: center;
+}
+
+.logo-box--wrap {
+    display: flex;
+}
+
+.logo--box {
+    height: 60px;
+    margin: 10px auto 20px;
+}
+
+.logo {
+    width: 65px;
+    height: 60px;
+    float: left;
+}
+
+.logo--text {
+    margin-top: 10px;
+    height: 40px;
+    width: 120px;
+    float: left;
+}
+
+.description {
+    line-height: 30px;
+    font-size: 12px;
+    color: #999999;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.list-masonry {
+    column-count: 2;
+    column-gap: 20px;
+}
+
+.item-masonry {
+    background-color: #fff;
+    break-inside: avoid;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+.item-masonry image {
+    width: 100%;
 }
