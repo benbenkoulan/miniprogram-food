@@ -66,7 +66,7 @@ function Search (props) {
                     renderEmpty={renderEmpty}
                     renderLoading={renderLoading}
                 />
-            </Content>            
+            </Content>
         </Layout>
     )
 }

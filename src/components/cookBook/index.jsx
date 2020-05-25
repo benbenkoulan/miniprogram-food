@@ -7,11 +7,11 @@ import router from '~/router';
 import './style.css';
 
 function CookBook(props) {
-    const { cookBookInfo } = props;
+    const { imagePath, title, id, userName, avatarUrl, } = props;
 
     const handleCookBookClick = () => {
         console.log('---handleCookBookClick--')
-        router.push('cookbook', { id: cookBookInfo.id });
+        router.push('cookbook', { id });
     };
 
     console.log('-----CookBook------');
@@ -19,14 +19,14 @@ function CookBook(props) {
     return (
         <div style={{ marginBottom: '20px' }} onClick={handleCookBookClick}>
             <div className="cookbook-image--box">
-                <wx-image mode="aspectFill" className="cookbook--image" src={cookBookInfo.imagePath}></wx-image>
+                <wx-image mode="aspectFill" className="cookbook--image" src={imagePath}></wx-image>
             </div>
             <Layout hasSider>
                 <Content className="one-row--text cookbook-title--text">
-                    {cookBookInfo.title}
+                    {title}
                 </Content>
                 <Sider width="100px" className="author-info--box">
-                    <wx-image className="author--icon" src="https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eroNkExCxm1HAtujBMe2c7Ne5KOFBnic22hSiaPV28TDmvql1HW8w5mp9wMjrjVzia2t2qksgGoQX0yA/132"></wx-image>
+                    <wx-image className="author--icon" src={avatarUrl}></wx-image>
                 </Sider>
             </Layout>
             <Layout hasSider className="cookbook-follow--text">
@@ -34,7 +34,7 @@ function CookBook(props) {
                     收藏10人
                 </Content>
                 <Sider width="100px" className="author-info--box">
-                    benkoulan
+                    {userName}
                 </Sider>
             </Layout>
         </div>
@@ -42,8 +42,10 @@ function CookBook(props) {
 }
 
 CookBook.defaultProps = {
-    cookBookInfo: {},
-    onClickCookBook: () => {}
+    imagePath: null,
+    title: '',
+    avatarUrl: null,
+    userName: '',
 }
 
 export default CookBook;

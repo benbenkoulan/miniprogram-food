@@ -15,7 +15,6 @@ function List(props) {
     } = props;
 
     useEffect(() => {
-        console.log('----useEffect----');
         const scrollViewElement = scrollViewRef.current;
         const handleScrollToLower = () => {
             if (!isLoading && hasMore) {

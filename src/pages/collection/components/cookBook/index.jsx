@@ -6,18 +6,20 @@ import CookBook from '~/components/CookBook';
 import './style.css';
 
 function CookBookWithDel(props) {
+    const { collection, onOperate, onDelete, onCancel } = props;
+
     const handleMainMenuClick = (e) => {
         e.stopPropagation();
-        props.onDel();
+        onDelete();
     };
 
     return (
         <div className="cookbook-del--container">
-            <CookBook />
-            <button className="cookbook-operate--btn" onClick={props.onOperate}>操作</button>
+            <CookBook {...collection} />
+            <button className="cookbook-operate--btn" onClick={onOperate}>操作</button>
             {
                 props.shouldShowDelMenu && (
-                    <Modal onModalClick={props.onCancel}>
+                    <Modal onModalClick={onCancel}>
                         <div className="menu--box">
                             <button className="menu--bar main-menu--bar" onClick={handleMainMenuClick}>从收藏移除</button>
                             <button className="menu--bar">取消</button>

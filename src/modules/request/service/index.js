@@ -9,7 +9,9 @@ const services = [
     { name: 'searchCookbooks', url: '/services/product', method: 'GET' },
     { name: 'getIsAuthorized', url: '/services/user/authorization', method: 'GET' },
     { name: 'upsertAttention', url: '/services/user/attention', method: 'POST'},
-    { name: 'upsertCollection', url: '/services/user/collection', method: 'POST'}
+    { name: 'upsertCollection', url: '/services/user/collection', method: 'POST'},
+    { name: 'getMyFollows', url: '/services/user/my-attentions', method: 'GET' },
+    { name: 'getMyCollections', url: '/services/user/my-collections', method: 'GET' }, 
 ];
 
 export default (serviceName) => services.find(service => service.name === serviceName);

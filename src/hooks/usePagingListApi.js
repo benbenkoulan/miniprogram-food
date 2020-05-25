@@ -30,10 +30,10 @@ function usePagingListApi(serviceName, {
                 if (query.pageNumber === 0) {
                     setData(newData);
                 } else {
-                    setData([
+                    setData(data => ([
                         ...data,
                         ...newData,
-                    ]);
+                    ]));
                 }
             } catch (e) {
                 setIsError(true);
@@ -42,7 +42,7 @@ function usePagingListApi(serviceName, {
             }
         };
         doFetch();
-    }, [query]);    
+    }, [query, serviceName, convertData]);    
 
     return [{
         data,
