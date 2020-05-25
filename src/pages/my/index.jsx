@@ -3,7 +3,8 @@ import { Row, Col, Layout, Sider, Content, useList } from 'micro-design';
 import 'micro-design/dist/es/components/flex/style.css';
 import 'micro-design/dist/es/components/layout/style.css';
 
-import { getStatisticsInfo, upsertUserInfo } from '~/api';
+import useDataApi from '~/hooks/useDataApi';
+
 import router from '~/router';
 
 import Menu from './components/menu';
@@ -25,11 +26,10 @@ const getMenus = () => [{
 }]
 
 function My() {
-    useEffect(() => {
-        // const res = await getStatisticsInfo();
-        // console.log(res);
-        // dispatch(showAuthorizeModal());
-    }, []);
+    const [statisticsInfo] = useDataApi('getStatisticsInfo', {
+        initialData: {},
+        propertyName: 'data',
+    });
 
     const renderMenu = (menuData) => (
         <Menu
@@ -54,11 +54,11 @@ function My() {
                 <Content>
                     <Row>
                         <Col span={6}>
-                            <p>2</p>
+                            <p>{statisticsInfo.fansCount}</p>
                             <p>关注</p>
                         </Col>
                         <Col span={6}>
-                            <p>10</p>
+                            <p>{statisticsInfo.collectionCount}</p>
                             <p>粉丝</p>
                         </Col>
                     </Row>
