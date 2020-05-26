@@ -1,6 +1,6 @@
 import React from 'react'
 import './style.css'
-import { BASE_REQUEST_URL } from '../../../../modules/constant/network'
+import { getImageUrl } from '../../../../modules/utils/image'
 
 function AuthorOtherCookBook(props) {
     return (
@@ -10,7 +10,7 @@ function AuthorOtherCookBook(props) {
                 {props && props.otherProducts && props.otherProducts.map(detail => (
                     <wx-view className="cookbook--detail">
                         <div className="authorOtherCookBook--image-box">
-                            <wx-image src={`${BASE_REQUEST_URL}/services/file/images/${detail.mainImageId}`} className="authorOtherCookBook--image"/>
+                            <wx-image src={getImageUrl(detail.mainImageId)} className="authorOtherCookBook--image"/>
                         </div>
                         <div className="authorOther--wrap">
                             <wx-text className="authorOther--name">

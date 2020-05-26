@@ -6,7 +6,8 @@ function Footer(props) {
     return (
         <Layout hasSider className="cookbook-follow--text">
             <Content>
-                {props.pageView}浏览 {props.collection}收藏 菜谱创建于{props.createdTime}
+                {/*{props.pageView}浏览 */}
+                {props.collection}收藏 菜谱创建于{props.createdTime}
             </Content>
         </Layout>
     )

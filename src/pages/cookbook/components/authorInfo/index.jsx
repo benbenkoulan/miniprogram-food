@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Layout, Sider, Content } from 'micro-design'
 import './style.css'
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Layout } from 'micro-design'
 import './style.css'
-import { BASE_REQUEST_URL } from '../../../../modules/constant/network'
+import { getImageUrl } from '../../../../modules/utils/image'
 
 function Step(props) {
 
@@ -12,7 +12,7 @@ function Step(props) {
                 {foodCookStep.imageId
                     ? <div>
                         <wx-image className="step--image"
-                                  src={`${BASE_REQUEST_URL}/services/file/images/${foodCookStep.imageId}`}/>
+                                  src={getImageUrl(foodCookStep.imageId)}/>
                     </div>
                     : null}
                 <wx-p className="step--description">{foodCookStep.description}</wx-p>
