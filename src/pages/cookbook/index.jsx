@@ -9,7 +9,6 @@ import AuthorInfo from './components/authorInfo/index.jsx'
 import Ingredient from './components/ingredient/index.jsx'
 import Step from './components/step/index.jsx'
 import CollectionAndShare from './components/collectionAndShare/index.jsx'
-import { BASE_REQUEST_URL } from '../../modules/constant/network'
 import { getImageUrl } from '../../modules/utils/image'
 
 function CookBook(props) {
@@ -91,7 +90,7 @@ function CookBook(props) {
             <div>
                 <div className="cookbook-image--box">
                     <wx-image mode="aspectFill" className="cookbook--image"
-                              src={`${BASE_REQUEST_URL}/services/file/images/${foodMaterials.mainImageId}`}/>
+                              src={getImageUrl(foodMaterials.mainImageId)}/>
                 </div>
                 <Layout className="menu--box">
                     <wx-p className="cookbook--title">{foodMaterials.title}</wx-p>
