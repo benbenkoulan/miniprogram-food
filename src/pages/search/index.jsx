@@ -5,7 +5,7 @@ import 'micro-design/dist/es/components/layout/style.css';
 import usePagingListApi from '~/hooks/usePagingListApi';
 import List from '~/components/list';
 
-import { convertCookbooks, renderLoading, renderEmpty, renderItem, } from './utils';
+import { convertCookbooks, renderLoading, renderEmpty, renderDataList } from './utils';
 import SearchForm from './components/searchForm';
 
 import './style.css';
@@ -62,7 +62,7 @@ function Search (props) {
                     hasMore={hasMore}
                     isLoading={isLoading}
                     loadMore={memomizedLoadMore}
-                    renderItem={renderItem}
+                    renderDataList={renderDataList}
                     renderEmpty={renderEmpty}
                     renderLoading={renderLoading}
                 />

@@ -1,14 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 import isEmpty from 'lodash/isEmpty';
 import noop from 'lodash/noop';
+import { renderDataList } from '../../pages/search/utils'
 
 function List(props) {
     const scrollViewRef = useRef();
     const {
         dataSource,
-        renderItem,
+        renderDataList,
         renderEmpty,
         renderLoading,
+        renderHeader,
         loadMore,
         isLoading = true,
         hasMore = true,
@@ -31,13 +33,19 @@ function List(props) {
 
     const renderList = () => (isEmpty(dataSource) && !hasMore)
         ? renderEmpty()
-        : dataSource.map(data => renderItem(data));
+        // : dataSource.map(data => renderItem(data));
+        : renderDataList(dataSource);
+
+    const renderHeaderModule = () => renderHeader ? renderHeader() : null
 
     return (
         <wx-scroll-view
             scroll-y={true}
             ref={scrollViewRef}
             style={{ height: '100%' }}>
+            {
+                renderHeaderModule()
+            }
             {
                 renderList()
             }
