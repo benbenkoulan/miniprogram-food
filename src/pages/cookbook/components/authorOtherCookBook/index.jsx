@@ -8,7 +8,7 @@ function AuthorOtherCookBook(props) {
             <wx-p className="authorOtherCookBook--title">{props && props.otherProducts && props.otherProducts.length ? '作者其他菜谱' : null}</wx-p>
             <wx-scroll-view scroll-x="true" className="scroll--wrap">
                 {props && props.otherProducts && props.otherProducts.map(detail => (
-                    <wx-view className="cookbook--detail">
+                    <wx-view className="cookbook--detail" onClick={() => props.handleClickAuthorOtherCookBook()}>
                         <div className="authorOtherCookBook--image-box">
                             <wx-image src={getImageUrl(detail.mainImageId)} className="authorOtherCookBook--image"/>
                         </div>

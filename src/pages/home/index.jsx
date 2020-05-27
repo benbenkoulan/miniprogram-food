@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback } from 'react'
 import { useSelector } from 'react-redux'
-import { Row, Col, } from 'micro-design';
-import 'micro-design/dist/es/components/grid/style';
+import { Row, Col } from 'micro-design'
+import 'micro-design/dist/es/components/grid/style'
 
 import { settingSelector } from '~/store/selector'
 import router from '~/router'
-import ScrollView from '~/components/scrollView';
+import ScrollView from '~/components/scrollView'
 import usePagingListApi from '~/hooks/usePagingListApi'
 
 import './style.css'
@@ -20,13 +20,13 @@ function Index() {
         data: cookbookList,
         query: searchQuery,
         hasMore,
-        isLoading,
+        isLoading
     }, setSearchQuery] = usePagingListApi('searchCookbooks', {
         initialQuery: {
             pageNumber: 0,
-            pageSize: 6,
+            pageSize: 10
         }
-    });
+    })
 
     const handleSearchLink = () => {
         console.log(settings)
@@ -36,22 +36,24 @@ function Index() {
     const memomizedLoadMore = useCallback(() => {
         setSearchQuery({
             ...searchQuery,
-            pageNumber: searchQuery.pageNumber + 1,
-        });
-    }, [searchQuery, setSearchQuery]);
+            pageNumber: searchQuery.pageNumber + 1
+        })
+    }, [searchQuery, setSearchQuery])
 
-    const renderHeader = () => (<HomeHeader handleSearchLink={handleSearchLink}/>);
-
+    const renderHeader = () => (<HomeHeader handleSearchLink={handleSearchLink}/>)
+    console.log(cookbookList, '----- cookbook')
     const renderDataList = () => (
-        <Row gutter={10}>
+        <Row gutter={10} className="item-masonry">
             <Col span={12}>
                 {
                     cookbookList.map((cookbook, index) => (
                         <React.Fragment key={cookbook.id}>
                             {
-                                index % 2 === 0 ? (<div style={{ marginBottom: '10px' }}>
-                                    <wx-image className="cookbook--image" src={getImageUrl(cookbook.mainImageId)} mode='widthFix'/>
-                                    <wx-text>{cookbook.title}</wx-text>
+                                index % 2 === 0 ? (<div style={{ marginBottom: '10px' }} className="item"
+                                                        onClick={() => router.push('cookbook', { id: cookbook.id })}>
+                                    <wx-image className="cookbook--image" src={getImageUrl(cookbook.mainImageId)}
+                                              mode='widthFix'/>
+                                    <wx-text style={{ fontSize: '14px' }}>{cookbook.title}</wx-text>
                                 </div>) : null
                             }
                         </React.Fragment>
@@ -63,9 +65,11 @@ function Index() {
                     cookbookList.map((cookbook, index) => (
                         <React.Fragment key={cookbook.id}>
                             {
-                                index % 2 === 1 ? (<div style={{ marginBottom: '10px' }}>
-                                    <wx-image className="cookbook--image" src={getImageUrl(cookbook.mainImageId)} mode='widthFix'/>
-                                    <wx-text>{cookbook.title}</wx-text>
+                                index % 2 === 1 ? (<div style={{ marginBottom: '10px' }} className="item"
+                                                        onClick={() => router.push('cookbook', { id: cookbook.id })}>
+                                    <wx-image className="cookbook--image" src={getImageUrl(cookbook.mainImageId)}
+                                              mode='widthFix'/>
+                                    <wx-text style={{ fontSize: '14px' }}>{cookbook.title}</wx-text>
                                 </div>) : null
                             }
                         </React.Fragment>
@@ -73,9 +77,15 @@ function Index() {
                 }
             </Col>
         </Row>
-    );
+    )
 
-    const renderBottom = useCallback(() => (!hasMore && (<div style={{ textAlign: 'center' }}>已经到底了</div>)) , [hasMore]);
+    const renderBottom = useCallback(() => (!hasMore && (
+        <div style={{
+            textAlign: 'center',
+            color: '#999999',
+            fontSize: '12px',
+            marginBottom: '10px'
+        }}>已经到底了</div>)), [hasMore])
 
     return (
         <ScrollView

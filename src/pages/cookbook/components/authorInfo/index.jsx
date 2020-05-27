@@ -4,8 +4,8 @@ import './style.css'
 
 function AuthorInfo(props) {
 
-    const handleCliAttention = () => {
-        props.handleCliAttention()
+    const handleClickAttention = () => {
+        props.handleClickAttention()
     }
 
     return (
@@ -19,8 +19,8 @@ function AuthorInfo(props) {
                 </Content>
                 <Sider width="80px" className="attention-btn--box">
                     {props.isAttention
-                        ? <div className="attention--btn grey" onClick={handleCliAttention}>已关注</div>
-                        : <div className="attention--btn" onClick={handleCliAttention}>关注</div>}
+                        ? <div className="attention--btn grey" onClick={handleClickAttention}>已关注</div>
+                        : <div className="attention--btn" onClick={handleClickAttention}>关注</div>}
                 </Sider>
             </Layout>
             <wx-p className="cookbook--description">{props.description}</wx-p>

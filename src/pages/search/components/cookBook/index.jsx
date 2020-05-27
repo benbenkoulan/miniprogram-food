@@ -12,7 +12,7 @@ function CookBook(props) {
         <div onClick={onClickCookBook}>
             <Layout hasSider>
                 <Sider width='80px'>
-                    <wx-image mode="aspectFill" className="menu--icon" src={imagePath}></wx-image>
+                    <wx-image mode="aspectFill" className="menu--icon" src={imagePath}/>
                 </Sider>
                 <Content style={{ textAlign: 'center' }} className={'menu-info--box'}>
                     <p className="menu-title--text">{title}</p>
