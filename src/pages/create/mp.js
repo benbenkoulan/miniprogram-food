@@ -3,10 +3,10 @@ import withNavigation from '../../components/navigation';
 
 import Index from './index';
 
-const Create = withNavigation(Index, { showCreate: false, navigationTitle: '创建菜谱' });
+// const Create = withNavigation(Index, { showCreate: false, navigationTitle: '创建菜谱' });
 
-const initPage = createInitPage(Create);
+const initPage = createInitPage(Index, { shouldShowCreate: false, });
 
 export default initPage;
 
-"undefined" != typeof wx && wx.getSystemInfoSync || createApp()
+"undefined" != typeof wx && wx.getSystemInfoSync || initPage()

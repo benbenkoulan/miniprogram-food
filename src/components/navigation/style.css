@@ -6,6 +6,7 @@
     text-align: center;
     flex-shrink: 0;
     background-color: #ffffff;
+    z-index: 100;
 }
 
 .btns--box {

@@ -7,14 +7,12 @@ import router from '~/router';
 import './style.css';
 
 function CookBook(props) {
-    const { imagePath, title, id, userName, avatarUrl, } = props;
+    const { imagePath, title, id, userName, avatarUrl, count, } = props;
 
     const handleCookBookClick = () => {
         console.log('---handleCookBookClick--')
         router.push('cookbook', { id });
     };
-
-    console.log('-----CookBook------');
 
     return (
         <div style={{ marginBottom: '20px' }} onClick={handleCookBookClick}>
@@ -31,7 +29,7 @@ function CookBook(props) {
             </Layout>
             <Layout hasSider className="cookbook-follow--text">
                 <Content>
-                    收藏10人
+                    收藏{count}人
                 </Content>
                 <Sider width="100px" className="author-info--box">
                     {userName}
@@ -46,6 +44,7 @@ CookBook.defaultProps = {
     title: '',
     avatarUrl: null,
     userName: '',
+    count: 0,
 }
 
 export default CookBook;

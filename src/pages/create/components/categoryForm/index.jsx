@@ -38,6 +38,7 @@ function CategoryForm(props) {
         }));
         if (firstCategoires.length > 0) {
             const firstCategory = allCategories[tempParentCategoryIndex];
+            console.log('allCategories: ', allCategories, ' firstCategory: ', firstCategory);
             const secondCategories = [...firstCategory.children];
             setCategories([firstCategoires, secondCategories]);
         }

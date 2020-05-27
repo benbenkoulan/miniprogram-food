@@ -1,23 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { Fragment, useMemo, useState } from 'react';
 
-import { Layout, Content, Footer } from 'micro-design';
+import { Layout, Content, Footer, Flex } from 'micro-design';
 import 'micro-design/dist/es/components/layout/style.css';
+import 'micro-design/dist/es/components/flex/style';
 
-import { fetchCategories } from '~/store/action/cookbook';
-import { categoriesSelector } from '~/store/selector';
 import { upload } from '~/modules/miniprogram/file';
 import { chooseImage } from '~/modules/miniprogram/image';
 import { showToast } from '~/modules/miniprogram/ui';
 import { send } from '~/modules/request/proxy';
+import { getImageUrl } from '~/modules/utils/image';
 import router from '~/router';
 import { showAuthorizeModal } from '~/store/action/app';
+import useToggle from '~/hooks/useToggle';
+import useDataApi from '~/hooks/useDataApi';
 
-import useFormItem from './components/form/formItem';
 import useFormItemList from './components/form/formItemList';
-import GarnishForm from './components/garnishForm';
-import StepForm from './components/stepForm';
 import CategoryForm from './components/categoryForm';
+
+import useFormItem from './components/form/useFormItem';
+import useNewFormItemList from './components/form/useFormItemList';
+import ListForm from './components/listForm';
+import IngredientFormItem from './components/ingredientFormItem';
+import StepFormItem from './components/stepFormItem';
+import CategorySelectionList from './components/categorySelectionList';
 
 import './style.css';
 
@@ -27,37 +32,32 @@ function getCategoryId(allCategories, parentCategoryIndex, categoryIndex) {
     return category.id;
 }
 
+function IngredientConstructor() {
+    this.name = '';
+    this.weight = '';
+}
+
+function StepConstructor() {
+    this.imageId = '';
+    this.description = '';
+}
+
 function Create() {
-    const dispatch = useDispatch();
-    const allCategories = useSelector(categoriesSelector);
-
-    useEffect(() => {
-        dispatch(fetchCategories());
-    }, [dispatch]);
-
+    const [shouldShowCategorySelectionList, toggleShowCategorySelectionList] = useToggle(false);
+    
+    const [allCategories] = useDataApi('getCategories', {
+        initialData: [],
+        propertyName: 'data',
+    });
+    
     const title = useFormItem('title', {
         rules: [{
             required: true,
             maxLength: 10, 
         }]
     });
-
     const description = useFormItem('description');
     const tip = useFormItem('tip');
-
-    const [
-        [garnishes],
-        [isShowGarnishForm, hideGarnishForm],
-        [currentGarnish],
-        [addGarnish, deleteGarnish, editGarnish, saveGarnish],
-    ] = useFormItemList();
-
-    const [
-        [steps],
-        [isShowStepForm, hideStepForm],
-        [currentStep],
-        [addStep, deleteStep, editStep, saveStep],
-    ] = useFormItemList();
 
     const [
         [categories],
@@ -80,25 +80,24 @@ function Create() {
         })
     );
 
-    const renderGarnishes = () => (
-        garnishes.map((garnish, index) => (
-            <div key={garnish.name} className="selected--box">
-                <p className="text--box" onClick={() => editGarnish(garnish, index)}>{garnish.name} {garnish.weight}</p>
-                <wx-image className="close--icon" src="/assets/images/create/close.svg" onClick={() => deleteGarnish(index)}></wx-image>
-            </div>
-        ))
-    );    
-
-    const renderSteps = () => (
-        steps.map((step, index) => (
-            <div key={index} className="selected--box">
-                <p className="text--box" onClick={() => editStep(step, index)}>步骤 {index + 1}</p>
-                <wx-image className="close--icon" src="/assets/images/create/close.svg" onClick={() => deleteStep(index)}></wx-image>
-            </div>
-        ))
-    );
-
     const [mainImageId, setMainImageId] = useState();
+    const mainImagePath = useMemo(() => getImageUrl(mainImageId), [mainImageId]);
+
+    const [ingredientList, {
+        addItem: addIngredient,
+        deleteItem: deleteIngredient,
+        updateItem: updateIngredient,
+    }] = useNewFormItemList([new IngredientConstructor], {
+        ItemConstructor: IngredientConstructor,
+    });
+
+    const [stepList, {
+        addItem: addStep,
+        deleteItem: deleteStep,
+        updateItem: updateStep,
+    }] = useNewFormItemList([new StepConstructor], {
+        ItemConstructor: StepConstructor,
+    });
 
     const handleUpload = async () => {
         const { tempFilePaths } = await chooseImage({ sizeType: ['original', 'compressed'] });
@@ -114,11 +113,11 @@ function Create() {
             return;
         }
         const categoryProducts = categories.map((categoryIndexs) => ({ categoryId: getCategoryId(allCategories, ...categoryIndexs) }));
-        const ingredients = garnishes.map((garnish, index) => ({
+        const ingredients = ingredientList.map((ingredient, index) => ({
             lineNumber: index + 1,
-            ...garnish,
+            ...ingredient,
         }));
-        const stepsData = steps.map((step, index) => ({
+        const steps = stepList.map((step, index) => ({
             lineNumber: index + 1,
             ...step,
         }));
@@ -127,7 +126,7 @@ function Create() {
             mainImageId,
             categoryProducts,
             ingredients,
-            steps: stepsData,
+            steps,
             description: description.value,
             tip: tip.value,
         };
@@ -139,14 +138,46 @@ function Create() {
     return (
         <Layout className="page">
             <Content>
-                <label className="form-item--box">
-                    <span className="form-item--label">菜长啥样</span>
-                    <div className="add--btn" onClick={handleUpload}>{ mainImageId ? '已选择图片' : '点击上传' }</div>
+                <Flex
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                    className="main-image--box select-image--btn"
+                    onClick={handleUpload}
+                >
+                    {
+                        mainImagePath ? <wx-image mode="aspectFit" src={mainImagePath} /> : (<Fragment>
+                            <p>+菜谱封面</p>
+                            <p>诱人的封面是吸引朋友的关键</p>
+                        </Fragment>)
+                    }
+                </Flex>
+                <label class="form-item--box">
+                    <input placeholder="好的标题更能吸引人" className="title-input--box" {...title} />
                 </label>
                 <label class="form-item--box">
-                    <span className="form-item--label">菜叫啥名</span>
-                    <input className="form-input--box input--box" {...title} />
+                    <input placeholder="输入这道美食背后的故事" className="textarea--box" {...description} />
                 </label>
+                <ListForm
+                    title="用料"
+                    itemList={ingredientList}
+                    onAdd={addIngredient}
+                    onDel={(index) => deleteIngredient(index)}
+                    renderItem={(item, index) => (<IngredientFormItem onChange={(newItem) => updateIngredient(newItem, index)} {...item} />)}
+                />
+                <ListForm
+                    title="步骤"
+                    itemList={stepList}
+                    onAdd={addStep}
+                    onDel={(index) => deleteStep(index)}
+                    renderItem={(item, index) => (<StepFormItem onUpload={(imageId) => updateStep({ ...item, imageId,}, index)} onChange={(newItem) => updateStep(newItem, index)} {...item} />)}
+                />
+                <label class="form-item--box">
+                    <input placeholder="多给点建议你好我也好" className="textarea--box" {...tip} />
+                </label>
+                <div className="category-select--btn" onClick={toggleShowCategorySelectionList}>
+                    推荐至分类
+                </div>
                 <label class="category form-item--box">
                     <span className="form-item--label">菜品印象</span>
                     <div className="list--box">
@@ -154,54 +185,13 @@ function Create() {
                         <div className="add--btn" onClick={addCategory}>添加</div>
                     </div>
                 </label>
-                <label class="garnish form-item--box">
-                    <span className="form-item--label">材料清单</span>
-                    <div className="list--box">
-                        {renderGarnishes()}
-                        <div className="add--btn" onClick={addGarnish}>添加</div>
-                    </div>
-                </label>
-                <label class="step form-item--box">
-                    <span className="form-item--label">一步一步</span>
-                    <div className="list--box">
-                        {renderSteps()}
-                        <div className="add--btn" onClick={addStep}>添加</div>
-                    </div>
-                </label>
-                <label class="form-item--box">
-                    <span className="form-item--label">有故事吗</span>
-                    {
-                        !isShowStepForm && !isShowGarnishForm && (
-                            <textarea className="form-input--box textarea--box" {...description} placeholder="请说出你的故事"></textarea>
-                        )
-                    }                    
-                </label>
-                <label class="form-item--box">
-                    <span className="form-item--label">给点建议</span>
-                    {
-                        !isShowStepForm && !isShowGarnishForm && (
-                            <textarea className="form-input--box textarea--box" {...tip} placeholder="多给点建议你好我也好"></textarea>
-                        )
-                    }
-                </label>
             </Content>
             <Footer>
-                <button className="save--btn" onClick={handleSubmit}>保存</button>
+                <button className="save--btn" onClick={handleSubmit}>发布这个菜谱</button>
             </Footer>
-            { isShowGarnishForm && (
-                <GarnishForm
-                    {...currentGarnish}
-                    onCloseGarnishForm={hideGarnishForm}
-                    onSubmitGarnishForm={saveGarnish}
-                /> 
-            )}
-            { isShowStepForm && (
-                <StepForm
-                    {...currentStep}
-                    onCloseStepForm={hideStepForm}
-                    onSubmitStepForm={saveStep}
-                />
-            )}
+            {
+                shouldShowCategorySelectionList && <CategorySelectionList categories={allCategories} />
+            }
             {
                 isShowCategoryForm && (
                     <CategoryForm

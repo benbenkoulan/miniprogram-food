@@ -42,7 +42,7 @@ function usePagingListApi(serviceName, {
             }
         };
         doFetch();
-    }, [query, serviceName, convertData]);    
+    }, [query, serviceName, convertData]);
 
     return [{
         data,

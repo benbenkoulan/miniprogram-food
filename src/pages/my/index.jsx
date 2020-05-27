@@ -47,11 +47,11 @@ function My() {
                 <Content>
                     <Row>
                         <Col span={6}>
-                            <p>{statisticsInfo.fansCount}</p>
+                            <p>{statisticsInfo.starCount}</p>
                             <p>关注</p>
                         </Col>
                         <Col span={6}>
-                            <p>{statisticsInfo.collectionCount}</p>
+                            <p>{statisticsInfo.fansCount}</p>
                             <p>粉丝</p>
                         </Col>
                     </Row>

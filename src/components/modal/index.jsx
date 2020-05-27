@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import './style.css';
+import './style.css'
 
 function Modal(props) {
-    const modalRoot = document.getElementById('modalRoot');
-
+    const container = document.querySelector('.modal--container');
+    
     const handleModalClick = (e) => {
         e.stopPropagation();
         props.onModalClick();
@@ -18,7 +18,7 @@ function Modal(props) {
                     {props.children}
                 </div>
             ),
-            modalRoot,
+            container,
         )
     );
 }

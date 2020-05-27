@@ -1,0 +1,33 @@
+@import 'mixins';
+@import 'layout';
+
+.list-header--text {
+    font-size: 18px;
+}
+
+.delete-item--btn {
+    position: relative;
+    margin: 0 10px;
+    @mixin circle 20px;
+    @mixin height-middle 20px;
+    background-color: lightcoral;
+    vertical-align: middle;
+}
+
+.delete-item--btn::after {
+    position: absolute;
+    top: 50%;
+    left: 4px;
+    margin-top: -2px;
+    width: 12px;
+    height: 2px;
+    background-color: white;
+    content: '';
+    display: block;
+}
+
+.row--box {
+    margin: 10px 0;
+    align-items: center;
+    border-bottom: 1px solid #f0f0f0;
+}

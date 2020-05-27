@@ -1,20 +1,24 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux';
-import store from '../../store';
 
-import AuthorizeModal from '../../components/authorizeModal';
+import store from '~/store';
+import { Navigation } from '~/components/navigation';
+import AuthorizeModal from '~/components/authorizeModal';
+import '~/styles/app.css';
 
-import '../../styles/app.css';
+export default (Page, { shouldShowCreate = true } = {}) => () => {
+    const root = document.createElement('div');
+    root.classList.push('.root--container');
+    document.body.appendChild(root);
 
-export default (Page) => () => {
-    const container = document.createElement('div')
-    container.setAttribute('id', 'app');
-    document.body.appendChild(container);
+    const navigationContainer = document.createElement('header');
+    navigationContainer.classList.push('.navigation--container');
+    root.appendChild(navigationContainer);
 
-    const modalRoot = document.createElement('div');
-    modalRoot.setAttribute('id', 'modalRoot');
-    document.body.appendChild(modalRoot);
+    const container = document.createElement('div');
+    container.classList.push('.app');
+    root.appendChild(container);
 
     const pages = getCurrentPages();
     const currentPage = pages[pages.length - 1];
@@ -25,8 +29,14 @@ export default (Page) => () => {
     }), {});
 
     ReactDOM.render(
+        <Navigation shouldShowCreate={shouldShowCreate} />,
+        navigationContainer,
+    );
+
+    ReactDOM.render(
         <Provider store={store}>
             <Page query={query} />
+            <div className="modal--container"></div>
             <AuthorizeModal />
         </Provider>, container)
 }

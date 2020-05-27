@@ -1,3 +1,17 @@
+@import 'mixins';
+
+.main-image--box {
+    width: 100%;
+    height: 250px;
+}
+
+.select-image--btn {
+    background-color: #f0f0f0;
+    color: #666666;
+    font-size: 16px;
+    line-height: 24px;
+}
+
 .form-item--box {
     margin: 20px;
     display: flex;
@@ -7,6 +21,21 @@
 .form-item--label {
     margin-right: 10px;
     flex-shrink: 0;
+}
+
+.title-input--box {
+    padding: 10px;
+    width: 100%;
+    font-size: 18px;
+    text-align: center;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.textarea--box {
+    width: 100%;
+    white-space: wrap;
+    height: 60px;
+    font-size: 16px;
 }
 
 .add--btn {
@@ -25,11 +54,7 @@
     border-radius: 4px;
 }
 
-.textarea--box {
-    height: 60px;
-}
-
-.form-item--box.step, .form-item--box.garnish, .form-item--box.category {
+.form-item--box.category {
     & .list--box {
         display: flex;
         align-items: center;
@@ -62,6 +87,13 @@
         height: 16px;
         border: 10px solid transparent;
     }
+}
+
+.category-select--btn {
+    margin: 20px;
+    @mixin height-middle 50px;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 16px;
 }
 
 .save--btn {

@@ -1,29 +1,26 @@
 import React from 'react';
-// import { Layout, Content, Sider } from 'micro-design';
-// import 'micro-design/dist/es/components/layout/style.css';
+import throttle from 'lodash/throttle';
 
 import router from '../../router';
 
 function NavigationBar(props) {
-    const { paddingHorizontal, paddingVertical } = props;
+    const { shouldShowBack, shouldShowCreate, paddingHorizontal, paddingVertical } = props;
 
     const handleCreateClick = () => {
         router.push('create');
     };
 
-    const handleBackClick = () => {
+    const handleBackClick = throttle(() => {
         router.back();
-    };
-
-    // console.log(props);
+    }, 1000);
 
     return (
         <div style={{ padding: `${paddingVertical}px 0` }} className="navigation--bar">
             <div style={ { padding: `${paddingVertical}px ${paddingHorizontal}px` } } class="btns--box">
-                { props.showBack && (<div className="back--btn" onClick={handleBackClick}>
+                { shouldShowBack && (<div className="back--btn" onClick={handleBackClick}>
                     <wx-image mode="widthFix" className="back--icon" src="/assets/images/navigation/back.svg"></wx-image>
                 </div>) }
-                { props.showCreate && (<div className="create--btn" onClick={handleCreateClick}>
+                { shouldShowCreate && (<div className="create--btn" onClick={handleCreateClick}>
                     <wx-image mode="widthFix" className="create--icon" src="/assets/images/navigation/create.svg"></wx-image>
                 </div>) } 
             </div>
@@ -33,12 +30,11 @@ function NavigationBar(props) {
 }
 
 NavigationBar.defaultProps = {
-    showBack: false,
-    showCreate: true,
+    shouldShowBack: false,
+    shouldShowCreate: true,
     navigationTitle: '',
     paddingVertical: 0,
     paddingHorizontal: 0,
-    
 };
 
 export default NavigationBar;

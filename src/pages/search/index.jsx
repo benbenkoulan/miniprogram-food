@@ -3,7 +3,7 @@ import { Layout, Content, Header } from 'micro-design';
 import 'micro-design/dist/es/components/layout/style.css';
 
 import usePagingListApi from '~/hooks/usePagingListApi';
-import List from '~/components/list';
+import ScrollView from '~/components/scrollView';
 
 import { convertCookbooks, renderLoading, renderEmpty, renderDataList } from './utils';
 import SearchForm from './components/searchForm';
@@ -40,6 +40,16 @@ function Search (props) {
         });
     }, [searchQuery, setSearchQuery]);
 
+    const renderContent = useCallback(() => 
+        (cookBookList.length === 0 && hasMore)
+            ? renderEmpty()
+            : renderDataList(cookBookList), [hasMore, cookBookList]);
+
+    const renderBottom = useCallback(() => hasMore
+        ? renderLoading()
+        : (<div style={{ textAlign: 'center' }}>已经到底了</div>),
+    [hasMore]);
+
     const handleSearch = (keyword) => {
         setSearchQuery({
             ...searchQuery,
@@ -57,14 +67,12 @@ function Search (props) {
                 />
             </Header>
             <Content className="list--box">
-                <List
-                    dataSource={cookBookList}
+                <ScrollView
                     hasMore={hasMore}
                     isLoading={isLoading}
                     loadMore={memomizedLoadMore}
-                    renderDataList={renderDataList}
-                    renderEmpty={renderEmpty}
-                    renderLoading={renderLoading}
+                    renderContent={renderContent}
+                    renderBottom={renderBottom}
                 />
             </Content>
         </Layout>
