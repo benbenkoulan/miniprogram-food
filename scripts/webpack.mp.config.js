@@ -10,9 +10,10 @@ const { root } = require('./util');
 
 const getPageEntry = pageName => root(`pages/${pageName}/mp.js`);
 
-const isOptimize = true // 是否压缩业务代码，开发者工具可能无法完美支持业务代码使用到的 es 特性，建议自己做代码压缩
+const isOptimize = process.env.NODE_ENV === 'production' // 是否压缩业务代码，开发者工具可能无法完美支持业务代码使用到的 es 特性，建议自己做代码压缩
 
 module.exports = {
+    devtool: isOptimize ? 'none' : 'source-map',
     mode: 'production',
     entry: {
         'miniprogram-app': root('app.js'),
