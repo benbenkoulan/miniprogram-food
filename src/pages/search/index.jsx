@@ -41,7 +41,7 @@ function Search (props) {
     }, [searchQuery, setSearchQuery]);
 
     const renderContent = useCallback(() => 
-        (cookBookList.length === 0 && hasMore)
+        (cookBookList.length === 0 && !hasMore)
             ? renderEmpty()
             : renderDataList(cookBookList), [hasMore, cookBookList]);
 

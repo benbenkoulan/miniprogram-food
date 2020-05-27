@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Col, Layout, Sider, Content } from 'micro-design';
-import 'micro-design/dist/es/components/flex/style.css';
-import 'micro-design/dist/es/components/layout/style.css';
+import 'micro-design/dist/es/components/grid/style';
+import 'micro-design/dist/es/components/layout/style';
 
 import useDataApi from '~/hooks/useDataApi';
 import router from '~/router';

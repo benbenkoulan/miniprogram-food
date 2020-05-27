@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col } from 'micro-design';
-import 'micro-design/dist/es/components/flex/style.css';
+import 'micro-design/dist/es/components/grid/style';
 
 import useFormItem from '../form/useFormItem';
 

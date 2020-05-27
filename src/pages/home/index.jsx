@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Row, Col, } from 'micro-design';
-import 'micro-design/dist/es/components/flex/style.css';
+import 'micro-design/dist/es/components/grid/style';
 
 import { settingSelector } from '~/store/selector'
 import router from '~/router'
