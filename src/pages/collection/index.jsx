@@ -40,7 +40,7 @@ function Collection(props) {
     };
 
     return (
-        <div style={ { margin: '20px' } }>
+        <div className="page">
             {
                 collections.map(collection => (<CookBookWithDel
                     key={collection.id}

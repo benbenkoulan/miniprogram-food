@@ -1,10 +1,11 @@
 .cookbook-del--container {
     position: relative;
+    margin-bottom: 30px
 }
 
 .cookbook-operate--btn {
     position: absolute;
-    right: 10px;
+    right: 30px;
     top: 10px;
     width: 30px;
     height: 30px;

@@ -15,16 +15,16 @@ function CookBook(props) {
     };
 
     return (
-        <div style={{ marginBottom: '20px' }} onClick={handleCookBookClick}>
+        <div style={{ margin: '20px'}} onClick={handleCookBookClick}>
             <div className="cookbook-image--box">
-                <wx-image mode="aspectFill" className="cookbook--image" src={imagePath}></wx-image>
+                <wx-image mode="aspectFill" className="cookbook--image" src={imagePath}/>
             </div>
             <Layout hasSider>
                 <Content className="one-row--text cookbook-title--text">
                     {title}
                 </Content>
                 <Sider width="100px" className="author-info--box">
-                    <wx-image className="author--icon" src={avatarUrl}></wx-image>
+                    <wx-image className="author--icon" src={avatarUrl}/>
                 </Sider>
             </Layout>
             <Layout hasSider className="cookbook-follow--text">
