@@ -10,7 +10,6 @@ import Ingredient from './components/ingredient/index.jsx'
 import Step from './components/step/index.jsx'
 import CollectionAndShare from './components/collectionAndShare/index.jsx'
 import { getImageUrl } from '../../modules/utils/image'
-import router from '../../router'
 
 function CookBook(props) {
 
@@ -43,10 +42,6 @@ function CookBook(props) {
         fetchData();
     }, [id])
 
-    const handleClickAuthorOtherCookBook =() => {
-        router.push('cookbook', { id: foodMaterials.id })
-    }
-
     return (
         <div className="page">
             <div>
@@ -77,8 +72,7 @@ function CookBook(props) {
                     createdTime={foodMaterials.createdTime && foodMaterials.createdTime.slice(0, 10)}/>
             <AuthorOtherCookBook otherProducts={foodMaterials.otherProducts}
                                  authorUrl={foodMaterials.user && foodMaterials.user.avatarUrl}
-                                 name={foodMaterials.user && foodMaterials.user.username}
-                                 handleClickAuthorOtherCookBook={handleClickAuthorOtherCookBook}/>
+                                 name={foodMaterials.user && foodMaterials.user.username}/>
             <CollectionAndShare handleClickCollection={handleClickCollection}
                                 isCollection={isCollection}/>
         </div>
