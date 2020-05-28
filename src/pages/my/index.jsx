@@ -33,7 +33,7 @@ function My() {
     const menus = getMenus();
 
     return (
-        <div>
+        <div className="page">
             <Layout hasSider={true} className="section">
                 <Content className="nickname--text">
                     <wx-open-data type="userNickName" />

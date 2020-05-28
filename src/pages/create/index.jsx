@@ -96,7 +96,7 @@ function Create() {
             dispatch(showAuthorizeModal());
             return;
         }
-        const categoryProducts = categories.map(category => category.id);
+        const categoryProducts = categories.map(category => ({ categoryId: category.id }));
         const ingredients = ingredientList.map((ingredient, index) => ({
             lineNumber: index + 1,
             ...ingredient,

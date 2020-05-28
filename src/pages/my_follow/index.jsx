@@ -30,7 +30,7 @@ function MyFllow() {
     });
 
     return (
-        <div>
+        <div className="page">
             {
                 follows.map(follow => (<Follow onFollow={getFollowHandler(follow.id, !follow.isFollowed)} key={follow.id} {...follow} />))
             }            

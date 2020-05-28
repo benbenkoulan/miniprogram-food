@@ -21,7 +21,7 @@ function MyCookBook() {
     });
 
     return (
-        <div style={ { margin: '20px' } }>
+        <div className="page">
             {cookBooks.map((cookBook) => (<CookBook key={cookBook.id} {...cookBook} />))}
         </div>
     )
