@@ -22,9 +22,9 @@ function usePagingListApi(serviceName, {
             setHasMore(true);
             setIsLoading(true);
             try {
-                const { content = [] } = await fetch(serviceName, { data: query });
+                const { content = [], pageable, totalPages, } = await fetch(serviceName, { data: query });
                 const newData = convertData ? convertData(content) : content;
-                if (!newData.length) {
+                if (pageable.pageNumber + 1 >= totalPages) {
                     setHasMore(false);
                 }
                 if (query.pageNumber === 0) {
