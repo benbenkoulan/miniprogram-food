@@ -1,6 +1,6 @@
 const routes = [{
     name: 'home',
-    path: '/pages/home/index',
+    path: '/pages/home/index'
     // title: '主页'
 }, {
     name: 'my',
@@ -30,6 +30,10 @@ const routes = [{
     name: 'my_follow',
     path: '/pages/my_follow/index',
     title: '我的关注'
-},];
+}, {
+    name: 'category',
+    path: 'pages/category/index',
+    // title: '菜谱分类'
+}]
 
 export default (pageName) => routes.find(route => route.name === pageName);
