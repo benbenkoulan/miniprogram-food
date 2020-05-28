@@ -6,7 +6,7 @@ import { getImageUrl } from '~/modules/utils/image';
 import { upload } from '~/modules/miniprogram/file';
 import { chooseImage } from '~/modules/miniprogram/image';
 
-import useFormItem from '../form/useFormItem';
+import useFormItem from '~/hooks/form/useFormItem';
 
 function StepFormItem(props) {
     const { imageId, description: initialDescriptionValue, onUpload, onChange } = props;

@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col } from 'micro-design';
 import 'micro-design/dist/es/components/grid/style';
 
-import useFormItem from '../form/useFormItem';
+import useFormItem from '~/hooks/form/useFormItem';
 
 function IngredientFormItem(props) {
     const { name: initialNameValue, weight: initialWeightValue, onChange } = props;

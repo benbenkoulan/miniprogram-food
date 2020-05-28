@@ -3,7 +3,7 @@ import { Row, Col, Layout, Sider, Content } from 'micro-design';
 import 'micro-design/dist/es/components/layout/style';
 import 'micro-design/dist/es/components/grid/style';
 
-import useFormItem from '~/components/form/formItem';
+import useFormItem from '~/hooks/form/useFormItem';
 
 import './style.css';
 
