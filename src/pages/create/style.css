@@ -92,8 +92,16 @@
 .category-select--btn {
     margin: 20px;
     @mixin height-middle 50px;
+    border-top: 1px solid #f0f0f0;
     border-bottom: 1px solid #f0f0f0;
     font-size: 16px;
+}
+
+.category-tag--box {
+    padding: 5px;
+    font-size: 12px;
+    color: #ffffff;
+    background-color: #1296db;
 }
 
 .save--btn {

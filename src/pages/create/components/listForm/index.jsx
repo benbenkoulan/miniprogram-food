@@ -14,7 +14,7 @@ function ListForm(props) {
     };
 
     const renderRow = (item, index) => (
-        <Layout hasSider className="row--box" key={index}>
+        <Layout hasSider className="row--box" key={item}>
             {
                 isEditMode && (<Sider style={{ fontSize: 0 }}>
                     <button className="delete-item--btn" onClick={() => onDel(index)}></button>

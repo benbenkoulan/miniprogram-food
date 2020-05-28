@@ -9,10 +9,16 @@ import { chooseImage } from '~/modules/miniprogram/image';
 import useFormItem from '../form/useFormItem';
 
 function StepFormItem(props) {
-    const { imageId, description: initialDescriptionValue, onUpload } = props;
+    const { imageId, description: initialDescriptionValue, onUpload, onChange } = props;
 
     const description = useFormItem('description', {
         initialValue: initialDescriptionValue,
+        change: (descriptionValue) => {
+            onChange({
+                imageId,
+                description: descriptionValue,
+            });
+        },
     });
 
     const imagePath = useMemo(() => getImageUrl(imageId), [imageId]);

@@ -8,10 +8,10 @@ import AuthorizeModal from '~/components/authorizeModal'
 import routes from '../../router/routes'
 import '~/styles/app.css'
 
-export default (Page, { shouldShowCreate = true } = {}) => () => {
-    const root = document.createElement('div')
-    root.classList.push('.root--container')
-    document.body.appendChild(root)
+export default (Page, { shouldShowCreate = true, navigationTitle = '' } = {}) => () => {
+    const root = document.createElement('div');
+    root.classList.push('.root--container');
+    document.body.appendChild(root);
 
     const navigationContainer = document.createElement('header')
     navigationContainer.classList.push('.navigation--container')

@@ -10,7 +10,6 @@ function IngredientFormItem(props) {
     const name = useFormItem('name', {
         initialValue: initialNameValue,
         change: (newNameValue) => {
-            console.log('newNameValue: ', newNameValue);
             onChange({
                 name: newNameValue,
                 weight: weight.value,
@@ -21,7 +20,6 @@ function IngredientFormItem(props) {
     const weight = useFormItem('weight', {
         initialValue: initialWeightValue,
         change: (newWeightValue) => {
-            console.log('newWeightValue: ', newWeightValue);
             onChange({
                 name: name.value,
                 weight: newWeightValue,

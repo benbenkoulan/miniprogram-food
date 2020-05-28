@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { checkRules, getChangeEventNameByElementType } from './utils';
 
@@ -11,6 +11,10 @@ function useFormItem(name, {
     const [value, setValue] = useState(initialValue);
     const [dirty, setDirty] = useState(false);
     const valid = checkRules(rules, value);
+
+    useEffect(() => {
+        setValue(initialValue);
+    }, [initialValue]);
 
     const eventName = getChangeEventNameByElementType(type);
     

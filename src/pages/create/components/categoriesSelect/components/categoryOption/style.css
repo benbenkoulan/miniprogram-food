@@ -1,0 +1,24 @@
+.option--box {
+    padding: 10px 20px;
+    font-size: 14px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.option--box.disabled {
+    background-color: #f0f0f0;
+}
+
+.option--box.checked {
+    position: relative;
+    color: #1296db;
+}
+
+.option--box.checked .checked--icon {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    margin-top: -8px;
+    display: block;
+    width: 16px;
+    height: 16px;
+}

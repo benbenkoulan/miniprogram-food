@@ -1,8 +1,9 @@
 import React, { Fragment, useMemo, useState } from 'react';
 
-import { Layout, Content, Footer, Flex } from 'micro-design';
-import 'micro-design/dist/es/components/layout/style.css';
+import { Layout, Content, Footer, Flex, Row, Col } from 'micro-design';
+import 'micro-design/dist/es/components/layout/style';
 import 'micro-design/dist/es/components/flex/style';
+import 'micro-design/dist/es/components/grid/style';
 
 import { upload } from '~/modules/miniprogram/file';
 import { chooseImage } from '~/modules/miniprogram/image';
@@ -14,15 +15,12 @@ import { showAuthorizeModal } from '~/store/action/app';
 import useToggle from '~/hooks/useToggle';
 import useDataApi from '~/hooks/useDataApi';
 
-import useFormItemList from './components/form/formItemList';
-import CategoryForm from './components/categoryForm';
-
 import useFormItem from './components/form/useFormItem';
-import useNewFormItemList from './components/form/useFormItemList';
+import useFormItemList from './components/form/useFormItemList';
 import ListForm from './components/listForm';
 import IngredientFormItem from './components/ingredientFormItem';
 import StepFormItem from './components/stepFormItem';
-import CategorySelectionList from './components/categorySelectionList';
+import CategoriesSelect from './components/categoriesSelect';
 
 import './style.css';
 
@@ -59,35 +57,21 @@ function Create() {
     const description = useFormItem('description');
     const tip = useFormItem('tip');
 
-    const [
-        [categories],
-        [isShowCategoryForm, hideCategoryForm],
-        [currentCategory],
-        [addCategory, deleteCategory, editCategory, saveCategory],
-    ] = useFormItemList([], []);
-
-    const renderCategories = () => (
-        categories.map((categoryIndexs, index) => {
-            const [parentCategoryIndex, categoryIndex] = categoryIndexs;
-            const parentCategory = allCategories[parentCategoryIndex];
-            const category = parentCategory.children[categoryIndex];
-            return (
-                <div key={`${parentCategoryIndex}-${categoryIndex}`} className="selected--box">
-                <p className="text--box" onClick={() => editCategory(categoryIndexs, index)}>{parentCategory.name}-{category.name}</p>
-                <wx-image className="close--icon" src="/assets/images/create/close.svg" onClick={() => deleteCategory(index)}></wx-image>
-            </div>
-            );
-        })
-    );
-
     const [mainImageId, setMainImageId] = useState();
     const mainImagePath = useMemo(() => getImageUrl(mainImageId), [mainImageId]);
+
+    const [categories, setCategories] = useState([]);
+
+    const handleConfirmCategory = (selectedCategories) => {
+        setCategories(selectedCategories);
+        toggleShowCategorySelectionList();
+    };
 
     const [ingredientList, {
         addItem: addIngredient,
         deleteItem: deleteIngredient,
         updateItem: updateIngredient,
-    }] = useNewFormItemList([new IngredientConstructor], {
+    }] = useFormItemList([new IngredientConstructor], {
         ItemConstructor: IngredientConstructor,
     });
 
@@ -95,7 +79,7 @@ function Create() {
         addItem: addStep,
         deleteItem: deleteStep,
         updateItem: updateStep,
-    }] = useNewFormItemList([new StepConstructor], {
+    }] = useFormItemList([new StepConstructor], {
         ItemConstructor: StepConstructor,
     });
 
@@ -112,7 +96,7 @@ function Create() {
             dispatch(showAuthorizeModal());
             return;
         }
-        const categoryProducts = categories.map((categoryIndexs) => ({ categoryId: getCategoryId(allCategories, ...categoryIndexs) }));
+        const categoryProducts = categories.map(category => category.id);
         const ingredients = ingredientList.map((ingredient, index) => ({
             lineNumber: index + 1,
             ...ingredient,
@@ -162,7 +146,7 @@ function Create() {
                     title="用料"
                     itemList={ingredientList}
                     onAdd={addIngredient}
-                    onDel={(index) => deleteIngredient(index)}
+                    onDel={(item) => deleteIngredient(item)}
                     renderItem={(item, index) => (<IngredientFormItem onChange={(newItem) => updateIngredient(newItem, index)} {...item} />)}
                 />
                 <ListForm
@@ -170,37 +154,26 @@ function Create() {
                     itemList={stepList}
                     onAdd={addStep}
                     onDel={(index) => deleteStep(index)}
-                    renderItem={(item, index) => (<StepFormItem onUpload={(imageId) => updateStep({ ...item, imageId,}, index)} onChange={(newItem) => updateStep(newItem, index)} {...item} />)}
+                    renderItem={(item, index) => (<StepFormItem onChange={(newItem) => updateStep(newItem, index)} onUpload={(imageId) => updateStep({ ...item, imageId,}, index)} onChange={(newItem) => updateStep(newItem, index)} {...item} />)}
                 />
                 <label class="form-item--box">
                     <input placeholder="多给点建议你好我也好" className="textarea--box" {...tip} />
                 </label>
-                <div className="category-select--btn" onClick={toggleShowCategorySelectionList}>
-                    推荐至分类
-                </div>
-                <label class="category form-item--box">
-                    <span className="form-item--label">菜品印象</span>
-                    <div className="list--box">
-                        {renderCategories()}
-                        <div className="add--btn" onClick={addCategory}>添加</div>
-                    </div>
-                </label>
+                <Flex justifyContent="space-between" alignItems="center" className="category-select--btn" onClick={toggleShowCategorySelectionList}>
+                    <p>推荐至分类</p>
+                    <wx-image mode="widthFix" style={{ width: '20px' }} src="/assets/images/create/arrow.svg"></wx-image>
+                </Flex>
+                <Row gutter={[10, 10]} style={{ padding: '0 20px 20px 20px', }}>
+                    {
+                        categories.map(category => <Col key={category.id} className="category-tag--box">{category.name}</Col>)
+                    }
+                </Row>
             </Content>
             <Footer>
-                <button className="save--btn" onClick={handleSubmit}>发布这个菜谱</button>
+                <button className="save--btn" onClick={handleSubmit}>发布菜谱</button>
             </Footer>
             {
-                shouldShowCategorySelectionList && <CategorySelectionList categories={allCategories} />
-            }
-            {
-                isShowCategoryForm && (
-                    <CategoryForm
-                        currentCategory={currentCategory}
-                        onCloseCategoryForm={hideCategoryForm}
-                        onSubmitCategoryForm={saveCategory}
-                        categories={allCategories}
-                    />
-                )
+                shouldShowCategorySelectionList && <CategoriesSelect selectedCategories={categories} allCategories={allCategories} onConfirm={handleConfirmCategory} />
             }
         </Layout>
     );

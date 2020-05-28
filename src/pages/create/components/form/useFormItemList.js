@@ -21,7 +21,8 @@ function useFormItemList(initialItemList = [], {
     const deleteItem = (deletingIndex) => {
         setItemList((prevItemList) => {
             if (prevItemList.length <= 1) return prevItemList;
-            return prevItemList.filter((item, index) => index !== deletingIndex);
+            const itemList = prevItemList.filter((item, index) => index !== deletingIndex);
+            return itemList;
         });
     };
 
