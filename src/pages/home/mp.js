@@ -3,9 +3,9 @@ import withNavigation from '../../components/navigation';
 
 import Index from './index';
 
-const Home = withNavigation(Index);
+// const Home = withNavigation(Index);
 
-const initPage = createInitPage(Home);
+const initPage = createInitPage(Index);
 
 "undefined" != typeof wx && wx.getSystemInfoSync || initPage()
 

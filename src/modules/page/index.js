@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import store from '~/store';
 import { Navigation } from '~/components/navigation';
 import AuthorizeModal from '~/components/authorizeModal';
+import routes from '../../router/routes'
 import '~/styles/app.css';
 
 export default (Page, { shouldShowCreate = true } = {}) => () => {
@@ -23,13 +24,16 @@ export default (Page, { shouldShowCreate = true } = {}) => () => {
     const pages = getCurrentPages();
     const currentPage = pages[pages.length - 1];
     const pageQuery = currentPage.query || {};
+
     const query = Object.keys(pageQuery).reduce((newQuery, key) => ({
         ...newQuery,
         [key]: decodeURIComponent(pageQuery[key]),
     }), {});
 
+    const navigationTitle = routes(currentPage.document.$_cookie.$_pageName) && routes(currentPage.document.$_cookie.$_pageName).title;
+
     ReactDOM.render(
-        <Navigation shouldShowCreate={shouldShowCreate} />,
+        <Navigation shouldShowCreate={shouldShowCreate} navigationTitle={navigationTitle}/>,
         navigationContainer,
     );
 

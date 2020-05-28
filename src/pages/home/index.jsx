@@ -41,7 +41,7 @@ function Index() {
     }, [searchQuery, setSearchQuery])
 
     const renderHeader = () => (<HomeHeader handleSearchLink={handleSearchLink}/>)
-    console.log(cookbookList, '----- cookbook')
+
     const renderDataList = () => (
         <Row gutter={10} className="item-masonry">
             <Col span={12}>

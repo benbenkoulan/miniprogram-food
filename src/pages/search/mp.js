@@ -1,11 +1,7 @@
 import createInitPage from '../../modules/page';
-import withNavigation from '../../components/navigation';
-
 import Index from './index';
 
-const Search = withNavigation(Index, { navigationTitle: '搜索菜谱' });
-
-const initPage = createInitPage(Search);
+const initPage = createInitPage(Index);
 
 export default initPage;
 

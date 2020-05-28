@@ -1,11 +1,7 @@
 import createInitPage from '~/modules/page';
-import withNavigation from '~/components/navigation';
-
 import Index from './index';
 
-const Collection = withNavigation(Index, { navigationTitle: '我的收藏' });
-
-const initPage = createInitPage(Collection);
+const initPage = createInitPage(Index);
 
 export default initPage;
 
