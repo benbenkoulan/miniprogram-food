@@ -38,7 +38,11 @@
 
 }
 
-.authorOther--name {
+.authorOther--title {
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 80%;
     line-height: 30px;
     color: #444444;
 }

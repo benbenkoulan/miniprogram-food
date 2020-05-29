@@ -14,9 +14,9 @@ function AuthorOtherCookBook(props) {
                             <wx-image src={getImageUrl(detail.mainImageId)} className="authorOtherCookBook--image"/>
                         </div>
                         <div className="authorOther--wrap">
-                            <wx-text className="authorOther--name">
+                            <span className="authorOther--title">
                                 {detail.title}
-                            </wx-text>
+                            </span>
                             <wx-image src={props.authorUrl} className="authorOther--image"/>
                         </div>
                         <div className="authorOther-description--box">
