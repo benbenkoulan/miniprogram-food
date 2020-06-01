@@ -12,6 +12,15 @@ import './style.css'
 import { getImageUrl } from '../../modules/utils/image'
 import HomeHeader from './components/header'
 
+// setTimeout(() => {
+//     let i = 0;
+//     console.log(performance.now());
+//     while(i < 10000000000) {
+//         i++;
+//     }
+//     console.log(performance.now());
+// }, 10000);
+
 function Index() {
 
     const settings = useSelector(settingSelector)

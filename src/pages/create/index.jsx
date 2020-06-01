@@ -1,4 +1,5 @@
 import React, { Fragment, useMemo, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { Layout, Content, Footer, Flex, Row, Col } from 'micro-design';
 import 'micro-design/dist/es/components/layout/style';
@@ -24,12 +25,6 @@ import CategoriesSelect from './components/categoriesSelect';
 
 import './style.css';
 
-function getCategoryId(allCategories, parentCategoryIndex, categoryIndex) {
-    const parentCategory = allCategories[parentCategoryIndex];
-    const category = parentCategory.children[categoryIndex];
-    return category.id;
-}
-
 function IngredientConstructor() {
     this.name = '';
     this.weight = '';
@@ -41,6 +36,7 @@ function StepConstructor() {
 }
 
 function Create() {
+    const dispatch = useDispatch();
     const [shouldShowCategorySelectionList, toggleShowCategorySelectionList] = useToggle(false);
 
     const [allCategories] = useDataApi('getCategories', {

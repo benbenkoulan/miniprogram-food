@@ -24,8 +24,10 @@ function StepFormItem(props) {
     const imagePath = useMemo(() => getImageUrl(imageId), [imageId]);
 
     const handleClick = async () => {
-        const { tempFilePaths } = await chooseImage({ sizeType: ['original', 'compressed'] });
+        const res = await chooseImage({ sizeType: ['original', 'compressed'] });
+        const { tempFilePaths } = res;
         const filePath = tempFilePaths[0];
+        console.log(res);
         const { data } = await upload(filePath);
         onUpload(data);
     };
