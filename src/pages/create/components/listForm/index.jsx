@@ -8,7 +8,7 @@ import './style.css';
 function ListForm(props) {
     const { itemList, title, renderItem, onAdd, onDel } = props;
     const [isEditMode, setIsEditMode] = useState(false);
-    
+
     const handleEdit = () => {
         setIsEditMode(!isEditMode);
     };
@@ -17,13 +17,13 @@ function ListForm(props) {
         <Layout hasSider className="row--box" key={item}>
             {
                 isEditMode && (<Sider style={{ fontSize: 0 }}>
-                    <button className="delete-item--btn" onClick={() => onDel(index)}></button>
+                    <button className="delete-item--btn" onClick={() => onDel(index)}/>
                 </Sider>)
             }
             <Content>{renderItem(item, index)}</Content>
         </Layout>
     );
-    
+
     return (
         <div style={{ margin: '20px' }}>
             <header className="list-header--text">{title}</header>

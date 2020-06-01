@@ -42,16 +42,16 @@ function StepConstructor() {
 
 function Create() {
     const [shouldShowCategorySelectionList, toggleShowCategorySelectionList] = useToggle(false);
-    
+
     const [allCategories] = useDataApi('getCategories', {
         initialData: [],
         propertyName: 'data',
     });
-    
+
     const title = useFormItem('title', {
         rules: [{
             required: true,
-            maxLength: 10, 
+            maxLength: 10,
         }]
     });
     const description = useFormItem('description');
@@ -161,7 +161,7 @@ function Create() {
                 </label>
                 <Flex justifyContent="space-between" alignItems="center" className="category-select--btn" onClick={toggleShowCategorySelectionList}>
                     <p>推荐至分类</p>
-                    <wx-image mode="widthFix" style={{ width: '20px' }} src="/assets/images/create/arrow.svg"></wx-image>
+                    <wx-image mode="widthFix" style={{ width: '20px' }} src="/assets/images/create/arrow.svg"/>
                 </Flex>
                 <Row gutter={[10, 10]} style={{ padding: '0 20px 20px 20px', }}>
                     {
