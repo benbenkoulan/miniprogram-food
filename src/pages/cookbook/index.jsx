@@ -46,7 +46,7 @@ function CookBook(props) {
         <div className="page">
             <div>
                 <div className="cookbook-image--box">
-                    <wx-image mode="aspectFill" className="cookbook--image"
+                    <wx-image mode="aspectFit" className="cookbook--image"
                               src={getImageUrl(foodMaterials.mainImageId)}/>
                 </div>
                 <Layout className="menu--box">

@@ -11,7 +11,7 @@ function Step(props) {
                 <wx-p className="step--name">步骤 {index + 1}</wx-p>
                 {foodCookStep.imageId
                     ? <div>
-                        <wx-image className="step--image"
+                        <wx-image mode="widthFix" className="step--image"
                                   src={getImageUrl(foodCookStep.imageId)}/>
                     </div>
                     : null}
