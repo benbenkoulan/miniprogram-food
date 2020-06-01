@@ -6,7 +6,7 @@ import 'micro-design/dist/es/components/layout/style';
 import './style.css';
 
 function CookBook(props) {
-    const { title, imagePath, ingredients, username, onClickCookBook } = props;
+    const { title, imagePath, ingredients, username, onClickCookBook, collectionCount } = props;
 
     return (
         <div onClick={onClickCookBook}>
@@ -17,7 +17,7 @@ function CookBook(props) {
                 <Content style={{ textAlign: 'center' }} className={'menu-info--box'}>
                     <p className="menu-title--text">{title}</p>
                     <p className="menu-garnish--text">{ingredients}</p>
-                    <p className="menu-star--text">7个赞</p>
+                    <p className="menu-star--text">{collectionCount}个收藏</p>
                     <p className="menu-author--text">{username}</p>
                 </Content>
             </Layout>

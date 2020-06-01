@@ -9,6 +9,7 @@ import CookBook from './components/cookBook'
 export const convertCookbooks = (cookbooks = []) => cookbooks.map(cookbook => ({
     id: cookbook.id,
     title: cookbook.title,
+    collectionCount: cookbook.collectionCount,
     username: nullSafeGet(cookbook, 'user.username', ''),
     ingredients: cookbook.ingredients.map(ingredient => ingredient.name).join(),
     imagePath: getImageUrl(cookbook.mainImageId)
