@@ -8,6 +8,7 @@ function ScrollView(props) {
         renderContent,
         renderBottom,
         loadMore,
+        enableFlex = false,
         isLoading = true,
         hasMore = true,
     } = props;
@@ -31,7 +32,8 @@ function ScrollView(props) {
         <wx-scroll-view
             scroll-y={true}
             ref={scrollViewRef}
-            style={{ height: '100%' }}>
+            enable-flex={enableFlex}
+            style={{ height: '100%', ...(enableFlex ? { display: 'flex', flexDirection: 'column' } : {})}}>
             {
                 renderHeader()
             }

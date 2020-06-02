@@ -22,7 +22,8 @@ export const renderEmpty = () => (
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
-        height: '100%'
+        flex: 'auto'
+        // height: '100%'
     }}>
         <wx-image style={{ width: '160px' }} mode="widthFix" src="/assets/images/search/empty.svg"/>
         <p className="empty-tip--text">抱歉～当前没有相关菜谱哦</p>

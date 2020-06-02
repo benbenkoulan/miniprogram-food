@@ -47,7 +47,7 @@ function Search (props) {
 
     const renderBottom = useCallback(() => hasMore
         ? renderLoading()
-        : (<div style={{ textAlign: 'center' }}>已经到底了</div>),
+        : (<div style={{ textAlign: 'center', fontSize: '12px', color: '#666666' }}>已经到底了</div>),
     [hasMore]);
 
     const handleSearch = (keyword) => {
@@ -68,6 +68,7 @@ function Search (props) {
             </Header>
             <Content className="list--box">
                 <ScrollView
+                    enableFlex={true}
                     hasMore={hasMore}
                     isLoading={isLoading}
                     loadMore={memomizedLoadMore}

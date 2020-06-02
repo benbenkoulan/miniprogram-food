@@ -10,67 +10,6 @@ import SubCategory from './components/sub-category';
 
 import './style.css';
 
-// import MEISHI_IMG from '~/assets/images/meishi.jpg';
-
-const mockData = [{
-    id: 1,
-    name: '测试',
-    children: [{
-        id: 11,
-        name: '测试1'
-    },{
-        id: 12,
-        name: '测试1'
-    },{
-        id: 13,
-        name: '测试1'
-    },{
-        id: 14,
-        name: '测试1'
-    },{
-        id: 15,
-        name: '测试1'
-    }]
-}, {
-    id: 2,
-    name: '测试2',
-    children: [{
-        id: 11,
-        name: '测试1'
-    },{
-        id: 12,
-        name: '测试1'
-    },{
-        id: 13,
-        name: '测试1'
-    },{
-        id: 14,
-        name: '测试1'
-    },{
-        id: 15,
-        name: '测试1'
-    }]
-}, {
-    id: 3,
-    name: '测试3',
-    children: [{
-        id: 11,
-        name: '测试1'
-    },{
-        id: 12,
-        name: '测试1'
-    },{
-        id: 13,
-        name: '测试1'
-    },{
-        id: 14,
-        name: '测试1'
-    },{
-        id: 15,
-        name: '测试1'
-    }]
-}];
-
 function Category() {
     const [categories, setCategories] = useState([]);
 
@@ -104,11 +43,7 @@ function Category() {
     );
 
     return (
-        <div>
-            {/* <List
-                itemCount={categories.length}
-                itemSize={index => getItemSize(index)}
-            /> */}
+        <div className="page">
             {renderCategories()}
         </div>
     );
