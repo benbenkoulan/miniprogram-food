@@ -37,7 +37,7 @@ function My() {
             <Layout hasSider={true} className="section">
                 <Content className="nickname--text">
                     <wx-open-data type="userNickName" />
-                    <text className="join--text">2020-02 加入</text>
+                    <text className="join--text">{statisticsInfo.user && statisticsInfo.user.createdTime.substring(0,10)} 加入</text>
                 </Content>
                 <Sider width className="avtar--icon">
                     <wx-open-data type="userAvatarUrl" />
