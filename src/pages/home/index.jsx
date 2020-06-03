@@ -1,23 +1,48 @@
-import React, { useCallback } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useCallback, useMemo } from 'react'
 import { Row, Col } from 'micro-design'
 import 'micro-design/dist/es/components/grid/style'
 
-import { settingSelector } from '~/store/selector'
 import router from '~/router'
 import ScrollView from '~/components/scrollView'
 import usePagingListApi from '~/hooks/usePagingListApi'
+import systemInfo from '~/modules/miniprogram/system';
+import { getImageUrl } from '~/modules/utils/image'
 
 import './style.css'
-import { getImageUrl } from '../../modules/utils/image'
-import HomeHeader from './components/header'
+import HomeHeader from './components/header';
+
+const convertData = (dataList) => dataList.map(data => {
+    const extInfo = JSON.parse(data.extInfo || '{}');
+    const ratio = extInfo.width / extInfo.height;
+    return {
+        ...data,
+        ratio,
+    };
+});
+
+const renderCookBook = (cookBook) => {
+    console.log('start: ', Date.now());
+    const { windowWidth }  = systemInfo;
+    console.log('end: ', Date.now());
+    const imageWidth = (windowWidth - 30) / 2;
+    const imageHeight = imageWidth / cookBook.ratio;
+
+    return (
+        <div key={cookBook.id}
+            className="item"
+            onClick={() => router.push('cookbook', { id: cookBook.id })}>
+            <wx-image style={{ height: `${imageHeight}px` }}
+                className="cookbook--image"
+                src={getImageUrl(cookBook.mainImageId)}
+                mode='widthFix'/>
+            <wx-text style={{ fontSize: '14px' }}>{cookBook.title}</wx-text>
+        </div>
+    )
+};
 
 function Index() {
-
-    const settings = useSelector(settingSelector)
-
     const [{
-        data: cookbookList,
+        data: cookBookList,
         query: searchQuery,
         hasMore,
         isLoading
@@ -25,77 +50,55 @@ function Index() {
         initialQuery: {
             pageNumber: 0,
             pageSize: 10
-        }
-    })
-
-    const handleSearchLink = () => {
-        console.log(settings)
-        router.push('search')
-    }
+        },
+        convertData,
+    });
 
     const memomizedLoadMore = useCallback(() => {
         setSearchQuery({
             ...searchQuery,
             pageNumber: searchQuery.pageNumber + 1
         })
-    }, [searchQuery, setSearchQuery])
+    }, [searchQuery, setSearchQuery]);
 
-    const renderHeader = () => (<HomeHeader handleSearchLink={handleSearchLink}/>)
-
-    const renderDataList = () => (
+    const content = useMemo(() => (
         <Row gutter={10} className="item-masonry">
             <Col span={12}>
                 {
-                    cookbookList.map((cookbook, index) => (
-                        <React.Fragment key={cookbook.id}>
-                            {
-                                index % 2 === 0 ? (<div style={{ marginBottom: '10px' }} className="item"
-                                                        onClick={() => router.push('cookbook', { id: cookbook.id })}>
-                                    <wx-image className="cookbook--image" src={getImageUrl(cookbook.mainImageId)}
-                                              mode='widthFix'/>
-                                    <wx-text style={{ fontSize: '14px' }}>{cookbook.title}</wx-text>
-                                </div>) : null
-                            }
-                        </React.Fragment>
-                    ))
+                    cookBookList.map((cookBook, index) => index % 2 === 0 ? renderCookBook(cookBook) : null)
                 }
             </Col>
             <Col span={12}>
                 {
-                    cookbookList.map((cookbook, index) => (
-                        <React.Fragment key={cookbook.id}>
-                            {
-                                index % 2 === 1 ? (<div style={{ marginBottom: '10px' }} className="item"
-                                                        onClick={() => router.push('cookbook', { id: cookbook.id })}>
-                                    <wx-image className="cookbook--image" src={getImageUrl(cookbook.mainImageId)}
-                                              mode='widthFix'/>
-                                    <wx-text style={{ fontSize: '14px' }}>{cookbook.title}</wx-text>
-                                </div>) : null
-                            }
-                        </React.Fragment>
-                    ))
+                    cookBookList.map((cookBook, index) => index % 2 === 1 ? renderCookBook(cookBook) : null)
                 }
             </Col>
         </Row>
-    )
+    ), [cookBookList]);
 
-    const renderBottom = useCallback(() => (!hasMore && (
+    const bottom = useMemo(() => (!hasMore && (
         <div style={{
             textAlign: 'center',
             color: '#999999',
             fontSize: '12px',
             marginBottom: '10px'
-        }}>已经到底了</div>)), [hasMore])
+        }}>已经到底了</div>)), [hasMore]);
+
 
     return (
         <ScrollView
             hasMore={hasMore}
             isLoading={isLoading}
             loadMore={memomizedLoadMore}
-            renderHeader={renderHeader}
-            renderContent={renderDataList}
-            renderBottom={renderBottom}
-        />
+        >
+            <HomeHeader handleSearchLink={() => router.push('search')}/>
+            {
+                content
+            }
+            {
+                bottom
+            }
+        </ScrollView>
     )
 }
 

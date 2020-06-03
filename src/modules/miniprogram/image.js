@@ -6,3 +6,11 @@ export const chooseImage = ({ sizeType, count = 1 } = {}) => new Promise((resolv
         fail: reject,
     });
 });
+
+export const getImageInfo = (src) => new Promise((resolve, reject) => {
+    wx.getImageInfo({
+        src,
+        success: resolve,
+        fail: reject,
+    });
+});

@@ -56,7 +56,11 @@ module.exports = {
 		// sitemapLocation: 'sitemap.json',
 	},
 	global: {},
-	pages: {},
+	pages: {
+		home: {
+			pullDownRefresh: true,
+		}
+	},
 	optimization: {
 		domSubTreeLevel: 10,
 

@@ -4,9 +4,7 @@ import noop from 'lodash/noop';
 function ScrollView(props) {
     const scrollViewRef = useRef();
     const {
-        renderHeader,
-        renderContent,
-        renderBottom,
+        children,
         loadMore,
         enableFlex = false,
         isLoading = true,
@@ -35,25 +33,17 @@ function ScrollView(props) {
             enable-flex={enableFlex}
             style={{ height: '100%', ...(enableFlex ? { display: 'flex', flexDirection: 'column' } : {})}}>
             {
-                renderHeader()
-            }
-            {
-                renderContent()
-            }
-            {
-                renderBottom()
+                children
             }
         </wx-scroll-view>
     );
 }
 
 ScrollView.defaultProps = {
-    renderHeader: noop,
-    renderContent: noop,
-    renderBottom: noop,
     loadMore: noop,
     isLoading: true,
     hasMore: true,
+    enableFlex: false,
 };
 
 export default ScrollView;

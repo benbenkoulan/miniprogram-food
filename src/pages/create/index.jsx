@@ -6,11 +6,12 @@ import 'micro-design/dist/es/components/layout/style';
 import 'micro-design/dist/es/components/flex/style';
 import 'micro-design/dist/es/components/grid/style';
 
-import { upload } from '~/modules/miniprogram/file';
-import { chooseImage } from '~/modules/miniprogram/image';
+import { uploadFile } from '~/modules/miniprogram/file';
+import { chooseImage, getImageInfo } from '~/modules/miniprogram/image';
 import { showToast } from '~/modules/miniprogram/ui';
 import { send } from '~/modules/request/proxy';
 import { getImageUrl } from '~/modules/utils/image';
+import withLoading from '~/modules/hof/withLoading';
 import router from '~/router';
 import { showAuthorizeModal } from '~/store/action/app';
 import useToggle from '~/hooks/useToggle';
@@ -55,6 +56,7 @@ function Create() {
 
     const [mainImageId, setMainImageId] = useState();
     const mainImagePath = useMemo(() => getImageUrl(mainImageId), [mainImageId]);
+    const [extInfo, setExtInfo] = useState({});
 
     const [categories, setCategories] = useState([]);
 
@@ -82,8 +84,16 @@ function Create() {
     const handleUpload = async () => {
         const { tempFilePaths } = await chooseImage({ sizeType: ['original', 'compressed'] });
         const filePath = tempFilePaths[0];
-        const { data } = await upload(filePath);
+        const [{ data }, { width, height }] = await withLoading(() => Promise.all([
+            uploadFile(filePath),
+            getImageInfo(filePath),
+        ]))();
         setMainImageId(data);
+        setExtInfo({
+            ...extInfo,
+            width,
+            height,
+        });
     };
 
     const handleSubmit = async () => {
@@ -109,6 +119,8 @@ function Create() {
             steps,
             description: description.value,
             tip: tip.value,
+            extInfo: JSON.stringify(extInfo),
+            isPublish: true
         };
         await send('saveCookbook', { data: formData });
         await showToast({ title: '恭喜，美食已分享' });

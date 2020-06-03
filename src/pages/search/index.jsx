@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useMemo } from 'react';
 import { Layout, Content, Header } from 'micro-design';
 import 'micro-design/dist/es/components/layout/style.css';
 
@@ -40,12 +40,11 @@ function Search (props) {
         });
     }, [searchQuery, setSearchQuery]);
 
-    const renderContent = useCallback(() => 
-        (cookBookList.length === 0 && !hasMore)
-            ? renderEmpty()
-            : renderDataList(cookBookList), [hasMore, cookBookList]);
+    const content = useMemo(() => (cookBookList.length === 0 && !hasMore)
+    ? renderEmpty()
+    : renderDataList(cookBookList), [hasMore, cookBookList]);
 
-    const renderBottom = useCallback(() => hasMore
+    const bottom = useMemo(() => hasMore
         ? renderLoading()
         : (<div style={{ textAlign: 'center', fontSize: '12px', color: '#666666' }}>已经到底了</div>),
     [hasMore]);
@@ -72,9 +71,14 @@ function Search (props) {
                     hasMore={hasMore}
                     isLoading={isLoading}
                     loadMore={memomizedLoadMore}
-                    renderContent={renderContent}
-                    renderBottom={renderBottom}
-                />
+                >
+                    {
+                        content
+                    }
+                    {
+                        bottom
+                    }
+                </ScrollView>
             </Content>
         </Layout>
     )

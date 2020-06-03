@@ -32,12 +32,6 @@ export const renderEmpty = () => (
 
 export const renderLoading = () => (<div style={{ textAlign: 'center' }}>loading...</div>)
 
-// export const renderItem = (item) => (<CookBook
-//     key={item.id}
-//     {...item}
-//     onClickCookBook={() => router.push('cookbook', { id: item.id })}
-// />);
-
 export const renderDataList = (dataList) => dataList.map(item => (<CookBook
     key={item.id}
     {...item}

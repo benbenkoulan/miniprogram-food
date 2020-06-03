@@ -42,21 +42,15 @@
     margin-top: 20px;
 }
 
-.list-masonry::after {
-    /* column-count: 2;
-    column-gap: 10px;
-    margin: 0 10px;
-    font-size: 14px; */
-}
-
 .item-masonry {
+    padding: 0 16px;
     background-color: #fff;
     break-inside: avoid;
     box-sizing: border-box;
 }
 
 .item {
-    margin: 30px 10px;
+    margin: 30px 0;
 }
 
 .item-masonry image {
@@ -66,4 +60,5 @@
 .cookbook--image {
     width: 100%;
     height: 0;
+    border-radius: 4px;
 }

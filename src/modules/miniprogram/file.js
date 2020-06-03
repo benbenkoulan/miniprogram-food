@@ -5,7 +5,7 @@ import router from '~/router';
 import withLoading from '../hof/withLoading';
 import login from '../login';
 
-const uploadFile = (filePath) => new Promise((resolve, reject) => {
+export const uploadFile = (filePath) => new Promise((resolve, reject) => {
     const pageCookie = storage.get('PAGE_COOKIE')[''];
     const sessionKey = nullSafeGet(pageCookie, '/.SESSION.key');
     const sessionValue = nullSafeGet(pageCookie, '/.SESSION.value');
@@ -24,7 +24,6 @@ const uploadFile = (filePath) => new Promise((resolve, reject) => {
                 await login();
                 router.switchTab('home');
             }
-            console.log(res);
             try {
                 const result = JSON.parse(data);
                 resolve(result);
