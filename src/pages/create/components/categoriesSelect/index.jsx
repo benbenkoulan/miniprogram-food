@@ -26,9 +26,7 @@ function CategoriesSelect(props) {
             ];
         })
     );
-
-    console.log(initialAllCategories, initialSelectedCategories, categories);
-
+    
     const selectedCategories = useMemo(() => categories.filter(category => category.isSelected), [categories]);
 
     const toggleCategory = (categoryId) => {

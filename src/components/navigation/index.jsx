@@ -30,38 +30,3 @@ export function Navigation(props) {
         <NavigationBar {...navigationProps} />
     );
 }
-
-function withNavigation(PageComponent, { showCreate = true, navigationTitle = '' } = {}) {
-    return (props) => {
-        const [pageCount, setPageCount] = useState(getPageCount());
-
-        const rect = wx.getMenuButtonBoundingClientRect();
-        const systemInfo = wx.getSystemInfoSync();
-
-        const navigationProps = {
-            showCreate,
-            navigationTitle,
-            showBack: pageCount > 1,
-            paddingVertical: rect.top,
-            paddingHorizontal: systemInfo.windowWidth - rect.right,
-        };
-
-        useEffect(() => {
-            setPageCount(getPageCount());
-        }, []);
-
-        return (
-            <PageComponent {...props} />
-            // <Layout className="page">
-            //     <Header>
-            //         <NavigationBar {...navigationProps} />
-            //     </Header>
-            //     <Content>
-            //         <PageComponent {...props} />
-            //     </Content>
-            // </Layout>
-        );
-    }
-}
-
-export default withNavigation;
