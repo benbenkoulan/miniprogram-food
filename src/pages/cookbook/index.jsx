@@ -53,9 +53,9 @@ function CookBook(props) {
                     <wx-p className="cookbook--title">{foodMaterials.title}</wx-p>
                 </Layout>
             </div>
-            <AuthorInfo name={foodMaterials.user && foodMaterials.user.username}
+            <AuthorInfo name={foodMaterials.userDto && foodMaterials.userDto.username}
                         description={foodMaterials.description}
-                        authorUrl={foodMaterials.user && foodMaterials.user.avatarUrl}
+                        authorUrl={foodMaterials.userDto && foodMaterials.userDto.avatarUrl}
                         handleClickAttention={handleClickAttention}
                         isAttention={isAttention}/>
             <Ingredient ingredients={foodMaterials.ingredients}/>
@@ -67,7 +67,7 @@ function CookBook(props) {
                 </div>
             )}
             <Footer
-                    // pageView={3083}
+                    pageView={foodMaterials.browseCount}
                     collection={foodMaterials.collectionCount}
                     createdTime={foodMaterials.createdTime && foodMaterials.createdTime.slice(0, 10)}/>
             <AuthorOtherCookBook otherProducts={foodMaterials.otherProducts}
