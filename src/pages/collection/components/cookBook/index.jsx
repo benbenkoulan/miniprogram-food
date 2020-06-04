@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Modal from '~/components/Modal';
-import CookBook from '~/components/CookBook';
+import Modal from '~/components/modal';
+import CookBook from '~/components/cookBook';
 
 import './style.css';
 

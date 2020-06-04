@@ -7,6 +7,7 @@ import { Navigation } from '~/components/navigation'
 import AuthorizeModal from '~/components/authorizeModal'
 import routes from '../../router/routes'
 import '~/styles/app.css'
+import 'micro-design/es/micro.css';
 
 export default (Page, { shouldShowCreate = true, navigationTitle = '' } = {}) => () => {
     const root = document.createElement('div');

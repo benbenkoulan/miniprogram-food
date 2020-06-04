@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 import { Row, Col } from 'micro-design';
-import 'micro-design/dist/es/components/grid/style';
 
 import router from '~/router';
 import { send } from '~/modules/request/proxy';

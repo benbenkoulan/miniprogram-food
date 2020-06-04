@@ -40,7 +40,7 @@ module.exports = {
         runtimeChunk: false, // 必需字段，不能修改
         splitChunks: { // 代码分隔配置，不建议修改
             chunks: 'all',
-            minSize: 1000,
+            minSize: 100,
             maxSize: 0,
             minChunks: 1,
             maxAsyncRequests: 100,
@@ -49,8 +49,8 @@ module.exports = {
             name: true,
             cacheGroups: {
                 vendors: {
-                    test: /[\\/]node_modules[\\/]/,
-                    priority: -10
+                    test: /([\\/]node_modules[\\/]|micro-design)/,
+                    priority: -10,
                 },
                 default: {
                     minChunks: 2,
@@ -88,13 +88,7 @@ module.exports = {
                 test: /\.css$/,
                 use: [
                     MiniCssExtractPlugin.loader,
-                    'css-loader'
-                ],
-            },
-            {
-                test: /\.css$/,
-                exclude: /micro-design/,
-                use: [
+                    'css-loader',
                     'postcss-loader'
                 ],
             },
@@ -127,7 +121,7 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['*', '.js', '.jsx', '.json'],
+        extensions: ['.js', '.jsx', '.css', '.json'],
         alias: {
             '~': root(''),
         }
@@ -138,7 +132,7 @@ module.exports = {
             'process.env.isDev': process.env.NODE_ENV === 'development',
         }),
         new MiniCssExtractPlugin({
-            filename: '[name].wxss',
+            filename: '[name].wxss'
         }),
         new MpPlugin(require('./miniprogram.config')),
         new CopyWebpackPlugin([{

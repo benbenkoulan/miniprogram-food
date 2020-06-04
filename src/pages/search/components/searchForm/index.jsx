@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Row, Col, Layout, Sider, Content } from 'micro-design';
-import 'micro-design/dist/es/components/layout/style';
-import 'micro-design/dist/es/components/grid/style';
 
 import useFormItem from '~/hooks/form/useFormItem';
 

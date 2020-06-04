@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo } from 'react'
 import { Row, Col } from 'micro-design'
-import 'micro-design/dist/es/components/grid/style'
 
 import router from '~/router'
 import ScrollView from '~/components/scrollView'

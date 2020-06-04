@@ -1,7 +1,5 @@
 import React from 'react';
 import { Layout, Sider, Content } from 'micro-design';
-import 'micro-design/dist/es/components/grid/style';
-import 'micro-design/dist/es/components/layout/style';
 
 import './style.css';
 

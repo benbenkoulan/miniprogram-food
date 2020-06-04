@@ -1,6 +1,5 @@
 import React, { useMemo, Fragment } from 'react';
 import { Flex } from 'micro-design';
-import 'micro-design/dist/es/components/flex/style';
 
 import { getImageUrl } from '~/modules/utils/image';
 import { upload } from '~/modules/miniprogram/file';

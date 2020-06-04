@@ -1,5 +1,4 @@
 @import 'mixins';
-@import 'layout';
 
 .list-header--text {
     font-size: 18px;

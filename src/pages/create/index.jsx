@@ -2,9 +2,6 @@ import React, { Fragment, useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { Layout, Content, Footer, Flex, Row, Col } from 'micro-design';
-import 'micro-design/dist/es/components/layout/style';
-import 'micro-design/dist/es/components/flex/style';
-import 'micro-design/dist/es/components/grid/style';
 
 import { uploadFile } from '~/modules/miniprogram/file';
 import { chooseImage, getImageInfo } from '~/modules/miniprogram/image';
