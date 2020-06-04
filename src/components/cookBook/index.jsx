@@ -1,24 +1,29 @@
-import React from 'react';
-import { Layout, Sider, Content } from 'micro-design';
-import 'micro-design/dist/es/components/layout/style.css';
+import React from 'react'
+import { Layout, Sider, Content } from 'micro-design'
+import 'micro-design/dist/es/components/layout/style.css'
 
-import router from '~/router';
+import router from '~/router'
 
-import './style.css';
+import './style.css'
 
 function CookBook(props) {
-    const { imagePath, title, id, userName, avatarUrl, count, } = props;
-
+    const { imagePath, title, id, userName, avatarUrl, count, isDraft } = props
     const handleCookBookClick = () => {
         console.log('---handleCookBookClick--')
-        router.push('cookbook', { id });
-    };
+        router.push('cookbook', { id })
+    }
+
+    const handleCreateCookBook = () => {
+        router.push('create', { id })
+    }
 
     return (
-        <div style={{ margin: '20px'}} onClick={handleCookBookClick}>
-            <div className="cookbook-image--box">
-                <wx-image mode="aspectFill" className="cookbook--image" src={imagePath}/>
-            </div>
+        <div style={{ margin: '20px' }} onClick={isDraft ? handleCreateCookBook : handleCookBookClick}>
+            {imagePath
+                ? (<div className="cookbook-image--box">
+                    <wx-image mode="aspectFill" className="cookbook--image" src={imagePath}/>
+                </div>)
+                : <div className="no-picture">暂未上传图片</div>}
             <Layout hasSider>
                 <Content className="one-row--text cookbook-title--text">
                     {title}
@@ -44,7 +49,7 @@ CookBook.defaultProps = {
     title: '',
     avatarUrl: null,
     userName: '',
-    count: 0,
+    count: 0
 }
 
-export default CookBook;
+export default CookBook

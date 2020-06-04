@@ -71,8 +71,8 @@ function CookBook(props) {
                     collection={foodMaterials.collectionCount}
                     createdTime={foodMaterials.createdTime && foodMaterials.createdTime.slice(0, 10)}/>
             <AuthorOtherCookBook otherProducts={foodMaterials.otherProducts}
-                                 authorUrl={foodMaterials.user && foodMaterials.user.avatarUrl}
-                                 name={foodMaterials.user && foodMaterials.user.username}/>
+                                 authorUrl={foodMaterials.userDto && foodMaterials.userDto.avatarUrl}
+                                 name={foodMaterials.userDto && foodMaterials.userDto.username}/>
             <CollectionAndShare handleClickCollection={handleClickCollection}
                                 isCollection={isCollection}/>
         </div>

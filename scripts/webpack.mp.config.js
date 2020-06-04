@@ -25,7 +25,8 @@ module.exports = {
         my_cookbook: getPageEntry('my_cookbook'),
         collection: getPageEntry('collection'),
         cookbook: getPageEntry('cookbook'),
-        my_follow: getPageEntry('my_follow')
+        my_follow: getPageEntry('my_follow'),
+        my_draft: getPageEntry('my_draft')
     },
     output: {
         path: path.resolve(__dirname, '../build/mp/common'), // 放到小程序代码目录中的 common 目录下
@@ -108,14 +109,10 @@ module.exports = {
                 loader: 'babel-loader',
                 exclude: /node_modules/,
                 options: {
-                    presets: [
-                        '@babel/preset-env',
-                        '@babel/preset-typescript'
-                    ],
-                    plugins : [ 
-                        ["transform-react-jsx"], 
+                    plugins : [
+                        ["transform-react-jsx"],
                         ["class"],
-                    ] 
+                    ]
                 }
             },
             // {
@@ -130,7 +127,7 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['*', '.js', '.jsx', '.ts', '.tsx', '.css', '.json'],
+        extensions: ['*', '.js', '.jsx', '.json'],
         alias: {
             '~': root(''),
         }

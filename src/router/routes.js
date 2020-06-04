@@ -32,8 +32,12 @@ const routes = [{
     title: '我的关注'
 }, {
     name: 'category',
-    path: 'pages/category/index',
+    path: '/pages/category/index',
     // title: '菜谱分类'
+}, {
+    name: 'my_draft',
+    path: '/pages/my_draft/index',
+    title: '草稿箱'
 }]
 
 export default (pageName) => routes.find(route => route.name === pageName);

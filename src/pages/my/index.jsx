@@ -1,14 +1,14 @@
-import React from 'react';
-import { Row, Col, Layout, Sider, Content } from 'micro-design';
-import 'micro-design/dist/es/components/grid/style';
-import 'micro-design/dist/es/components/layout/style';
+import React from 'react'
+import { Row, Col, Layout, Sider, Content } from 'micro-design'
+import 'micro-design/dist/es/components/grid/style'
+import 'micro-design/dist/es/components/layout/style'
 
-import useDataApi from '~/hooks/useDataApi';
-import router from '~/router';
+import useDataApi from '~/hooks/useDataApi'
+import router from '~/router'
 
-import Menu from './components/menu';
+import Menu from './components/menu'
 
-import './style.css';
+import './style.css'
 
 const getMenus = () => [{
     key: 'COLLECTION',
@@ -17,30 +17,36 @@ const getMenus = () => [{
 }, {
     key: 'FOLLOW',
     text: '我的关注',
-    onClick: () => router.push('my_follow'),
+    onClick: () => router.push('my_follow')
 }, {
     key: 'MYCOOKBOOK',
     text: '我的菜谱',
     onClick: () => router.push('my_cookbook')
-}];
+}, {
+    key: 'DRAFT',
+    text: '草稿箱',
+    onClick: () => router.push('my_draft')
+}]
 
 function My() {
     const [statisticsInfo] = useDataApi('getStatisticsInfo', {
         initialData: {},
-        propertyName: 'data',
-    });
+        propertyName: 'data'
+    })
 
-    const menus = getMenus();
+    const menus = getMenus()
 
     return (
         <div className="page">
             <Layout hasSider={true} className="section">
                 <Content className="nickname--text">
-                    <wx-open-data type="userNickName" />
-                    <text className="join--text">{statisticsInfo.user && statisticsInfo.user.createdTime.substring(0,10)} 加入</text>
+                    <wx-open-data type="userNickName"/>
+                    <text
+                        className="join--text">{statisticsInfo.user && statisticsInfo.user.createdTime.substring(0, 10)} 加入
+                    </text>
                 </Content>
                 <Sider width className="avtar--icon">
-                    <wx-open-data type="userAvatarUrl" />
+                    <wx-open-data type="userAvatarUrl"/>
                 </Sider>
             </Layout>
             <Layout hasSider align="center" justify="space-between" className="section">
@@ -64,7 +70,7 @@ function My() {
                 menus.map(menu => <Menu {...menu} />)
             }
         </div>
-    );
+    )
 }
 
-export default My;
+export default My

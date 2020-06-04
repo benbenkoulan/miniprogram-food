@@ -4,7 +4,6 @@ function useFormItemList(initialItemList = [], {
     ItemConstructor = Object,
 }) {
     const [itemList, setItemList] = useState(initialItemList);
-
     const addItem = () => {
         setItemList([
             ...itemList,
@@ -32,6 +31,7 @@ function useFormItemList(initialItemList = [], {
             addItem,
             updateItem,
             deleteItem,
+            setItemList
         }
     ];
 }

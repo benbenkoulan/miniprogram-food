@@ -9,7 +9,7 @@ function useDataApi(serviceName, {
     propertyName = 'content',
 }) {
     const [data, setData] = useState(initialData);
-    const [query, setQuery] = useState(initialQuery);    
+    const [query, setQuery] = useState(initialQuery);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -22,6 +22,6 @@ function useDataApi(serviceName, {
     }, [query, propertyName, convertData, serviceName]);
 
     return [data, setData, setQuery];
-};
+}
 
 export default useDataApi;

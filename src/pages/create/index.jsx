@@ -1,5 +1,5 @@
-import React, { Fragment, useMemo, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { Fragment, useEffect, useMemo, useState } from 'react'
+import { useDispatch } from 'react-redux'
 
 import { Layout, Content, Footer, Flex, Row, Col } from 'micro-design';
 import 'micro-design/dist/es/components/layout/style';
@@ -36,39 +36,64 @@ function StepConstructor() {
     this.description = '';
 }
 
-function Create() {
-    const dispatch = useDispatch();
-    const [shouldShowCategorySelectionList, toggleShowCategorySelectionList] = useToggle(false);
-
+function Create(props) {
+    const {id} = props.query || {}
+    const [draft, setDraft] = useState({}); //todo delete
     const [allCategories] = useDataApi('getCategories', {
         initialData: [],
-        propertyName: 'data',
-    });
+        propertyName: 'data'
+    })
+
+    useEffect( () => {
+        if(id) {
+            const fetchData = async() =>{
+                const { data = {} } = await send('getCookbookDetail', {data:{id}})
+                setDraft(data);
+                setMainImageId(data.mainImageId);
+                setIngredientList(data.ingredients);
+                setStepList(data.steps);
+                setCategories(data.categoryProducts.map(product => {
+                    return {
+                        id: product.categoryId,
+                    }
+                }));
+            }
+            fetchData();
+        }
+    }, [id])
+
+    const dispatch = useDispatch()
+    const [shouldShowCategorySelectionList, toggleShowCategorySelectionList] = useToggle(false)
 
     const title = useFormItem('title', {
+        initialValue: draft.title ? draft.title : undefined,
         rules: [{
             required: true,
-            maxLength: 10,
+            maxLength: 10
         }]
-    });
-    const description = useFormItem('description');
-    const tip = useFormItem('tip');
+    })
+    const description = useFormItem('description',{
+        initialValue: draft.description ? draft.description : undefined
+    })
+    const tip = useFormItem('tip',{
+        initialValue: draft.tip ? draft.tip : undefined
+    })
 
     const [mainImageId, setMainImageId] = useState();
     const mainImagePath = useMemo(() => getImageUrl(mainImageId), [mainImageId]);
     const [extInfo, setExtInfo] = useState({});
 
-    const [categories, setCategories] = useState([]);
 
+    const [categories, setCategories] = useState([])
     const handleConfirmCategory = (selectedCategories) => {
-        setCategories(selectedCategories);
-        toggleShowCategorySelectionList();
-    };
-
+        setCategories(selectedCategories)
+        toggleShowCategorySelectionList()
+    }
     const [ingredientList, {
         addItem: addIngredient,
         deleteItem: deleteIngredient,
         updateItem: updateIngredient,
+        setItemList: setIngredientList
     }] = useFormItemList([new IngredientConstructor], {
         ItemConstructor: IngredientConstructor,
     });
@@ -77,9 +102,10 @@ function Create() {
         addItem: addStep,
         deleteItem: deleteStep,
         updateItem: updateStep,
+        setItemList: setStepList
     }] = useFormItemList([new StepConstructor], {
-        ItemConstructor: StepConstructor,
-    });
+        ItemConstructor: StepConstructor
+    })
 
     const handleUpload = async () => {
         const { tempFilePaths } = await chooseImage({ sizeType: ['original', 'compressed'] });
@@ -96,22 +122,23 @@ function Create() {
         });
     };
 
-    const handleSubmit = async () => {
-        const { data: isAuthorized } = await send('getIsAuthorized');
+    const handleSubmit = async (isPublish) => {
+        const { data: isAuthorized } = await send('getIsAuthorized')
         if (!isAuthorized) {
-            dispatch(showAuthorizeModal());
-            return;
+            dispatch(showAuthorizeModal())
+            return
         }
-        const categoryProducts = categories.map(category => ({ categoryId: category.id }));
+        const categoryProducts = categories.map(category => ({ categoryId: category.id }))
         const ingredients = ingredientList.map((ingredient, index) => ({
             lineNumber: index + 1,
-            ...ingredient,
-        }));
+            ...ingredient
+        }))
         const steps = stepList.map((step, index) => ({
             lineNumber: index + 1,
-            ...step,
-        }));
+            ...step
+        }))
         const formData = {
+            id: id ? id : undefined,
             title: title.value,
             mainImageId,
             categoryProducts,
@@ -119,13 +146,13 @@ function Create() {
             steps,
             description: description.value,
             tip: tip.value,
+            isPublish: isPublish ? 1 : 0,
             extInfo: JSON.stringify(extInfo),
-            isPublish: true
-        };
-        await send('saveCookbook', { data: formData });
-        await showToast({ title: '恭喜，美食已分享' });
-        router.switchTab('my');
-    };
+        }
+        await send('saveCookbook', { data: formData })
+        await showToast({ title: '恭喜，美食已分享' })
+        router.switchTab('my')
+    }
 
     return (
         <Layout className="page">
@@ -138,7 +165,7 @@ function Create() {
                     onClick={handleUpload}
                 >
                     {
-                        mainImagePath ? <wx-image mode="aspectFit" src={mainImagePath} /> : (<Fragment>
+                        mainImagePath ? <wx-image mode="aspectFit" src={mainImagePath}/> : (<Fragment>
                             <p>+菜谱封面</p>
                             <p>诱人的封面是吸引朋友的关键</p>
                         </Fragment>)
@@ -155,36 +182,47 @@ function Create() {
                     itemList={ingredientList}
                     onAdd={addIngredient}
                     onDel={(item) => deleteIngredient(item)}
-                    renderItem={(item, index) => (<IngredientFormItem onChange={(newItem) => updateIngredient(newItem, index)} {...item} />)}
+                    renderItem={(item, index) => (
+                        <IngredientFormItem onChange={(newItem) => updateIngredient(newItem, index)} {...item} />)}
                 />
                 <ListForm
                     title="步骤"
                     itemList={stepList}
                     onAdd={addStep}
                     onDel={(index) => deleteStep(index)}
-                    renderItem={(item, index) => (<StepFormItem onChange={(newItem) => updateStep(newItem, index)} onUpload={(imageId) => updateStep({ ...item, imageId,}, index)} onChange={(newItem) => updateStep(newItem, index)} {...item} />)}
+                    renderItem={(item, index) => (<StepFormItem onChange={(newItem) => updateStep(newItem, index)}
+                                                                onUpload={(imageId) => updateStep({
+                                                                    ...item,
+                                                                    imageId
+                                                                }, index)}
+                                                                onChange={(newItem) => updateStep(newItem, index)} {...item} />)}
                 />
                 <label class="form-item--box">
                     <input placeholder="多给点建议你好我也好" className="textarea--box" {...tip} />
                 </label>
-                <Flex justifyContent="space-between" alignItems="center" className="category-select--btn" onClick={toggleShowCategorySelectionList}>
+                <Flex justifyContent="space-between" alignItems="center" className="category-select--btn"
+                      onClick={toggleShowCategorySelectionList}>
                     <p>推荐至分类</p>
                     <wx-image mode="widthFix" style={{ width: '20px' }} src="/assets/images/create/arrow.svg"/>
                 </Flex>
-                <Row gutter={[10, 10]} style={{ padding: '0 20px 20px 20px', }}>
+                <Row gutter={[10, 10]} style={{ padding: '0 20px 20px 20px' }}>
                     {
-                        categories.map(category => <Col key={category.id} className="category-tag--box">{category.name}</Col>)
+                        categories.map(category => <Col key={category.id}
+                                                        className="category-tag--box">{category.name}</Col>)
                     }
                 </Row>
             </Content>
             <Footer>
-                <button className="save--btn" onClick={handleSubmit}>发布菜谱</button>
+                <button className="drafts--btn" onClick={() => handleSubmit(false)}>保存至草稿箱</button>
+                <button className="save--btn" onClick={() => handleSubmit(true)}>发布菜谱</button>
             </Footer>
             {
-                shouldShowCategorySelectionList && <CategoriesSelect selectedCategories={categories} allCategories={allCategories} onConfirm={handleConfirmCategory} />
+                shouldShowCategorySelectionList &&
+                <CategoriesSelect selectedCategories={categories} allCategories={allCategories}
+                                  onConfirm={handleConfirmCategory}/>
             }
         </Layout>
-    );
+    )
 }
 
-export default Create;
+export default Create

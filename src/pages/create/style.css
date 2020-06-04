@@ -76,9 +76,9 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         font-size: 12px;
-        
+
     }
-    
+
     & .close--icon {
         position: absolute;
         right: -20px;
@@ -104,12 +104,17 @@
     background-color: #1296db;
 }
 
-.save--btn {
-    width: 100%;
+
+.save--btn, .drafts--btn {
+    width: 50%;
     height: 50px;
     line-height: 50px;
     text-align: center;
     font-size: 16px;
     color: #ffffff;
     background-color: #1296db;
+}
+
+.drafts--btn {
+    background-color: #87CEFF;
 }
