@@ -108,6 +108,10 @@ module.exports = {
                 loader: 'babel-loader',
                 exclude: /node_modules/,
                 options: {
+                    presets: [
+                        '@babel/preset-env',
+                        '@babel/preset-typescript'
+                    ],
                     plugins : [ 
                         ["transform-react-jsx"], 
                         ["class"],
@@ -126,7 +130,7 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['*', '.js', '.jsx', '.json'],
+        extensions: ['*', '.js', '.jsx', '.ts', '.tsx', '.css', '.json'],
         alias: {
             '~': root(''),
         }

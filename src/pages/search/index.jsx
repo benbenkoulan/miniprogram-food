@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback, useMemo } from 'react';
 import { Layout, Content, Header } from 'micro-design';
-import 'micro-design/dist/es/components/layout/style.css';
+import 'micro-design/dist/es/components/layout/style';
 
 import usePagingListApi from '~/hooks/usePagingListApi';
 import ScrollView from '~/components/scrollView';

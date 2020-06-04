@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Row, Col } from 'micro-design';
-import 'micro-design/dist/es/components/flex/style.css';
+import 'micro-design/dist/es/components/flex/style';
 
 import Modal from '../modal';
 import { authorize } from '~/store/action/user';

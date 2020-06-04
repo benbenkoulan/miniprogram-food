@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Flex, Layout, Sider, Content } from 'micro-design';
 import 'micro-design/dist/es/components/flex/style';
-import 'micro-design/dist/es/components/layout/style.css';
+import 'micro-design/dist/es/components/layout/style';
 
 import './style.css';
 

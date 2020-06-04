@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Content, Header } from 'micro-design';
-import 'micro-design/dist/es/components/layout/style.css';
 
 import { getPageCount } from '~/router';
 
