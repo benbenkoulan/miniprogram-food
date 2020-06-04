@@ -1,6 +1,6 @@
-import React, { Fragment, useEffect, useMemo, useState } from 'react'
-import { useDispatch } from 'react-redux'
-
+import React, { Fragment, useEffect, useMemo, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import flatMap from 'lodash/flatMap';
 import { Layout, Content, Footer, Flex, Row, Col } from 'micro-design';
 
 import { uploadFile } from '~/modules/miniprogram/file';
@@ -33,13 +33,15 @@ function StepConstructor() {
     this.description = '';
 }
 
+const convertCategories = (data) => flatMap(data, (category) => [
+    category,
+    ...category.children,
+]);
+
 function Create(props) {
-    const {id} = props.query || {}
-    const [draft, setDraft] = useState({}); //todo delete
-    const [allCategories] = useDataApi('getCategories', {
-        initialData: [],
-        propertyName: 'data'
-    })
+    const { id } = props.query || {}
+    
+    const [draft, setDraft] = useState({});
 
     useEffect( () => {
         if(id) {
@@ -49,43 +51,49 @@ function Create(props) {
                 setMainImageId(data.mainImageId);
                 setIngredientList(data.ingredients);
                 setStepList(data.steps);
-                setCategories(data.categoryProducts.map(product => {
-                    return {
-                        id: product.categoryId,
-                    }
-                }));
+                setCategoryIds(data.categoryProducts.map(categoryProduct => categoryProduct.categoryId));
             }
             fetchData();
         }
-    }, [id])
+    }, [id, setIngredientList, setStepList])
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const [shouldShowCategorySelectionList, toggleShowCategorySelectionList] = useToggle(false)
 
     const title = useFormItem('title', {
-        initialValue: draft.title ? draft.title : undefined,
+        initialValue: draft.title,
         rules: [{
             required: true,
             maxLength: 10
         }]
-    })
-    const description = useFormItem('description',{
-        initialValue: draft.description ? draft.description : undefined
-    })
-    const tip = useFormItem('tip',{
-        initialValue: draft.tip ? draft.tip : undefined
-    })
+    });
+    const description = useFormItem('description', {
+        initialValue: draft.description,
+    });
+    const tip = useFormItem('tip', {
+        initialValue: draft.tip,
+    });
 
     const [mainImageId, setMainImageId] = useState();
     const mainImagePath = useMemo(() => getImageUrl(mainImageId), [mainImageId]);
     const [extInfo, setExtInfo] = useState({});
 
+    const [allCategories] = useDataApi('getCategories', {
+        initialData: [],
+        propertyName: 'data',
+        convertData: convertCategories,
+    });
+    const [categoryIds, setCategoryIds] = useState([]);
+    const categories = useMemo(() => {
+        if (!allCategories.length) return [];
+        return categoryIds.map(categoryId => allCategories.find(category => category.id === categoryId));
+    }, [categoryIds, allCategories]);
 
-    const [categories, setCategories] = useState([])
-    const handleConfirmCategory = (selectedCategories) => {
-        setCategories(selectedCategories)
-        toggleShowCategorySelectionList()
+    const handleConfirmCategory = (selectedCategoryIds) => {
+        setCategoryIds(selectedCategoryIds);
+        toggleShowCategorySelectionList();
     }
+
     const [ingredientList, {
         addItem: addIngredient,
         deleteItem: deleteIngredient,
@@ -135,7 +143,7 @@ function Create(props) {
             ...step
         }))
         const formData = {
-            id: id ? id : undefined,
+            id,
             title: title.value,
             mainImageId,
             categoryProducts,
@@ -147,8 +155,12 @@ function Create(props) {
             extInfo: JSON.stringify(extInfo),
         }
         await send('saveCookbook', { data: formData })
-        await showToast({ title: '恭喜，美食已分享' })
-        router.switchTab('my')
+        if (isPublish) {
+            await showToast({ title: '恭喜，美食已分享' })
+            router.switchTab('my')
+        } else {
+            showToast({ title: '已保存至草稿箱', duration: 1000 });
+        }
     }
 
     return (
@@ -215,7 +227,7 @@ function Create(props) {
             </Footer>
             {
                 shouldShowCategorySelectionList &&
-                <CategoriesSelect selectedCategories={categories} allCategories={allCategories}
+                <CategoriesSelect selectedCategoryIds={categoryIds} allCategories={allCategories}
                                   onConfirm={handleConfirmCategory}/>
             }
         </Layout>

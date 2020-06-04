@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react';
 import { Layout, Content, Footer } from 'micro-design';
-import flatMap from 'lodash/flatMap'
 
 import Modal from '~/components/modal';
 
@@ -11,21 +10,13 @@ import './style.css';
 function CategoriesSelect(props) {
     const {
         allCategories: initialAllCategories = [],
-        selectedCategories: initialSelectedCategories = [],
+        selectedCategoryIds: initialSelectedCategoryIds = [],
         onConfirm
     } = props;
-    const [categories, setCategories] = useState(
-        () => flatMap(initialAllCategories, (category) => {
-            const childCategories = category.children.map(childCategory => ({
-                ...childCategory,
-                isSelected: !!initialSelectedCategories.find(initialSelectedCategory => initialSelectedCategory.id === childCategory.id),
-            }));
-            return [
-                category,
-                ...childCategories,
-            ];
-        })
-    );
+    const [categories, setCategories] = useState(() => initialAllCategories.map(category => category.parentId ? {
+        ...category,
+        isSelected: !!initialSelectedCategoryIds.find(initialSelectedCategoryId => initialSelectedCategoryId === category.id),
+    } : category));
     
     const selectedCategories = useMemo(() => categories.filter(category => category.isSelected), [categories]);
 
@@ -36,6 +27,10 @@ function CategoriesSelect(props) {
 
     const handleUncheck = (categoryId) => {
         setCategories(categories.map(category => category.id === categoryId ? ({ ...category, isSelected: false, }) : category));
+    };
+
+    const handleConfirm = () => {
+        onConfirm(selectedCategories.map(selectedCategory => selectedCategory.id));
     };
 
     return (
@@ -58,7 +53,7 @@ function CategoriesSelect(props) {
                     }
                 </Content>
                 <Footer>
-                    <div className="confirm--btn" onClick={() => onConfirm(selectedCategories)}>选好了</div>
+                    <div className="confirm--btn" onClick={handleConfirm}>选好了</div>
                 </Footer>
             </Layout>
         </Modal>
