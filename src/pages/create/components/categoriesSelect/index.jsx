@@ -21,8 +21,10 @@ function CategoriesSelect(props) {
     const selectedCategories = useMemo(() => categories.filter(category => category.isSelected), [categories]);
 
     const toggleCategory = (categoryId) => {
-        if (selectedCategories.length >= 5) return;
-        setCategories(categories.map(category => category.id === categoryId ? ({ ...category, isSelected: !category.isSelected, }) : category));
+        const currentCategory = categories.find(category => category.id === categoryId);
+        if (currentCategory.isSelected || selectedCategories.length < 5) {
+            setCategories(categories.map(category => category.id === categoryId ? ({ ...category, isSelected: !category.isSelected, }) : category));
+        }
     };
 
     const handleUncheck = (categoryId) => {
