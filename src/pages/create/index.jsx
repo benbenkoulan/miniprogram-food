@@ -39,23 +39,24 @@ const convertCategories = (data) => flatMap(data, (category) => [
 ]);
 
 function Create(props) {
-    const { id } = props.query || {}
+    const query = props.query || {}
     
     const [draft, setDraft] = useState({});
+    const [id, setId] = useState(query.id);
 
-    useEffect( () => {
-        if(id) {
-            const fetchData = async() =>{
-                const { data = {} } = await send('getCookbookDetail', {data:{id}})
+    useEffect(() => {
+        const initData = async () => {
+            if (id) {
+                const { data = {} } = await send('getCookbookDetail', { data:{ id } })
                 setDraft(data);
                 setMainImageId(data.mainImageId);
                 setIngredientList(data.ingredients);
                 setStepList(data.steps);
                 setCategoryIds(data.categoryProducts.map(categoryProduct => categoryProduct.categoryId));
             }
-            fetchData();
         }
-    }, [id, setIngredientList, setStepList])
+        initData();
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const dispatch = useDispatch();
     const [shouldShowCategorySelectionList, toggleShowCategorySelectionList] = useToggle(false)
@@ -70,6 +71,7 @@ function Create(props) {
     const description = useFormItem('description', {
         initialValue: draft.description,
     });
+
     const tip = useFormItem('tip', {
         initialValue: draft.tip,
     });
@@ -92,7 +94,7 @@ function Create(props) {
     const handleConfirmCategory = (selectedCategoryIds) => {
         setCategoryIds(selectedCategoryIds);
         toggleShowCategorySelectionList();
-    }
+    };
 
     const [ingredientList, {
         addItem: addIngredient,
@@ -110,7 +112,7 @@ function Create(props) {
         setItemList: setStepList
     }] = useFormItemList([new StepConstructor], {
         ItemConstructor: StepConstructor
-    })
+    });
 
     const handleUpload = async () => {
         const { tempFilePaths } = await chooseImage({ sizeType: ['original', 'compressed'] });
@@ -154,14 +156,15 @@ function Create(props) {
             isPublish: isPublish ? 1 : 0,
             extInfo: JSON.stringify(extInfo),
         }
-        await send('saveCookbook', { data: formData })
+        const { data }  = await send('saveCookbook', { data: formData });
         if (isPublish) {
             await showToast({ title: '恭喜，美食已分享' })
             router.switchTab('my')
         } else {
+            setId(data.id);
             showToast({ title: '已保存至草稿箱', duration: 1000 });
         }
-    }
+    };
 
     return (
         <Layout className="page">
@@ -214,7 +217,7 @@ function Create(props) {
                     <p>推荐至分类</p>
                     <wx-image mode="widthFix" style={{ width: '20px' }} src="/assets/images/create/arrow.svg"/>
                 </Flex>
-                <Row gutter={[10, 10]} style={{ padding: '0 20px 20px 20px' }}>
+                <Row gutter={[10, 10]} style={{ padding: '0 20px 20px 20px', width: '100%', boxSizing: 'border-box' }}>
                     {
                         categories.map(category => <Col key={category.id}
                                                         className="category-tag--box">{category.name}</Col>)

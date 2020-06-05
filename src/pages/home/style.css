@@ -43,14 +43,11 @@
 }
 
 .item-masonry {
-    padding: 0 16px;
-    background-color: #fff;
-    break-inside: avoid;
-    box-sizing: border-box;
+    padding: 20px 10px 0 10px;
 }
 
 .item {
-    margin: 30px 0;
+    margin-bottom: 20px;
 }
 
 .item-masonry image {

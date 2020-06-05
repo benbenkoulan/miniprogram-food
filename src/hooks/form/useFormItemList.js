@@ -12,7 +12,6 @@ function useFormItemList(initialItemList = [], {
     };
 
     const updateItem = (newItem, itemIndex) => {
-        console.log(newItem, itemIndex);
         const newItemList = itemList.map((item, index) => itemIndex === index ? newItem : item);
         setItemList(newItemList);
     };
