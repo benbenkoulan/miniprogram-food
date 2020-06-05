@@ -26,7 +26,7 @@ function CookBook(props) {
     }
 
     const handleClickAttention = () => {
-        send('upsertAttention', { data: { starUserId: foodMaterials.user.id, isAttention: !isAttention } })
+        send('upsertAttention', { data: { starUserId: foodMaterials.userDto.id, isAttention: !isAttention } })
             .then(() =>{
                 setIsAttention(!isAttention);
             });
