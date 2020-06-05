@@ -38,6 +38,10 @@ const routes = [{
     name: 'my_draft',
     path: '/pages/my_draft/index',
     title: '草稿箱'
+}, {
+    name: 'user_home',
+    path: '/pages/user_home/index',
+    title: '个人主页'
 }]
 
 export default (pageName) => routes.find(route => route.name === pageName);
