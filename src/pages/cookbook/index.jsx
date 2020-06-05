@@ -67,7 +67,7 @@ function CookBook(props) {
                 </div>
             )}
             <Footer
-                    pageView={foodMaterials.browseCount}
+                    browseCount={foodMaterials.browseCount}
                     collection={foodMaterials.collectionCount}
                     createdTime={foodMaterials.createdTime && foodMaterials.createdTime.slice(0, 10)}/>
             <AuthorOtherCookBook otherProducts={foodMaterials.otherProducts}
