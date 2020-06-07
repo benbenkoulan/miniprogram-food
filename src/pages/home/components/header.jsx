@@ -3,7 +3,7 @@ import React from 'react'
 function HomeHeader(props) {
 
     const handleClickSearch = () => {
-        props.handleSearchLink();
+        props.onClickSearch();
     }
 
     return (

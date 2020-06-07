@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, Fragment } from 'react'
 import { Row, Col } from 'micro-design'
 
 import router from '~/router'
@@ -48,7 +48,7 @@ function Index() {
     }, setSearchQuery] = usePagingListApi('searchCookbooks', {
         initialQuery: {
             pageNumber: 0,
-            pageSize: 10
+            pageSize: 6
         },
         convertData,
     });
@@ -60,44 +60,41 @@ function Index() {
         })
     }, [searchQuery, setSearchQuery]);
 
-    const content = useMemo(() => (
-        <Row gutter={10} className="item-masonry">
-            <Col span={12}>
-                {
-                    cookBookList.map((cookBook, index) => index % 2 === 0 ? renderCookBook(cookBook) : null)
-                }
-            </Col>
-            <Col span={12}>
-                {
-                    cookBookList.map((cookBook, index) => index % 2 === 1 ? renderCookBook(cookBook) : null)
-                }
-            </Col>
-        </Row>
-    ), [cookBookList]);
-
-    const bottom = useMemo(() => (!hasMore && (
-        <div style={{
-            textAlign: 'center',
-            color: '#999999',
-            fontSize: '12px',
-            marginBottom: '10px'
-        }}>已经到底了</div>)), [hasMore]);
+    const render = useCallback(() => (
+        <Fragment>
+            <HomeHeader onClickSearch={() => { router.push('search'); }} />
+            <Row gutter={10} className="item-masonry">
+                <Col span={12}>
+                    {
+                        cookBookList.map((cookBook, index) => index % 2 === 0 ? renderCookBook(cookBook) : null)
+                    }
+                </Col>
+                <Col span={12}>
+                    {
+                        cookBookList.map((cookBook, index) => index % 2 === 1 ? renderCookBook(cookBook) : null)
+                    }
+                </Col>
+            </Row>
+            {
+                !hasMore && (
+                    <div style={{
+                        textAlign: 'center',
+                        color: '#999999',
+                        fontSize: '12px',
+                        marginBottom: '10px'
+                    }}>已经到底了</div>)
+            }
+        </Fragment>
+    ), [cookBookList, hasMore]);
 
 
     return (
         <ScrollView
+            render={render}
             hasMore={hasMore}
             isLoading={isLoading}
             loadMore={memomizedLoadMore}
-        >
-            <HomeHeader handleSearchLink={() => router.push('search')}/>
-            {
-                content
-            }
-            {
-                bottom
-            }
-        </ScrollView>
+        />
     )
 }
 

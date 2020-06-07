@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useMemo } from 'react';
+import React, { useEffect, useCallback, Fragment } from 'react';
 import { Layout, Content, Header } from 'micro-design';
 
 import usePagingListApi from '~/hooks/usePagingListApi';
@@ -39,14 +39,26 @@ function Search (props) {
         });
     }, [searchQuery, setSearchQuery]);
 
-    const content = useMemo(() => (cookBookList.length === 0 && !hasMore)
-    ? renderEmpty()
-    : renderDataList(cookBookList), [hasMore, cookBookList]);
-
-    const bottom = useMemo(() => hasMore
-        ? renderLoading()
-        : (<div style={{ textAlign: 'center', fontSize: '12px', color: '#666666' }}>已经到底了</div>),
-    [hasMore]);
+    const render = useCallback(() => (
+        <Fragment>
+            {
+                (cookBookList.length === 0 && !hasMore) ? (<div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: '100%',
+                    flex: 1,
+                }}>
+                    <wx-image style={{ width: '160px' }} mode="widthFix" src="/assets/images/search/empty.svg"/>
+                    <p className="empty-tip--text">抱歉～当前没有相关菜谱哦</p>
+                </div>) : renderDataList(cookBookList)
+            }
+            <div style={{ textAlign: 'center', fontSize: '12px', color: '#666666' }}>
+                { hasMore ? '加载中' : '已经到底了' }
+            </div>
+        </Fragment>
+    ), [hasMore, cookBookList]);
 
     const handleSearch = (keyword) => {
         setSearchQuery({
@@ -69,15 +81,9 @@ function Search (props) {
                     enableFlex={true}
                     hasMore={hasMore}
                     isLoading={isLoading}
+                    render={render}
                     loadMore={memomizedLoadMore}
-                >
-                    {
-                        content
-                    }
-                    {
-                        bottom
-                    }
-                </ScrollView>
+                />
             </Content>
         </Layout>
     )
