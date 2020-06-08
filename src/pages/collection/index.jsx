@@ -7,6 +7,7 @@ import { getImageUrl } from '~/modules/utils/image';
 import { send } from '~/modules/request/proxy';
 
 import CookBookWithDel from './components/cookBook';
+import router from '~/router'
 
 const convertCollections = collections => collections.map((collection) => ({
     id: collection.id,
@@ -39,6 +40,11 @@ function Collection(props) {
         setShouldShowDelMenu(false);
     };
 
+    const handleCookBookClick = (id) => {
+        console.log('---handleCookBookClick--')
+        router.push('cookbook', { id })
+    }
+
     return (
         <div className="page">
             {
@@ -49,6 +55,7 @@ function Collection(props) {
                     onCancel={handleCancel}
                     onDelete={getUnCollectHandler(collection.id)}
                     shouldShowDelMenu={shouldShowDelMenu}
+                    handleClickCookBook={() => handleCookBookClick(collection.id)}
                 />))
             }
         </div>

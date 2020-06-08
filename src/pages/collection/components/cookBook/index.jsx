@@ -15,7 +15,7 @@ function CookBookWithDel(props) {
 
     return (
         <div className="cookbook-del--container">
-            <CookBook {...collection} />
+            <CookBook {...collection} handleClickEvent={props.handleClickCookBook}/>
             <button className="cookbook-operate--btn" onClick={onOperate}>操作</button>
             {
                 props.shouldShowDelMenu && (

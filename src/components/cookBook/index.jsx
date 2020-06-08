@@ -6,18 +6,14 @@ import router from '~/router'
 import './style.css'
 
 function CookBook(props) {
-    const { imagePath, title, id, userName, avatarUrl, count, isDraft } = props
-    const handleCookBookClick = () => {
-        console.log('---handleCookBookClick--')
-        router.push('cookbook', { id })
-    }
+    const { imagePath, title, id, userName, avatarUrl, count } = props
 
-    const handleCreateCookBook = () => {
-        router.push('create', { id })
+    const handleClick = () => {
+        props.handleClickEvent();
     }
 
     return (
-        <div style={{ margin: '20px' }} onClick={isDraft ? handleCreateCookBook : handleCookBookClick}>
+        <div style={{ margin: '20px' }} onClick={handleClick}>
             {imagePath
                 ? (<div className="cookbook-image--box">
                     <wx-image mode="aspectFill" className="cookbook--image" src={imagePath}/>

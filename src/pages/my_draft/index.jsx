@@ -3,6 +3,7 @@ import CookBook from '../../components/cookBook'
 import useDataApi from '../../hooks/useDataApi'
 import nullSafeGet from 'lodash/get';
 import { getImageUrl } from '../../modules/utils/image'
+import router from '~/router'
 
 
 const convertDraft = drafts => drafts.map((draft) => ({
@@ -21,9 +22,13 @@ function MyDraft(props) {
         convertData: convertDraft,
     });
 
+    const handleCreateCookBook = (id) => {
+        router.push('create', { id })
+    }
+
     return (
         <div className="page">
-            {drafts.map((draft) => (<CookBook key={draft.id} {...draft} />))}
+            {drafts.map((draft) => (<CookBook key={draft.id} {...draft} handleClickEvent={() => handleCreateCookBook(draft.id)} />))}
         </div>
     )
 }

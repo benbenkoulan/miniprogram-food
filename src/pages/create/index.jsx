@@ -40,7 +40,7 @@ const convertCategories = (data) => flatMap(data, (category) => [
 
 function Create(props) {
     const query = props.query || {}
-    
+
     const [draft, setDraft] = useState({});
     const [id, setId] = useState(query.id);
 
