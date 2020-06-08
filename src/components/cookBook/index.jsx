@@ -6,7 +6,7 @@ import router from '~/router'
 import './style.css'
 
 function CookBook(props) {
-    const { imagePath, title, id, userName, avatarUrl, count } = props
+    const { imagePath, title, userName, avatarUrl, collectionCount } = props
 
     const handleClick = () => {
         props.handleClickEvent();
@@ -27,9 +27,9 @@ function CookBook(props) {
                     <wx-image className="author--icon" src={avatarUrl}/>
                 </Sider>
             </Layout>
-            <Layout hasSider className="cookbook-follow--text">
+            <Layout hasSider style={{ justifyContent: 'center' }} className="cookbook-follow--text">
                 <Content>
-                    收藏{count}人
+                    { collectionCount > 0 ? `收藏${collectionCount}人` : '' }
                 </Content>
                 <Sider width="100px" className="author-info--box">
                     {userName}

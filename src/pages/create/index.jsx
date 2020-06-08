@@ -59,7 +59,9 @@ function Create(props) {
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const dispatch = useDispatch();
-    const [shouldShowCategorySelectionList, toggleShowCategorySelectionList] = useToggle(false)
+    const [shouldShowCategorySelectionList, {
+        toggle: toggleShouldShowCategorySelectionList
+    }] = useToggle(false);
 
     const title = useFormItem('title', {
         initialValue: draft.title,
@@ -93,7 +95,7 @@ function Create(props) {
 
     const handleConfirmCategory = (selectedCategoryIds) => {
         setCategoryIds(selectedCategoryIds);
-        toggleShowCategorySelectionList();
+        toggleShouldShowCategorySelectionList();
     };
 
     const [ingredientList, {
@@ -213,7 +215,7 @@ function Create(props) {
                     <input placeholder="多给点建议你好我也好" className="textarea--box" {...tip} />
                 </label>
                 <Flex justifyContent="space-between" alignItems="center" className="category-select--btn"
-                      onClick={toggleShowCategorySelectionList}>
+                      onClick={toggleShouldShowCategorySelectionList}>
                     <p>推荐至分类</p>
                     <wx-image mode="widthFix" style={{ width: '20px' }} src="/assets/images/create/arrow.svg"/>
                 </Flex>

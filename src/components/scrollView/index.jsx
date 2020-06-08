@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import noop from 'lodash/noop';
 
+import './style.css';
+
 function ScrollView(props) {
     const scrollViewRef = useRef();
     const {
@@ -31,6 +33,7 @@ function ScrollView(props) {
             scroll-y={true}
             ref={scrollViewRef}
             enable-flex={enableFlex}
+            className="scroll-view--container"
             style={{ height: '100%', ...(enableFlex ? { display: 'flex', flexDirection: 'column' } : {})}}>
             {
                 render && render()

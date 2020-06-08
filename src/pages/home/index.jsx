@@ -20,9 +20,7 @@ const convertData = (dataList) => dataList.map(data => {
 });
 
 const renderCookBook = (cookBook) => {
-    console.log('start: ', Date.now());
     const { windowWidth }  = systemInfo;
-    console.log('end: ', Date.now());
     const imageWidth = (windowWidth - 30) / 2;
     const imageHeight = imageWidth / cookBook.ratio;
 
@@ -82,7 +80,7 @@ function Index() {
                         color: '#999999',
                         fontSize: '12px',
                         marginBottom: '10px'
-                    }}>已经到底了</div>)
+                    }}>这就是全部啦</div>)
             }
         </Fragment>
     ), [cookBookList, hasMore]);

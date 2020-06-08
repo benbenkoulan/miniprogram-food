@@ -3,9 +3,11 @@ import { Layout, Content, Header } from 'micro-design';
 
 import usePagingListApi from '~/hooks/usePagingListApi';
 import ScrollView from '~/components/scrollView';
+import { SORT_TYPE } from '~/modules/constant/cookBook';
 
-import { convertCookbooks, renderLoading, renderEmpty, renderDataList } from './utils';
+import { convertCookbooks, renderDataList } from './utils';
 import SearchForm from './components/searchForm';
+import OrderContainer from './components/orderContainer';
 
 import './style.css';
 
@@ -20,9 +22,10 @@ function Search (props) {
     }, setSearchQuery] = usePagingListApi('searchCookbooks', {
         initialQuery: {
             categoryId,
-            keyword: '',
+            keyword: categoryName,
             pageNumber: 0,
             pageSize: 10,
+            sortKey: SORT_TYPE.DEFAULT,
         },
         convertData: convertCookbooks,
     });
@@ -39,8 +42,18 @@ function Search (props) {
         });
     }, [searchQuery, setSearchQuery]);
 
+    const handleChangeSortType = (sortKey) => {
+        if (searchQuery.sortKey === sortKey) return;
+        setSearchQuery({
+            ...searchQuery,
+            pageNumber: 0,
+            sortKey,
+        });
+    };
+
     const render = useCallback(() => (
         <Fragment>
+            <OrderContainer onCheck={handleChangeSortType} currentSortKey={searchQuery.sortKey} />
             {
                 (cookBookList.length === 0 && !hasMore) ? (<div style={{
                     display: 'flex',
@@ -55,7 +68,7 @@ function Search (props) {
                 </div>) : renderDataList(cookBookList)
             }
             <div style={{ textAlign: 'center', fontSize: '12px', color: '#666666' }}>
-                { hasMore ? '加载中' : '已经到底了' }
+                { hasMore ? '加载更多中' : '这就是全部啦' }
             </div>
         </Fragment>
     ), [hasMore, cookBookList]);
@@ -64,6 +77,7 @@ function Search (props) {
         setSearchQuery({
             ...searchQuery,
             pageNumber: 0,
+            categoryId: '',
             keyword,
         });
     };

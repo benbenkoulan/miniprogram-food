@@ -10,7 +10,7 @@ const convertCookBook = (cookBooks) => cookBooks.map(cookBook => ({
     id: cookBook.id,
     title: cookBook.title,
     imagePath: getImageUrl(cookBook.mainImageId),
-    count: cookBook.collectionCount,
+    collectionCount: cookBook.collectionCount,
 }));
 
 function MyCookBook() {

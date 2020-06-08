@@ -1,0 +1,3 @@
+.scroll-view--container {
+    -webkit-overflow-scrolling: touch;
+}

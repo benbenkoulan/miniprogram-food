@@ -1,0 +1,17 @@
+@import 'mixins.css';
+
+.sort--container {
+    position: sticky;
+    top: 0;
+    background-color: #ffffff;
+}
+
+.sort--box {
+    @mixin height-middle 40px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.sort--box.active {
+    color: #1296db;
+}

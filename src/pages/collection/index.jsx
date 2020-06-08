@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import nullSafeGet from 'lodash/get';
 import memoize from 'lodash/memoize';
 
 import useDataApi from '~/hooks/useDataApi';
+import useToggle from '~/hooks/useToggle';
 import { getImageUrl } from '~/modules/utils/image';
 import { send } from '~/modules/request/proxy';
 
@@ -17,8 +18,11 @@ const convertCollections = collections => collections.map((collection) => ({
     avatarUrl: nullSafeGet(collection, 'user.avatarUrl'),
 }));
 
-function Collection(props) {
-    const [shouldShowDelMenu, setShouldShowDelMenu] = useState(false);
+function Collection() {
+    const [shouldShowDelMenu, {
+        open: showDelMenu,
+        close: hideDelMenu,
+    }] = useToggle(false);
     const [collections, setCollections] = useDataApi('getMyCollections', {
         initialData: [],
         initialQuery: { pageNumber: 0, pageSize: 50 },
@@ -29,21 +33,12 @@ function Collection(props) {
         await send('upsertCollection', { data: { productId: id, isCollection: false } });
         const newCollections = collections.filter(collection => collection.id !== id);
         setCollections(newCollections);
-        setShouldShowDelMenu(false);
+        hideDelMenu();
     });
-
-    const handleOperate = () => {
-        setShouldShowDelMenu(true);
-    };
-
-    const handleCancel = () => {
-        setShouldShowDelMenu(false);
-    };
-
+    
     const handleCookBookClick = (id) => {
-        console.log('---handleCookBookClick--')
         router.push('cookbook', { id })
-    }
+    };
 
     return (
         <div className="page">
@@ -51,8 +46,8 @@ function Collection(props) {
                 collections.map(collection => (<CookBookWithDel
                     key={collection.id}
                     collection={collection}
-                    onOperate={handleOperate}
-                    onCancel={handleCancel}
+                    onOperate={showDelMenu}
+                    onCancel={hideDelMenu}
                     onDelete={getUnCollectHandler(collection.id)}
                     shouldShowDelMenu={shouldShowDelMenu}
                     handleClickCookBook={() => handleCookBookClick(collection.id)}

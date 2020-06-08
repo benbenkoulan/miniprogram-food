@@ -61,6 +61,9 @@ module.exports = {
 	pages: {
 		home: {
 			pullDownRefresh: true,
+		},
+		search: {
+			pullDownRefresh: true,
 		}
 	},
 	optimization: {

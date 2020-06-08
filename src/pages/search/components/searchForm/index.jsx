@@ -23,10 +23,6 @@ function SearchForm(props) {
 
     const handleSearch = () => onSearch(keyword.value);
 
-    // useEffect(() => {
-    //     keyword.setValue(initialKeyword);
-    // }, [keyword, initialKeyword]);
-
     return (
         <Layout hasSider className="search-form--box">
             <Content>
