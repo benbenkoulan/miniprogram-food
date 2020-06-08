@@ -5,7 +5,7 @@ import { SORT_TYPE } from '~/modules/constant/cookBook';
 
 import './style.css';
 
-function OrderContainer(props) {
+function SortContainer(props) {
     const {
         currentSortKey,
         onCheck,
@@ -28,4 +28,4 @@ function OrderContainer(props) {
     )
 }
 
-export default OrderContainer;
+export default SortContainer;

@@ -7,7 +7,7 @@ import { SORT_TYPE } from '~/modules/constant/cookBook';
 
 import { convertCookbooks, renderDataList } from './utils';
 import SearchForm from './components/searchForm';
-import OrderContainer from './components/orderContainer';
+import SortContainer from './components/sortContainer';
 
 import './style.css';
 
@@ -42,18 +42,22 @@ function Search (props) {
         });
     }, [searchQuery, setSearchQuery]);
 
-    const handleChangeSortType = (sortKey) => {
+    const handleChangeSortType = useCallback((sortKey) => {
         if (searchQuery.sortKey === sortKey) return;
         setSearchQuery({
             ...searchQuery,
             pageNumber: 0,
             sortKey,
         });
-    };
+    }, [searchQuery, setSearchQuery]);
+
+    const renderSort = useCallback(() => (<SortContainer onCheck={handleChangeSortType} currentSortKey={searchQuery.sortKey} />), [handleChangeSortType, searchQuery]);
 
     const render = useCallback(() => (
         <Fragment>
-            <OrderContainer onCheck={handleChangeSortType} currentSortKey={searchQuery.sortKey} />
+            {
+                renderSort()
+            }
             {
                 (cookBookList.length === 0 && !hasMore) ? (<div style={{
                     display: 'flex',
@@ -71,7 +75,7 @@ function Search (props) {
                 { hasMore ? '加载更多中' : '这就是全部啦' }
             </div>
         </Fragment>
-    ), [hasMore, cookBookList]);
+    ), [hasMore, cookBookList, renderSort]);
 
     const handleSearch = (keyword) => {
         setSearchQuery({
