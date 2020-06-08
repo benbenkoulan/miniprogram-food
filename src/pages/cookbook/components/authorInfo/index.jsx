@@ -16,12 +16,12 @@ function AuthorInfo(props) {
     return (
         <div>
             <Layout hasSider className="author-info--box">
-                <div className="author-info" onClick={handleClickUserHome}>
+                <Content className="author-info" onClick={handleClickUserHome}>
                     <wx-image className="author--icon" src={props.authorUrl}/>
                     <Content className="author--name">
                         {props.name}
                     </Content>
-                </div>
+                </Content>
                 <Sider width="80px" className="attention-btn--box">
                     {props.isAttention
                         ? <div className="attention--btn grey" onClick={handleClickAttention}>已关注</div>

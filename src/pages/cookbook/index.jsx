@@ -14,44 +14,40 @@ import router from '~/router'
 
 function CookBook(props) {
 
-    const {id} = props.query || {}
+    const { id } = props.query || {}
     const [foodMaterials, setFoodMaterials] = useState({})
     const [isAttention, setIsAttention] = useState(foodMaterials.isAttention)
     const [isCollection, setIsCollection] = useState(foodMaterials.isCollection)
 
-    const handleClickCollection = () => {
-        send('upsertCollection', { data: { productId: foodMaterials.id, isCollection: !isCollection } })
-            .then(() =>{
-                setIsCollection(!isCollection);
-            });
+    const handleClickCollection = async () => {
+        await send('upsertCollection', { data: { productId: foodMaterials.id, isCollection: !isCollection } })
+        setIsCollection(!isCollection)
     }
 
-    const handleClickAttention = () => {
-        send('upsertAttention', { data: { starUserId: foodMaterials.userDto.id, isAttention: !isAttention } })
-            .then(() =>{
-                setIsAttention(!isAttention);
-            });
+    const handleClickAttention = async () => {
+        await end('upsertAttention', { data: { starUserId: foodMaterials.userDto.id, isAttention: !isAttention } })
+        setIsAttention(!isAttention)
     }
 
-    useEffect( () => {
-        const fetchData = async() =>{
-            const { data = {} } = await send('getCookbookDetail', {data:{id: id ? id : 11}})
+    useEffect(() => {
+        const fetchData = async () => {
+            const { data = {} } = await send('getCookbookDetail', { data: { id: id ? id : 11 } })
             setFoodMaterials(data)
             setIsAttention(data.isAttention)
             setIsCollection(data.isCollection)
         }
-        fetchData();
+        fetchData()
     }, [id])
 
     const handleClickUserHome = () => {
-        router.push('user_home');
+        router.push('user_home')
     }
 
     return (
         <div className="page">
             <div>
                 <div className="cookbook-image--box">
-                    <wx-image mode="aspectFit" className="cookbook--image"
+                    <wx-image mode="aspectFill" className="cookbook--image"
                               src={getImageUrl(foodMaterials.mainImageId)}/>
                 </div>
                 <Layout className="menu--box">
@@ -73,9 +69,9 @@ function CookBook(props) {
                 </div>
             )}
             <Footer
-                    browseCount={foodMaterials.browseCount}
-                    collection={foodMaterials.collectionCount}
-                    createdTime={foodMaterials.createdTime && foodMaterials.createdTime.slice(0, 10)}/>
+                browseCount={foodMaterials.browseCount}
+                collection={foodMaterials.collectionCount}
+                createdTime={foodMaterials.createdTime && foodMaterials.createdTime.slice(0, 10)}/>
             <AuthorOtherCookBook otherProducts={foodMaterials.otherProducts}
                                  authorUrl={foodMaterials.userDto && foodMaterials.userDto.avatarUrl}
                                  name={foodMaterials.userDto && foodMaterials.userDto.username}/>
