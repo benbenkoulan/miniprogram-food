@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import './style.css'
 import { Layout } from 'micro-design'
+
+import useToggle from '~/hooks/useToggle';
+import useShareAppMessage from '~/hooks/useShareAppMessage';
 import { send } from '~/modules/request/proxy'
 
 import AuthorOtherCookBook from './components/authorOtherCookBook/index.jsx'
@@ -13,35 +16,40 @@ import { getImageUrl } from '../../modules/utils/image'
 import router from '~/router'
 
 function CookBook(props) {
+    const { id } = props.query || {};
 
-    const { id } = props.query || {}
-    const [foodMaterials, setFoodMaterials] = useState({})
-    const [isAttention, setIsAttention] = useState(foodMaterials.isAttention)
-    const [isCollection, setIsCollection] = useState(foodMaterials.isCollection)
-
-    const handleClickCollection = async () => {
-        await send('upsertCollection', { data: { productId: foodMaterials.id, isCollection: !isCollection } })
-        setIsCollection(!isCollection)
-    }
-
-    const handleClickAttention = async () => {
-        await end('upsertAttention', { data: { starUserId: foodMaterials.userDto.id, isAttention: !isAttention } })
-        setIsAttention(!isAttention)
-    }
+    const [isAttention, { toggle: toggleIsAttention }] = useToggle(false);
+    const [isCollection, { toggle: toggleIsCollection }] = useToggle(false);
+    const [foodMaterials, setFoodMaterials] = useState({});
 
     useEffect(() => {
         const fetchData = async () => {
-            const { data = {} } = await send('getCookbookDetail', { data: { id: id ? id : 11 } })
-            setFoodMaterials(data)
-            setIsAttention(data.isAttention)
-            setIsCollection(data.isCollection)
-        }
-        fetchData()
-    }, [id])
+            const { data } = await send('getCookbookDetail', { data: { id } });
+            toggleIsAttention(data.isAttention);
+            toggleIsCollection(data.isCollection);
+            setFoodMaterials(data);
+        };
+        fetchData();
+    }, [id]);
+
+    useShareAppMessage({
+        title: foodMaterials.title || '这个美食很不错',
+        path: `/pages/search/index?id=${foodMaterials.id}`,
+    });
+
+    const handleClickCollection = async () => {
+        await send('upsertCollection', { data: { productId: foodMaterials.id, isCollection: !isCollection } });
+        toggleIsCollection();
+    };
+
+    const handleClickAttention = async () => {
+        await send('upsertAttention', { data: { starUserId: foodMaterials.userDto.id, isAttention: !isAttention } })
+        toggleIsAttention();
+    };
 
     const handleClickUserHome = () => {
         router.push('user_home', {userId: foodMaterials.userId})
-    }
+    };
 
     return (
         <div className="page">
@@ -76,7 +84,9 @@ function CookBook(props) {
                                  authorUrl={foodMaterials.userDto && foodMaterials.userDto.avatarUrl}
                                  name={foodMaterials.userDto && foodMaterials.userDto.username}/>
             <CollectionAndShare handleClickCollection={handleClickCollection}
-                                isCollection={isCollection}/>
+                                isCollection={isCollection}
+                                cookBookId={id}
+                                />
         </div>
     )
 }

@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import isNil from 'lodash/isNil';
 
 function useToggle(initialStatus = false) {
     const [status, setStatus] = useState(initialStatus);
 
-    const toggle = () => {
-        setStatus(!status);
+    const toggle = (forceStatus) => {
+        const newStatus = isNil(forceStatus) ? !status : forceStatus;
+        setStatus(newStatus);
     };
 
     const open = () => setStatus(true);
