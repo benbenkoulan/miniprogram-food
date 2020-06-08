@@ -7,7 +7,7 @@ function Step(props) {
 
     const renderCookStepDetail = (foodCookSteps) => (
         foodCookSteps.map((foodCookStep, index) => (
-            <Layout className="menu--box">
+            <Layout className="menu--box section">
                 <wx-p className="step--name">步骤 {index + 1}</wx-p>
                 {foodCookStep.imageId
                     ? <div>
