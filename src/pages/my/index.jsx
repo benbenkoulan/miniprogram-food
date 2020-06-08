@@ -1,12 +1,10 @@
 import React from 'react'
-import { Row, Col, Layout, Sider, Content } from 'micro-design'
-
 import useDataApi from '~/hooks/useDataApi'
 import router from '~/router'
 
 import Menu from './components/menu'
 
-import './style.css'
+import UserInfo from '~/components/userInfo'
 
 const getMenus = () => [{
     key: 'COLLECTION',
@@ -36,34 +34,7 @@ function My() {
 
     return (
         <div className="page">
-            <Layout hasSider={true} className="section">
-                <Content className="nickname--text">
-                    <wx-open-data type="userNickName"/>
-                    <text
-                        className="join--text">{statisticsInfo.user && statisticsInfo.user.createdTime.substring(0, 10)} 加入
-                    </text>
-                </Content>
-                <Sider width className="avtar--icon">
-                    <wx-open-data type="userAvatarUrl"/>
-                </Sider>
-            </Layout>
-            <Layout hasSider align="center" justify="space-between" className="section">
-                <Content>
-                    <Row>
-                        <Col span={6}>
-                            <p>{statisticsInfo.starCount}</p>
-                            <p>关注</p>
-                        </Col>
-                        <Col span={6}>
-                            <p>{statisticsInfo.fansCount}</p>
-                            <p>粉丝</p>
-                        </Col>
-                    </Row>
-                </Content>
-                <Sider width="80px">
-                    <wx-button className="share--btn" open-type="share">分享</wx-button>
-                </Sider>
-            </Layout>
+            <UserInfo {...statisticsInfo} isSection/>
             {
                 menus.map(menu => <Menu {...menu} />)
             }

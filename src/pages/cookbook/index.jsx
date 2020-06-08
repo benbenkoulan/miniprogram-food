@@ -40,7 +40,7 @@ function CookBook(props) {
     }, [id])
 
     const handleClickUserHome = () => {
-        router.push('user_home')
+        router.push('user_home', {userId: foodMaterials.userId})
     }
 
     return (

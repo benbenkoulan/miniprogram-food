@@ -1,0 +1,55 @@
+.section {
+    padding: 20px;
+}
+
+.section {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.wrap {
+    height: 100px;
+    padding: 20px 20px 10px 20px;
+}
+
+.avtar--icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.join--text {
+    font-size: 10px;
+}
+
+.share--btn, .attention--btn {
+     width: 60px;
+     height: 30px;
+     line-height: 30px;
+     border-radius: 4px;
+     background-color: green!important;
+     color: #ffffff!important;
+     text-align: center;
+     font-size: 12px;
+ }
+
+.attention--btn{
+    width: 80px;
+    background-color: orangered!important;
+}
+
+.section {
+    padding: 20px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.nickname--text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 24px;
+}
+
+.margin-left{
+    margin-left: 10px;
+}

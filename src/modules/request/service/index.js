@@ -12,7 +12,8 @@ const services = [
     { name: 'upsertCollection', url: '/services/user/collection', method: 'POST'},
     { name: 'getMyFollows', url: '/services/user/my-attentions', method: 'GET' },
     { name: 'getMyCollections', url: '/services/user/my-collections', method: 'GET' },
-    { name: 'getDrafts', url: '/services/product/my-drafts', method: 'GET' }
+    { name: 'getDrafts', url: '/services/product/my-drafts', method: 'GET' },
+    { name: 'getOtherUserInfo', url: '/services/user/{userId}/statistics-info', method: 'GET' },
 ];
 
 export default (serviceName) => services.find(service => service.name === serviceName);
