@@ -1,9 +1,9 @@
-.cookbook-del--container {
+.operate-menu--container {
     position: relative;
     margin-bottom: 30px
 }
 
-.cookbook-operate--btn {
+.operate--btn {
     position: absolute;
     right: 30px;
     top: 10px;

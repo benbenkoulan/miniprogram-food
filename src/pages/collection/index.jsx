@@ -3,11 +3,12 @@ import nullSafeGet from 'lodash/get';
 import memoize from 'lodash/memoize';
 
 import useDataApi from '~/hooks/useDataApi';
-import useToggle from '~/hooks/useToggle';
 import { getImageUrl } from '~/modules/utils/image';
 import { send } from '~/modules/request/proxy';
 
-import CookBookWithDel from './components/cookBook';
+import OperationMenu from '~/components/operationMenu';
+import CookBook from '~/components/cookBook';
+
 import router from '~/router'
 
 const convertCollections = collections => collections.map((collection) => ({
@@ -19,10 +20,6 @@ const convertCollections = collections => collections.map((collection) => ({
 }));
 
 function Collection() {
-    const [shouldShowDelMenu, {
-        open: showDelMenu,
-        close: hideDelMenu,
-    }] = useToggle(false);
     const [collections, setCollections] = useDataApi('getMyCollections', {
         initialData: [],
         initialQuery: { pageNumber: 0, pageSize: 50 },
@@ -35,23 +32,25 @@ function Collection() {
         setCollections(newCollections);
         hideDelMenu();
     });
-    
-    const handleCookBookClick = (id) => {
-        router.push('cookbook', { id })
-    };
+
+    const getCookBookClickHandler = memoize((id) => () => {
+        router.push('cookbook', { id });
+    });
 
     return (
         <div className="page">
             {
-                collections.map(collection => (<CookBookWithDel
-                    key={collection.id}
-                    collection={collection}
-                    onOperate={showDelMenu}
-                    onCancel={hideDelMenu}
-                    onDelete={getUnCollectHandler(collection.id)}
-                    shouldShowDelMenu={shouldShowDelMenu}
-                    handleClickCookBook={() => handleCookBookClick(collection.id)}
-                />))
+                collections.map(collection => (
+                    <OperationMenu
+                        key={collection.id}
+                        onMainMenuClick={getUnCollectHandler(collection.id)}
+                        mainMenuText="从收藏中删除"
+                        render={() => (
+                            <CookBook handleClickEvent={getCookBookClickHandler(collection.id)}
+                                {...collection}
+                            />)}
+                    />
+                ))
             }
         </div>
     )

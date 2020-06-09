@@ -1,9 +1,12 @@
 import React from 'react';
-import CookBook from '../../components/cookBook'
-import useDataApi from '../../hooks/useDataApi'
 import nullSafeGet from 'lodash/get';
-import { getImageUrl } from '../../modules/utils/image'
+
+import CookBook from '~/components/cookBook'
+import OperationMenu from '~/components/operationMenu';
+import useDataApi from '~/hooks/useDataApi'
+import { getImageUrl } from '~/modules/utils/image'
 import router from '~/router'
+
 
 const convertDraft = drafts => drafts.map((draft) => ({
     id: draft.id,
@@ -28,7 +31,16 @@ function MyDraft() {
 
     return (
         <div className="page">
-            {drafts.map((draft) => (<CookBook key={draft.id} {...draft} handleClickEvent={() => handleCreateCookBook(draft.id)} />))}
+            {drafts.map((draft) => (
+                <OperationMenu 
+                    key={draft.id}
+                    onMainMenuClick={() => console.log('------test---')}
+                    mainMenuText="从草稿箱中删除"
+                    render={() => (
+                        <CookBook {...draft} handleClickEvent={() => handleCreateCookBook(draft.id)} />
+                    )}
+                />
+            ))}
         </div>
     )
 }
