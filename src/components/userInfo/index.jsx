@@ -44,11 +44,11 @@ function UserInfo(props) {
                 <Content>
                     <Row>
                         <Col span={6}>
-                            <p>{starCount}</p>
+                            <p style={{textIndent:'2px'}}>{starCount}</p>
                             <p>关注</p>
                         </Col>
                         <Col span={6}>
-                            <p>{fansCount}</p>
+                            <p style={{textIndent:'2px'}}>{fansCount}</p>
                             <p>粉丝</p>
                         </Col>
                     </Row>
