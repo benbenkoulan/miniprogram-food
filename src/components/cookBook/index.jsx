@@ -6,6 +6,7 @@ import router from '~/router'
 import './style.css'
 
 function CookBook(props) {
+
     const { imagePath, title, userName, avatarUrl, collectionCount } = props
 
     const handleClick = (e) => {

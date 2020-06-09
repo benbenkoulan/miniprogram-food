@@ -4,7 +4,6 @@ import { getImageUrl } from '~/modules/utils/image';
 import useDataApi from '~/hooks/useDataApi';
 
 import CookBook from '../../components/cookBook';
-import router from '~/router'
 
 const convertCookBook = (cookBooks) => cookBooks.map(cookBook => ({
     id: cookBook.id,

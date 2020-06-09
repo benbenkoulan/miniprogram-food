@@ -12,7 +12,6 @@ function AuthorInfo(props) {
         props.handleClickUserHome()
     }
 
-
     return (
         <div>
             <Layout hasSider className="author-info--box">
