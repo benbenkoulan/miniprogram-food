@@ -5,6 +5,7 @@
 .list--box {
     margin: 0 20px 10px 20px;
     overflow: hidden!important;
+    height: 100%;
 }
 
 .empty-tip--text {
