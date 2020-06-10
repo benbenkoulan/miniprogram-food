@@ -8,3 +8,5 @@ export const getIsAuthorized = () => request('getIsAuthorized');
 export const upsertUserInfo = (encryptedData, iv) => send('upsertUserInfo', { data: { encryptedData, iv } });
 
 export const getCategories = () => send('getCategories');
+
+export const deleteDrafts = (ids) => send('deleteDrafts', { data: ids, });

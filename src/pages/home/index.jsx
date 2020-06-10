@@ -46,7 +46,7 @@ function Index() {
     }, setSearchQuery] = usePagingListApi('searchCookbooks', {
         initialQuery: {
             pageNumber: 0,
-            pageSize: 6
+            pageSize: 10
         },
         convertData,
     });

@@ -16,6 +16,7 @@ const services = [
     { name: 'getOtherUserInfo', url: '/services/user/{userId}/statistics-info', method: 'GET' },
     { name: 'getOtherUserCollection', url: '/services/user/{userId}/collections', method: 'GET' },
     { name: 'getOtherUserProduct', url: '/services/user/{userId}/products', method: 'GET' },
+    { name: 'deleteDrafts', url: '/services/product/drafts', method: 'DELETE' },
 ];
 
 export default (serviceName) => services.find(service => service.name === serviceName);

@@ -5,7 +5,8 @@ import CookBook from '~/components/cookBook'
 import OperationMenu from '~/components/operationMenu';
 import useDataApi from '~/hooks/useDataApi'
 import { getImageUrl } from '~/modules/utils/image'
-import router from '~/router'
+import router from '~/router';
+import { deleteDrafts } from '~/api';
 
 
 const convertDraft = drafts => drafts.map((draft) => ({
@@ -19,25 +20,30 @@ const convertDraft = drafts => drafts.map((draft) => ({
 }));
 
 function MyDraft() {
-    const [drafts] = useDataApi('getDrafts', {
+    const [drafts, setDrafts] = useDataApi('getDrafts', {
         initialData: [],
         initialQuery: { pageNumber: 0, pageSize: 10 },
         convertData: convertDraft,
     });
 
-    const handleCreateCookBook = (id) => {
+    const handleClickDraft = (id) => {
         router.push('create', { id })
-    }
+    };
+
+    const handleDeleteDraft = async (id) => {
+        await deleteDrafts([id]);
+        setDrafts(drafts.filter(draft => draft.id !== id));
+    };
 
     return (
         <div className="page">
             {drafts.map((draft) => (
                 <OperationMenu 
                     key={draft.id}
-                    onMainMenuClick={() => console.log('------test---')}
+                    onMainMenuClick={() => handleDeleteDraft(draft.id)}
                     mainMenuText="从草稿箱中删除"
                     render={() => (
-                        <CookBook {...draft} handleClickEvent={() => handleCreateCookBook(draft.id)} />
+                        <CookBook {...draft} handleClickEvent={() => handleClickDraft(draft.id)} />
                     )}
                 />
             ))}
