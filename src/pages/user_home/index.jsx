@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { Fragment, useCallback, useState } from 'react'
 import UserInfo from '~/components/userInfo'
 import useDataApi from '~/hooks/useDataApi'
 import { Row, Col } from 'micro-design'
@@ -30,7 +30,9 @@ function UserHome(props) {
         propertyName: 'data'
     })
 
-    const [serviceName, setServiceName] = useState("getOtherUserCollection");
+    const [navActive, setNavActive] = useState('collection')
+    const [serviceName, setServiceName] = useState('getOtherUserCollection')
+    const [isNeedLoad, setIsNeedLoad] = useState(true)
 
     const [{
         data: cookBookList,
@@ -41,42 +43,52 @@ function UserHome(props) {
         initialQuery: {
             userId,
             pageNumber: 0,
-            pageSize: 10
+            pageSize: 9
         },
-        convertData: convertUserCollection
+        convertData: convertUserCollection,
+        isNeedLoad
     })
 
-
     const memomizedLoadMore = useCallback(() => {
+        setIsNeedLoad(true)
         setSearchQuery({
-            ...searchQuery,
-            pageNumber: searchQuery.pageNumber + 1
-        })
+                ...searchQuery,
+                pageNumber: searchQuery.pageNumber + 1
+            })
     }, [searchQuery, setSearchQuery])
 
-    const [navActive, setNavActive] = useState('collection')
 
     const handleClickCollection = () => {
         setNavActive('collection')
-        setServiceName("getOtherUserCollection")
+        setServiceName('getOtherUserCollection')
+        setIsNeedLoad(false)
     }
 
-    const handleClickProduct = async () => {
+    const handleClickProduct = () => {
         setNavActive('product')
-        setServiceName("getOtherUserProduct")
+        setServiceName('getOtherUserProduct')
+        setIsNeedLoad(false)
     }
 
     const getCookBookClickHandler = (id) => {
         router.push('cookbook', { id })
     }
 
-    const renderCollection = () => {
-        return (<div>
-            {cookBookList.map((cookBook) => (
-                <CookBook key={cookBook.id} {...cookBook}
-                          handleClickEvent={() => getCookBookClickHandler(cookBook.id)}/>))}
-        </div>)
-    }
+    // const renderCollection = useCallback(() =>
+    //         (<Fragment>
+    //             {cookBookList.map((cookBook) => (
+    //                 <CookBook key={cookBook.id} {...cookBook}
+    //                           handleClickEvent={() => getCookBookClickHandler(cookBook.id)}/>))}
+    //         </Fragment>)
+    //     , [hasMore, cookBookList])
+
+    const renderCollection = () =>
+            (<Fragment>
+                {cookBookList.map((cookBook) => (
+                    <CookBook key={cookBook.id} {...cookBook}
+                              handleClickEvent={() => getCookBookClickHandler(cookBook.id)}/>))}
+            </Fragment>)
+
 
     const renderProduct = () => {
         return (
@@ -90,9 +102,9 @@ function UserHome(props) {
         )
     }
 
-    return <div className="page">
-        <UserInfo {...statisticsInfo} isUserInfoDisplay/>
+    const renderContent = () => (
         <div>
+            <UserInfo {...statisticsInfo} isUserInfoDisplay/>
             <div>
                 <Row className="nav--wrap">
                     <Col className={navActive === 'product' ? 'nav--box active' : 'nav--box'}
@@ -100,28 +112,26 @@ function UserHome(props) {
                     <Col className={navActive === 'collection' ? 'nav--box active' : 'nav--box'}
                          onClick={handleClickCollection}>收藏 {statisticsInfo && statisticsInfo.collectionCount}</Col>
                 </Row>
-            </div>
-            <div>
-                <div className="content--box" style={{ display: navActive === 'product' ? 'block' : 'none' }}>
-                    <ScrollView
-                        enableFlex={true}
-                        hasMore={hasMore}
-                        isLoading={isLoading}
-                        render={renderProduct}
-                        loadMore={memomizedLoadMore}
-                    />
-                </div>
-                <div className="content--box" style={{ display: navActive === 'collection' ? 'block' : 'none' }}>
-                    <ScrollView
-                        enableFlex={true}
-                        hasMore={hasMore}
-                        isLoading={isLoading}
-                        render={renderCollection}
-                        loadMore={memomizedLoadMore}
-                    />
+                <div>
+                    <div className="content--box" style={{ display: navActive === 'product' ? 'block' : 'none' }}>
+                        {renderProduct()}
+                    </div>
+                    <div className="content--box" style={{ display: navActive === 'collection' ? 'block' : 'none' }}>
+                        {renderCollection()}
+                    </div>
                 </div>
             </div>
         </div>
+    )
+
+    return <div className="page">
+        <ScrollView
+            enableFlex={true}
+            hasMore={hasMore}
+            isLoading={isLoading}
+            render={renderContent}
+            loadMore={memomizedLoadMore}
+        />
     </div>
 }
 
