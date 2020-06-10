@@ -1,6 +1,8 @@
 import React from 'react';
 import { Layout, Sider, Content } from 'micro-design';
 
+import withUserInfoScope from '~/hoc/withUserInfoScope';
+
 import './style.css';
 
 function Menu(props) {
@@ -20,4 +22,4 @@ Menu.defaultProps = {
     onClick: () => {},
 }
 
-export default Menu;
+export default withUserInfoScope(Menu, { needCheckLogin: false });

@@ -35,7 +35,11 @@ export default (Page, { shouldShowCreate = true, navigationTitle = '' } = {}) =>
         && routes(currentPage.document.$_cookie.$_pageName).title
 
     ReactDOM.render(
-        <Navigation shouldShowCreate={shouldShowCreate} navigationTitle={navigationTitle}/>,
+        (
+            <Provider store={store}>
+                <Navigation shouldShowCreate={shouldShowCreate} navigationTitle={navigationTitle}/>
+            </Provider>
+        ),
         navigationContainer
     )
 

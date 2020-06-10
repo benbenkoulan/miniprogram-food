@@ -6,7 +6,7 @@ import Menu from './components/menu'
 
 import UserInfo from '~/components/userInfo'
 
-const getMenus = () => [{
+const menus = [{
     key: 'COLLECTION',
     text: '我的收藏',
     onClick: () => router.push('collection')
@@ -28,9 +28,7 @@ function My() {
     const [statisticsInfo] = useDataApi('getStatisticsInfo', {
         initialData: {},
         propertyName: 'data'
-    })
-
-    const menus = getMenus()
+    });
 
     return (
         <div className="page">

@@ -58,7 +58,6 @@ function Create(props) {
         initData();
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const dispatch = useDispatch();
     const [shouldShowCategorySelectionList, {
         toggle: toggleShouldShowCategorySelectionList
     }] = useToggle(false);
@@ -132,11 +131,6 @@ function Create(props) {
     };
 
     const handleSubmit = async (isPublish) => {
-        const { data: isAuthorized } = await send('getIsAuthorized')
-        if (!isAuthorized) {
-            dispatch(showAuthorizeModal())
-            return
-        }
         const categoryProducts = categories.map(category => ({ categoryId: category.id }))
         const ingredients = ingredientList.map((ingredient, index) => ({
             lineNumber: index + 1,

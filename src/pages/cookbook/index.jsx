@@ -30,7 +30,7 @@ function CookBook(props) {
             setFoodMaterials(data);
         };
         fetchData();
-    }, [id]);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     useShareAppMessage({
         title: foodMaterials.title || '这个美食很不错',

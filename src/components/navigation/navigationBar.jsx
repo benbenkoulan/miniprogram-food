@@ -1,18 +1,19 @@
 import React from 'react';
 import throttle from 'lodash/throttle';
 
-import router from '../../router';
+import router from '~/router';
+import Add from './add';
+
+const handleCreateClick = throttle(() => {
+    router.push('create');
+});
+
+const handleBackClick = throttle(() => {
+    router.back();
+}, 1000);
 
 function NavigationBar(props) {
-    const { shouldShowBack, shouldShowCreate, paddingHorizontal, paddingVertical } = props;
-
-    const handleCreateClick = () => {
-        router.push('create');
-    };
-
-    const handleBackClick = throttle(() => {
-        router.back();
-    }, 1000);
+    const { shouldShowBack, shouldShowCreate, paddingHorizontal, paddingVertical, navigationTitle } = props;
 
     return (
         <div style={{ padding: `${paddingVertical}px 0` }} className="navigation--bar">
@@ -20,11 +21,9 @@ function NavigationBar(props) {
                 { shouldShowBack && (<div className="back--btn" onClick={handleBackClick}>
                     <wx-image mode="widthFix" className="back--icon" src="/assets/images/navigation/back.svg"></wx-image>
                 </div>) }
-                { shouldShowCreate && (<div className="create--btn" onClick={handleCreateClick}>
-                    <wx-image mode="widthFix" className="create--icon" src="/assets/images/navigation/create.svg"></wx-image>
-                </div>) } 
+                { shouldShowCreate && (<Add onClick={handleCreateClick} />) } 
             </div>
-            { props.navigationTitle }
+            { navigationTitle }
         </div>
     )
 }

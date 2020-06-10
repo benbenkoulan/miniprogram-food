@@ -1,7 +1,7 @@
 import withLoading from '~/modules/hof/withLoading';
 import request from '../request';
 
-const login = () => {
+export const wxLogin = () => {
     return new Promise((resolve) => {
         wx.login({
             success: async ({ code }) => {
@@ -13,4 +13,4 @@ const login = () => {
     })
 };
 
-export default withLoading(login, { title: '登陆中', mask: true });
+export default withLoading(wxLogin, { title: '登陆中', mask: true });
