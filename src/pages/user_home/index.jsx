@@ -94,7 +94,7 @@ function UserHome(props) {
         return (
             <div style={{marginTop:"10px"}}>
                 {cookBookList.map(product => (
-                    <div className="image--wrap">
+                    <div className="image--wrap" onClick={() => getCookBookClickHandler(product.id)}>
                         <wx-image mode="aspectFill" className="product--image" src={product.imagePath}/>
                     </div>
                 ))}
