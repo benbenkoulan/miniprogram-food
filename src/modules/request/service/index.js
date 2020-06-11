@@ -11,6 +11,7 @@ const services = [
     { name: 'upsertAttention', url: '/services/user/attention', method: 'POST'},
     { name: 'upsertCollection', url: '/services/user/collection', method: 'POST'},
     { name: 'getMyFollows', url: '/services/user/my-attentions', method: 'GET' },
+    { name: 'getUserFollows', url: '/services/user/{userId}/attentions', method: 'GET' },
     { name: 'getMyCollections', url: '/services/user/my-collections', method: 'GET' },
     { name: 'getDrafts', url: '/services/product/my-drafts', method: 'GET' },
     { name: 'getOtherUserInfo', url: '/services/user/{userId}/statistics-info', method: 'GET' },

@@ -5,7 +5,7 @@ const routes = [{
 }, {
     name: 'my',
     path: '/pages/my/index',
-    title: '我的'
+    // title: '我的'
 }, {
     name: 'search',
     path: '/pages/search/index',

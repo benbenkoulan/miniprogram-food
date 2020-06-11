@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import noop from 'lodash/noop';
 
 import './style.css';
+import { throttle } from '~/components/utils'
 
 function ScrollView(props) {
     const scrollViewRef = useRef();
@@ -15,11 +16,11 @@ function ScrollView(props) {
 
     useEffect(() => {
         const scrollViewElement = scrollViewRef.current;
-        const handleScrollToLower = () => {
+        const handleScrollToLower = throttle(() => {
             if (!isLoading && hasMore) {
                 loadMore();
             }
-        };
+        }, 300)
 
         scrollViewElement.addEventListener('scrolltolower', handleScrollToLower);
 

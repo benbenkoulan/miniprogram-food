@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import memoize from 'lodash/memoize';
 
 import { send } from '~/modules/request/proxy';
@@ -13,10 +13,13 @@ const convertFollows = (follows) => follows.map((follow) => ({
     isFollowed: true,
 }));
 
-function MyFllow() {
-    const [follows, setFollows] = useDataApi('getMyFollows', {
+function MyFollow(props) {
+
+    const { userId } = props.query;
+
+    const [follows, setFollows] = useDataApi(userId? 'getUserFollows' : 'getMyFollows', {
         initialData: [],
-        initialQuery: { pageNumber: 0, pageSize: 50, },
+        initialQuery: { pageNumber: 0, pageSize: 50, userId},
         convertData: convertFollows,
     });
 
@@ -33,9 +36,9 @@ function MyFllow() {
         <div className="page">
             {
                 follows.map(follow => (<Follow onFollow={getFollowHandler(follow.id, !follow.isFollowed)} key={follow.id} {...follow} />))
-            }            
+            }
         </div>
     )
 }
 
-export default MyFllow;
+export default MyFollow;
