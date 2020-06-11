@@ -32,7 +32,6 @@ function UserHome(props) {
 
     const [navActive, setNavActive] = useState('collection')
     const [serviceName, setServiceName] = useState('getOtherUserCollection')
-    const [isNeedLoad, setIsNeedLoad] = useState(true)
 
     const [{
         data: cookBookList,
@@ -45,29 +44,33 @@ function UserHome(props) {
             pageNumber: 0,
             pageSize: 9
         },
-        convertData: convertUserCollection,
-        isNeedLoad
+        convertData: convertUserCollection
     })
 
     const memomizedLoadMore = useCallback(() => {
-        setIsNeedLoad(true)
         setSearchQuery({
-                ...searchQuery,
-                pageNumber: searchQuery.pageNumber + 1
-            })
+            ...searchQuery,
+            pageNumber: searchQuery.pageNumber + 1
+        })
     }, [searchQuery, setSearchQuery])
 
 
     const handleClickCollection = () => {
         setNavActive('collection')
         setServiceName('getOtherUserCollection')
-        setIsNeedLoad(false)
+        setSearchQuery({
+            ...searchQuery,
+            pageNumber: 0
+        })
     }
 
     const handleClickProduct = () => {
         setNavActive('product')
         setServiceName('getOtherUserProduct')
-        setIsNeedLoad(false)
+        setSearchQuery({
+            ...searchQuery,
+            pageNumber: 0
+        })
     }
 
     const getCookBookClickHandler = (id) => {
@@ -83,16 +86,16 @@ function UserHome(props) {
     //     , [hasMore, cookBookList])
 
     const renderCollection = () =>
-            (<Fragment>
-                {cookBookList.map((cookBook) => (
-                    <CookBook key={cookBook.id} {...cookBook}
-                              handleClickEvent={() => getCookBookClickHandler(cookBook.id)}/>))}
-            </Fragment>)
+        (<Fragment>
+            {cookBookList.map((cookBook) => (
+                <CookBook key={cookBook.id} {...cookBook}
+                          handleClickEvent={() => getCookBookClickHandler(cookBook.id)}/>))}
+        </Fragment>)
 
 
     const renderProduct = () => {
         return (
-            <div style={{marginTop:"10px"}}>
+            <div style={{ marginTop: '10px' }}>
                 {cookBookList.map(product => (
                     <div className="image--wrap" onClick={() => getCookBookClickHandler(product.id)}>
                         <wx-image mode="aspectFill" className="product--image" src={product.imagePath}/>

@@ -9,7 +9,6 @@ function usePagingListApi(serviceName, {
     initialIsError = false,
     initialHasMore = true,
     convertData = null,
-    isNeedLoad = true
 }) {
     const [data, setData] = useState(initialData);
     const [query, setQuery] = useState(initialQuery);
@@ -42,9 +41,7 @@ function usePagingListApi(serviceName, {
                 setIsLoading(false);
             }
         };
-        if(isNeedLoad) {
-            doFetch();
-        }
+        doFetch();
     }, [query, serviceName, convertData]);
 
     return [{
