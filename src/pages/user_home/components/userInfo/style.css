@@ -39,6 +39,12 @@
     background-color: orangered!important;
 }
 
+.grey{
+    border: 1px solid orangered !important;
+    color: orangered !important;
+    background-color: #ffffff!important;
+}
+
 .section {
     padding: 20px;
     border-bottom: 1px solid #e5e5e5;

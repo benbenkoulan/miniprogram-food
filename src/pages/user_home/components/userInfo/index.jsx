@@ -4,9 +4,13 @@ import './style.css'
 
 function UserInformation(props) {
 
-    const {username, createdTime, gender, country, starCount, fansCount, avatarUrl, handleClickFollow} = props;
+    const { username, createdTime, gender, country, starCount, fansCount, avatarUrl, isAttention } = props
+    const handleLookUpFollowEvent = () => {
+        props.handleLookUpAttention()
+    }
+
     const handleClickFollowEvent = () => {
-        handleClickFollow()
+        props.handleClickAttention()
     }
 
     return (
@@ -16,7 +20,7 @@ function UserInformation(props) {
                     <text>{username}</text>
                     <div>
                         <text className="join--text">
-                            {createdTime&&createdTime.substring(0, 10)} 加入
+                            {createdTime && createdTime.substring(0, 10)} 加入
                         </text>
                         <text className="join--text">
                             {gender === '1' ? '男' : '女'}
@@ -31,7 +35,7 @@ function UserInformation(props) {
             <Layout hasSider align="center" justify="space-between" className="section">
                 <Content>
                     <Row>
-                        <Col span={6} onClick={handleClickFollowEvent}>
+                        <Col span={6} onClick={handleLookUpFollowEvent}>
                             <p style={{ textIndent: '2px' }}>{starCount}</p>
                             <p>关注</p>
                         </Col>
@@ -45,11 +49,13 @@ function UserInformation(props) {
                     <wx-button className="share--btn" open-type="share">分享</wx-button>
                 </Sider>
                 <Sider width="80px" class="margin-left">
-                    <wx-button className="attention--btn">关注</wx-button>
+                    {isAttention
+                        ? <wx-button className="attention--btn grey" onClick={handleClickFollowEvent}>已关注</wx-button>
+                        : <wx-button className="attention--btn" onClick={handleClickFollowEvent}>关注</wx-button>}
                 </Sider>
             </Layout>
         </Fragment>
     )
 }
 
-export default UserInformation;
+export default UserInformation

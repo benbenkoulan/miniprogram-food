@@ -1,5 +1,4 @@
-import React, { useCallback, useState } from 'react'
-import useDataApi from '~/hooks/useDataApi'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Row, Col } from 'micro-design'
 import './style.css'
 import ScrollView from '~/components/scrollView'
@@ -9,6 +8,9 @@ import { getImageUrl } from '~/modules/utils/image'
 import nullSafeGet from 'lodash/get'
 import router from '~/router'
 import UserInformation from '~/pages/user_home/components/userInfo'
+import useToggle from '~/hooks/useToggle'
+import { send } from '~/modules/request/proxy'
+import useShareAppMessage from '~/hooks/useShareAppMessage'
 
 
 const convertUserCollection = (collections = []) => collections.map(collection => ({
@@ -24,13 +26,18 @@ function UserHome(props) {
 
     const { userId } = props.query || {}
 
-    const [statisticsInfo] = useDataApi('getOtherUserInfo', {
-        initialData: {},
-        initialQuery: { userId },
-        propertyName: 'data'
-    })
-
+    const [statisticsInfo, setStatisticsInfo] = useState({})
     const [navActive, setNavActive] = useState('collection')
+    const [isAttention, { toggle: toggleIsAttention }] = useToggle(false)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const { data } = await send('getOtherUserInfo', { data: { userId } });
+            toggleIsAttention(data.isAttention);
+            setStatisticsInfo(data)
+        };
+        fetchData();
+    }, []);
 
     const [{
         data: cookBookCollectionList,
@@ -89,6 +96,11 @@ function UserHome(props) {
         router.push('cookbook', { id })
     }
 
+    useShareAppMessage({
+        title: statisticsInfo.user && statisticsInfo.user.username + '的个人主页' || '个人主页',
+        path: `/pages/user_home/index?userId=${userId}`,
+    });
+
     // const renderCollection = useCallback(() =>
     //         (<Fragment>
     //             {cookBookList.map((cookBook) => (
@@ -114,9 +126,14 @@ function UserHome(props) {
             ))}
         </div>)
 
-    const handleClickAttention = (userId) => {
+    const handleLookUpAttention = (userId) => {
         router.push('my_follow', { userId })
     }
+
+    const handleClickAttention = async () => {
+        await send('upsertAttention', { data: { starUserId: statisticsInfo.user.id, isAttention: !isAttention } })
+        toggleIsAttention();
+    };
 
     const renderContent = () => (
         <div>
@@ -128,7 +145,9 @@ function UserHome(props) {
                 avatarUrl={statisticsInfo.user && statisticsInfo.user.avatarUrl}
                 starCount={statisticsInfo && statisticsInfo.starCount}
                 fansCount={statisticsInfo && statisticsInfo.fansCount}
-                handleClickFollow = {() => handleClickAttention(userId)}/>
+                isAttention={isAttention}
+                handleLookUpAttention = {() => handleLookUpAttention(userId)}
+                handleClickAttention = {handleClickAttention}/>
             <div>
                 <div>
                     <Row className="nav--wrap">
