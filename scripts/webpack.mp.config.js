@@ -6,9 +6,9 @@ const TerserPlugin = require('terser-webpack-plugin')
 const MpPlugin = require('mp-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const { root } = require('./util');
+const { ROOT, getPathRelativeRoot } = require('./util');
 
-const getPageEntry = pageName => root(`pages/${pageName}/mp.js`);
+const getPageEntry = pageName => getPathRelativeRoot(`pages/${pageName}/mp.js`);
 
 const isOptimize = process.env.NODE_ENV === 'production' // 是否压缩业务代码，开发者工具可能无法完美支持业务代码使用到的 es 特性，建议自己做代码压缩
 
@@ -16,7 +16,7 @@ module.exports = {
     devtool: isOptimize ? 'none' : 'source-map',
     mode: 'production',
     entry: {
-        'miniprogram-app': root('app.js'),
+        'miniprogram-app': getPathRelativeRoot('app.js'),
         home: getPageEntry('home'),
         category: getPageEntry('category'),
         my: getPageEntry('my'),
@@ -110,6 +110,18 @@ module.exports = {
                     ]
                 }
             },
+            {
+                test: /\.[t|j]sx?$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/,
+                include: /redux-logger/,
+                options: {
+                    plugins : [
+                        ["transform-react-jsx"],
+                        ["class"],
+                    ]
+                }
+            },
             // {
             //     test: /\.(png|jpg|gif|svg)$/,
             //     loader: 'file-loader',
@@ -124,7 +136,7 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.jsx', '.css', '.json'],
         alias: {
-            '~': root(''),
+            '~': ROOT,
         }
     },
     plugins: [
@@ -137,7 +149,7 @@ module.exports = {
         }),
         new MpPlugin(require('./miniprogram.config')),
         new CopyWebpackPlugin([{
-            from: root('assets'),
+            from: getPathRelativeRoot('assets'),
             to: path.resolve(__dirname, '../build/mp/common/assets')
         }])
     ],

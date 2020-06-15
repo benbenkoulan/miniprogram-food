@@ -92,7 +92,7 @@ function UserHome(props) {
         setNavActive('product')
     }
 
-    const getCookBookClickHandler = (id) => {
+    const handleClickCookBook = (id) => {
         router.push('cookbook', { id })
     }
 
@@ -116,7 +116,7 @@ function UserHome(props) {
         (<div>
             {cookBookCollectionList.map((collection) => (
                 <CookBook key={collection.id} {...collection}
-                          handleClickEvent={() => getCookBookClickHandler(collection.id)}/>))}
+                          onClick={() => handleClickCookBook(collection.id)}/>))}
         </div>)
 
 

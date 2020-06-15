@@ -19,6 +19,8 @@ const convertCollections = collections => collections.map((collection) => ({
     avatarUrl: nullSafeGet(collection, 'user.avatarUrl'),
 }));
 
+const handleClickCookBook = (id) => router.push('cookbook', { id });
+
 function Collection() {
     const [collections, setCollections] = useDataApi('getMyCollections', {
         initialData: [],
@@ -33,10 +35,6 @@ function Collection() {
         hideDelMenu();
     });
 
-    const getCookBookClickHandler = memoize((id) => () => {
-        router.push('cookbook', { id });
-    });
-
     return (
         <div className="page">
             {
@@ -46,7 +44,7 @@ function Collection() {
                         onMainMenuClick={getUnCollectHandler(collection.id)}
                         mainMenuText="从收藏中删除"
                         render={() => (
-                            <CookBook handleClickEvent={getCookBookClickHandler(collection.id)}
+                            <CookBook onClick={() => handleClickCookBook(collection.id)}
                                 {...collection}
                             />)}
                     />

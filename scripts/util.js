@@ -1,3 +1,7 @@
 const path = require('path');
 
-exports.root = (filePath) => path.join(path.resolve(__dirname, '../src'), filePath);
+const ROOT = path.resolve(__dirname, '../src');
+
+exports.ROOT = ROOT;
+
+exports.getPathRelativeRoot = (filePath = '') => path.join(ROOT, filePath);

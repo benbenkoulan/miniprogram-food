@@ -1,5 +1,6 @@
 import React from 'react';
 
+import router from '~/router';
 import { getImageUrl } from '~/modules/utils/image';
 import useDataApi from '~/hooks/useDataApi';
 
@@ -12,6 +13,8 @@ const convertCookBook = (cookBooks) => cookBooks.map(cookBook => ({
     collectionCount: cookBook.collectionCount,
 }));
 
+const handleClickCookBook = (id) => router.push('cookbook', { id });
+
 function MyCookBook() {
     const [cookBooks] = useDataApi('getMyCookbooks', {
         initialQuery: { pageNumber: 0, pageSize: 20, },
@@ -21,7 +24,7 @@ function MyCookBook() {
 
     return (
         <div className="page">
-            {cookBooks.map((cookBook) => (<CookBook key={cookBook.id} {...cookBook} />))}
+            {cookBooks.map((cookBook) => (<CookBook onClick={() => handleClickCookBook(cookBook.id)} key={cookBook.id} {...cookBook} />))}
         </div>
     )
 }

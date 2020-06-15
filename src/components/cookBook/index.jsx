@@ -1,17 +1,15 @@
 import React from 'react'
 import { Layout, Sider, Content } from 'micro-design'
 
-import router from '~/router'
-
 import './style.css'
 
 function CookBook(props) {
 
-    const { imagePath, title, userName, avatarUrl, collectionCount } = props
+    const { imagePath, title, userName, avatarUrl, collectionCount, onClick } = props
 
     const handleClick = (e) => {
         e.stopPropagation();
-        props.handleClickEvent();
+        onClick && onClick(e);
     }
 
     return (

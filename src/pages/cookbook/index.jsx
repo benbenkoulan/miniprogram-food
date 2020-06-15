@@ -36,7 +36,7 @@ function CookBook(props) {
         title: foodMaterials.title || '这个美食很不错',
         url: '/pages/search/index',
         query: {
-            id: foodMaterials.id,
+            id,
         }
     });
 

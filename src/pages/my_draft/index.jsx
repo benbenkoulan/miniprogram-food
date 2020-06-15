@@ -43,7 +43,7 @@ function MyDraft() {
                     onMainMenuClick={() => handleDeleteDraft(draft.id)}
                     mainMenuText="从草稿箱中删除"
                     render={() => (
-                        <CookBook {...draft} handleClickEvent={() => handleClickDraft(draft.id)} />
+                        <CookBook {...draft} onClick={() => handleClickDraft(draft.id)} />
                     )}
                 />
             ))}

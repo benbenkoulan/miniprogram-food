@@ -1,9 +1,9 @@
 /**
  * 配置参考：https://wechat-miniprogram.github.io/kbone/docs/config/
  */
-const { root } = require('./util');
+const { getPathRelativeRoot } = require('./util');
 
-const pages = (pageName) => root(`pages/${pageName}/index`);
+const pages = (pageName) => getPathRelativeRoot(`pages/${pageName}/index`);
 
 module.exports = {
 	origin: '/common',
@@ -33,18 +33,18 @@ module.exports = {
 			color: "#8a8a8a",
 			selectedColor: "#1296db",
 			list: [{
-			  selectedIconPath: root('assets/images/index.png'),
-			  iconPath: root('assets/images/index_inactive.png'),
+			  selectedIconPath: getPathRelativeRoot('assets/images/index.png'),
+			  iconPath: getPathRelativeRoot('assets/images/index_inactive.png'),
 			  pageName: "home",
 			  text: "吃什么"
 			}, {
-			  selectedIconPath: root('assets/images/category.png'),
-			  iconPath: root('assets/images/category_inactive.png'),
+			  selectedIconPath: getPathRelativeRoot('assets/images/category.png'),
+			  iconPath: getPathRelativeRoot('assets/images/category_inactive.png'),
 			  pageName: "category",
 			  text: '有什么',
 			}, {
-			  selectedIconPath: root('assets/images/my.png'),
-			  iconPath: root('assets/images/my_inactive.png'),
+			  selectedIconPath: getPathRelativeRoot('assets/images/my.png'),
+			  iconPath: getPathRelativeRoot('assets/images/my_inactive.png'),
 			  pageName: "my",
 			  text: '收藏家',
 			}]
@@ -63,7 +63,7 @@ module.exports = {
 			pullDownRefresh: true,
 		},
 		search: {
-			pullDownRefresh: true,
+			// pullDownRefresh: true,
 		}
 	},
 	optimization: {
