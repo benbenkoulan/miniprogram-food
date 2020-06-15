@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import noop from 'lodash/noop';
 
-import './style.css';
 import { throttle } from '~/components/utils'
+
+import './style.css';
 
 function ScrollView(props) {
     const scrollViewRef = useRef();

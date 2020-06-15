@@ -98,7 +98,10 @@ function UserHome(props) {
 
     useShareAppMessage({
         title: statisticsInfo.user && statisticsInfo.user.username + '的个人主页' || '个人主页',
-        path: `/pages/user_home/index?userId=${userId}`,
+        url: '/pages/user_home/index',
+        query: {
+            userId,
+        },
     });
 
     // const renderCollection = useCallback(() =>

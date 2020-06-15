@@ -22,10 +22,14 @@
     width: 16px;
 }
 
-.back--icon, .create--icon {
+.create--btn, .home--btn {
+    width: 24px;
+}
+
+.back--icon, .create--icon, .home--icon {
     width: 100%;
 }
 
-.create--btn {
-    width: 24px;
+.home--btn {
+    margin-left: 10px;
 }

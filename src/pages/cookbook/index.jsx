@@ -34,7 +34,10 @@ function CookBook(props) {
 
     useShareAppMessage({
         title: foodMaterials.title || '这个美食很不错',
-        path: `/pages/search/index?id=${foodMaterials.id}`,
+        url: '/pages/search/index',
+        query: {
+            id: foodMaterials.id,
+        }
     });
 
     const handleClickCollection = async () => {

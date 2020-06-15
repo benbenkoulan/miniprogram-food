@@ -1,9 +1,20 @@
 import { useEffect } from 'react';
+import { stringifyUrl } from 'query-string';
 
-function useShareAppMessage({ title, path, imageUrl } = {}) {
+import scene from '~/modules/constant/scene';
+
+function useShareAppMessage({ title, url, query, imageUrl } = {}) {
     useEffect(() => {
-        window.onShareAppMessage = () => ({ title, path, imageUrl });
-    }, [title, path, imageUrl]);
+        const path = stringifyUrl({ url, query: {
+            ...query,
+            scene: scene.SHARE
+        } });
+        window.onShareAppMessage = () => ({
+            title,
+            path,
+            imageUrl,
+        });
+    }, [title, url, query, imageUrl]);
 }
 
 export default useShareAppMessage;

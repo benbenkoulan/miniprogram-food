@@ -3,17 +3,29 @@ import throttle from 'lodash/throttle';
 
 import router from '~/router';
 import Add from './add';
+import Home from './home';
 
 const handleCreateClick = throttle(() => {
     router.push('create');
-});
+}, 500);
 
 const handleBackClick = throttle(() => {
     router.back();
-}, 1000);
+}, 500);
+
+const handleHomeClick = throttle(() => {
+    router.switchTab('home');
+}, 500);
 
 function NavigationBar(props) {
-    const { shouldShowBack, shouldShowCreate, paddingHorizontal, paddingVertical, navigationTitle } = props;
+    const {
+        shouldShowBack,
+        shouldShowCreate,
+        shouldShowHome,
+        paddingHorizontal,
+        paddingVertical,
+        navigationTitle
+    } = props;
 
     return (
         <div style={{ padding: `${paddingVertical}px 0` }} className="navigation--bar">
@@ -22,6 +34,7 @@ function NavigationBar(props) {
                     <wx-image mode="widthFix" className="back--icon" src="/assets/images/navigation/back.svg"></wx-image>
                 </div>) }
                 { shouldShowCreate && (<Add onClick={handleCreateClick} />) } 
+                { shouldShowHome && (<Home onClick={handleHomeClick} />) } 
             </div>
             { navigationTitle }
         </div>

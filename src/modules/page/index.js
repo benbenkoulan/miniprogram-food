@@ -5,7 +5,9 @@ import { Provider } from 'react-redux'
 import store from '~/store'
 import { Navigation } from '~/components/navigation'
 import AuthorizeModal from '~/components/authorizeModal'
-import routes from '../../router/routes'
+import getRoutes from '~/router/routes'
+import SCENE from '~/modules/constant/scene';
+
 import '~/styles/app.css'
 import 'micro-design/es/micro.css';
 
@@ -29,15 +31,18 @@ export default (Page, { shouldShowCreate = true, navigationTitle = '' } = {}) =>
     const query = Object.keys(pageQuery).reduce((newQuery, key) => ({
         ...newQuery,
         [key]: decodeURIComponent(pageQuery[key])
-    }), {})
+    }), {});
 
-    const navigationTitle = routes(currentPage.document.$_cookie.$_pageName)
-        && routes(currentPage.document.$_cookie.$_pageName).title
+    const route = getRoutes(currentPage.document.$_cookie.$_pageName);
+    const navigationTitle = route && route.title;
 
     ReactDOM.render(
         (
             <Provider store={store}>
-                <Navigation shouldShowCreate={shouldShowCreate} navigationTitle={navigationTitle}/>
+                <Navigation
+                    shouldShowHome={query.type === SCENE.SHARE}
+                    shouldShowCreate={shouldShowCreate}
+                    navigationTitle={navigationTitle}/>
             </Provider>
         ),
         navigationContainer
