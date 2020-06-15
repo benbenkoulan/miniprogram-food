@@ -20,14 +20,15 @@
     "antd": "^4.1.4",
     "axios": "^0.19.2",
     "lodash": "^4.17.15",
-    "query-string": "^6.12.1",
+    "query-string": "^6.13.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
     "react-window": "^1.8.5",
     "redux": "^4.0.5",
     "redux-actions-helper": "^1.0.4",
-    "redux-logger": "^3.0.6"
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0"
   },
   "browserslist": [
     "> 1%",
