@@ -7,7 +7,7 @@ function SubCategory(props) {
 
     return (
         <div className="sub-category--box" onClick={onClickSubCategory}>
-            <wx-image mode="widthFix" className="sub-category--icon" src={imagePath}></wx-image>
+            <wx-image mode="widthFix" className="sub-category--icon" src={imagePath}/>
             <p className="sub-category--text">{name}</p>
         </div>
     );

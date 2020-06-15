@@ -7,6 +7,7 @@ import { send } from '~/modules/request/proxy';
 
 import SubCategory from './components/sub-category';
 
+import { categoryPicture } from './utils'
 import './style.css';
 
 function Category() {
@@ -16,6 +17,8 @@ function Category() {
         const fetchData = async () => {
             const { data: categories } = await send('getCategories');
             setCategories(categories);
+            console.log(categories,'categories');
+            console.log(categoryPicture.filter(path => path.id === 0),'categoryPicture');
         }
         fetchData();
     }, []);
@@ -23,8 +26,8 @@ function Category() {
     const handleClickSubCategory = (categoryId, categoryName) => router.push('search', { categoryId, categoryName });
 
     const renderSubCategories = (subCategories) => (subCategories.map((subCategory) => (
-        <Col key={subCategory.id} span={6}>
-            <SubCategory onClickSubCategory={() => handleClickSubCategory(subCategory.id, subCategory.name)} name={subCategory.name} imagePath="/assets/images/meishi.jpg" />
+        <Col key={subCategory.id} span={4}>
+            <SubCategory onClickSubCategory={() => handleClickSubCategory(subCategory.id, subCategory.name)} name={subCategory.name} imagePath={categoryPicture.filter(path => path.id === subCategory.id).length? categoryPicture.filter(path => path.id === subCategory.id)[0].imagePath : ''} />
         </Col>
     )));
 
@@ -32,7 +35,7 @@ function Category() {
 
     const renderCategory = (category) => (
         <div key={category.id} className="category--box">
-            <h3 className="category--title">{category.name}</h3>
+            <h4 className="category--title">{category.name}</h4>
             <Row wrap gutter={[16, 16]}>
                 {
                     renderSubCategories(category.children)
