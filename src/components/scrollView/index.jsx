@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import noop from 'lodash/noop';
 
-import { throttle } from '~/components/utils'
+import { throttle } from '../../modules/utils/throttle'
 
 import './style.css';
 
