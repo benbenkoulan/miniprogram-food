@@ -10,8 +10,9 @@ export const convertCookbooks = (cookbooks = []) => cookbooks.map(cookbook => ({
     id: cookbook.id,
     title: cookbook.title,
     collectionCount: cookbook.collectionCount,
-    username: nullSafeGet(cookbook, 'user.username', ''),
+    username: nullSafeGet(cookbook, 'userDto.username', ''),
     ingredients: cookbook.ingredients.map(ingredient => ingredient.name).join(),
+    avatarUrl: nullSafeGet(cookbook, 'userDto.avatarUrl', ''),
     imagePath: getImageUrl(cookbook.mainImageId)
 }))
 

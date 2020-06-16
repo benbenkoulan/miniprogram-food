@@ -8,20 +8,35 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin: 10px;
+    margin: 10px 20px;
     min-height: 60px;
 }
 
 .menu-title--text {
-    font-size: 20px;
+    font-size: 16px;
     overflow: hidden;
     height: 20px;
-    line-height: 20px;
+    line-height: 16px;
     text-overflow: ellipsis;
 }
 
 .menu-garnish--text, .menu-star--text, .menu-author--text {
+    font-size: 12px;
+}
+
+.menu-author--text{
+    display: flex;
+    line-height: 20px;
     font-size: 10px;
+    color: #777777
+}
+
+.menu-author--avatar{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 5px;
 }
 
 .food-author--text {
