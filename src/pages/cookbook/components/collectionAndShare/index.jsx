@@ -16,10 +16,10 @@ function CollectionAndShare(props) {
                 <wx-image className="collection--image" src={props.isCollection ? collection : unCollection}/>
                 <Content className="collection-text">{props.isCollection ? '已收藏' : '收藏'}</Content>
             </div>
-            <div className="share--box">
+            <wx-button className="share--box" open-type='share'>
                 <wx-image className="share--image" src="/assets/images/share.png"/>
-                <wx-button className="share-text" open-type='share'>分享</wx-button>
-            </div>
+                <div className="share-text" >分享</div>
+            </wx-button>
         </Layout>
     )
 }
