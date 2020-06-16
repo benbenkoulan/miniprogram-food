@@ -13,9 +13,14 @@ function CookBook(props) {
                 </Sider>
                 <Content style={{ textAlign: 'center' }} className={'menu-info--box'}>
                     <p className="menu-title--text">{title}</p>
-                    {/*<p className="menu-garnish--text">{ingredients}</p>*/}
-                    <p className="menu-star--text">{collectionCount}个收藏</p>
-                    <p className="menu-author--text"><wx-image src={avatarUrl} className="menu-author--avatar"/>{username}</p>
+                    <p className="menu-garnish--text">{ingredients}</p>
+                    <p className="menu-author--text">
+                        <wx-image src={avatarUrl} className="menu-author--avatar"/>{username}
+                        <p style={{display: 'flex', lineHeight: '20px', marginLeft:"10px"}}>
+                            <wx-image className="menu-collection--avatar" src="/assets/images/collection_search.png"/>
+                            {collectionCount}个收藏
+                        </p>
+                    </p>
                 </Content>
             </Layout>
         </div>
