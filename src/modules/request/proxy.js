@@ -10,7 +10,7 @@ export const send = withLoading(async (serviceName, { data = {} } = {}) => {
     if (status === 401) {
         await login();
         if (currentPage.isTab) {
-            router.switchTab(currentPage.name);
+            router.reLaunch(currentPage.name);
         } else {
             router.replace(currentPage.name, currentPage.query);
         }

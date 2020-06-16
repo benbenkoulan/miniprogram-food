@@ -3,7 +3,7 @@ export const showToast = ({
     icon = 'success',
     mask = true,
     duration = 2000,
-}) => (new Promise((resolve, reject) => {
+}) => (new Promise((resolve, reject) => {    
     wx.showToast({
         title,
         icon,

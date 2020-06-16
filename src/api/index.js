@@ -10,3 +10,10 @@ export const upsertUserInfo = (encryptedData, iv) => send('upsertUserInfo', { da
 export const getCategories = () => send('getCategories');
 
 export const deleteDrafts = (ids) => send('deleteDrafts', { data: ids, });
+
+export const getDrafts = (data) => send('getDrafts', { data });
+
+export const saveDraft = (data) => send('saveCookbook', { data: {
+    ...data,
+    isPublish: 0,
+} });

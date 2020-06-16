@@ -10,11 +10,11 @@ import { send } from '~/modules/request/proxy';
 import { getImageUrl } from '~/modules/utils/image';
 import withLoading from '~/modules/hof/withLoading';
 import router from '~/router';
-import { showAuthorizeModal } from '~/store/action/app';
 import useToggle from '~/hooks/useToggle';
 import useDataApi from '~/hooks/useDataApi';
 import useFormItem from '~/hooks/form/useFormItem';
 import useFormItemList from '~/hooks/form/useFormItemList';
+import { saveDraft } from '~/store/action/user';
 
 import ListForm from './components/listForm';
 import IngredientFormItem from './components/ingredientFormItem';
@@ -43,6 +43,8 @@ function Create(props) {
 
     const [draft, setDraft] = useState({});
     const [id, setId] = useState(query.id);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const initData = async () => {
@@ -155,14 +157,16 @@ function Create(props) {
             tip: tip.value,
             isPublish: isPublish ? 1 : 0,
             extInfo: JSON.stringify(extInfo),
-        }
-        const { data }  = await send('saveCookbook', { data: formData });
+        };
+
         if (isPublish) {
+            await send('saveCookbook', { data: formData });
             await showToast({ title: '恭喜，美食已分享' })
-            router.switchTab('my')
+            router.switchTab('my');
         } else {
+            const data = await dispatch(saveDraft(formData));
             setId(data.id);
-            showToast({ title: '已保存至草稿箱', duration: 1000 });
+            showToast({ title: '已保存至草稿箱', duration: 2000 });
         }
     };
 
