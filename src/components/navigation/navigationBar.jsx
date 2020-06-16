@@ -1,7 +1,7 @@
 import React from 'react';
-import throttle from 'lodash/throttle';
 
 import router from '~/router';
+import throttle from '~/modules/utils/throttle';
 import Add from './add';
 import Home from './home';
 

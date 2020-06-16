@@ -90,6 +90,12 @@ module.exports = {
                 use: [
                     MiniCssExtractPlugin.loader,
                     'css-loader',
+                    {
+                        loader: 'px2rpx-loader',
+                        options: {
+                            rpxUnit: 0.5
+                        }
+                    },
                     'postcss-loader'
                 ],
             },

@@ -7,6 +7,7 @@ const getInitialState = () => ({
     setting: {
         userInfo: false,
     },
+    drafts: [],
 });
 
 const setting = handleActions({

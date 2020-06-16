@@ -66,7 +66,7 @@ function Create(props) {
         initialValue: draft.title,
         rules: [{
             required: true,
-            maxLength: 10
+            maxLength: 20
         }]
     });
     const description = useFormItem('description', {
@@ -131,6 +131,10 @@ function Create(props) {
     };
 
     const handleSubmit = async (isPublish) => {
+        if (!title.valid) {
+            showToast({ title: '请输入正确的标题', icon: 'none', mask: true });
+            return;
+        }
         const categoryProducts = categories.map(category => ({ categoryId: category.id }))
         const ingredients = ingredientList.map((ingredient, index) => ({
             lineNumber: index + 1,
@@ -173,7 +177,7 @@ function Create(props) {
                     onClick={handleUpload}
                 >
                     {
-                        mainImagePath ? <wx-image mode="aspectFit" src={mainImagePath}/> : (<Fragment>
+                        mainImagePath ? <wx-image style={{ width: '100%' }} mode="aspectFit" src={mainImagePath}/> : (<Fragment>
                             <p>+菜谱封面</p>
                             <p>诱人的封面是吸引朋友的关键</p>
                         </Fragment>)

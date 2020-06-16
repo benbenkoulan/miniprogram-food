@@ -46,7 +46,7 @@ module.exports = {
 			  selectedIconPath: getPathRelativeRoot('assets/images/my.png'),
 			  iconPath: getPathRelativeRoot('assets/images/my_inactive.png'),
 			  pageName: "my",
-			  text: '收藏家',
+			  text: '我',
 			}]
 		  }
     },

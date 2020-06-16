@@ -1,11 +1,13 @@
 const routes = [{
     name: 'home',
-    path: '/pages/home/index'
+    path: '/pages/home/index',
     // title: '主页'
+    isTab: true,
 }, {
     name: 'my',
     path: '/pages/my/index',
     // title: '我的'
+    isTab: true,
 }, {
     name: 'search',
     path: '/pages/search/index',
@@ -44,4 +46,4 @@ const routes = [{
     title: '个人主页'
 }]
 
-export default (pageName) => routes.find(route => route.name === pageName);
+export default (pageName, propertyName = 'name') => routes.find(route => route[propertyName] === pageName);

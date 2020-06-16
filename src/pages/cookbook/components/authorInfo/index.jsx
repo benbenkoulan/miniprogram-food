@@ -1,5 +1,7 @@
 import React from 'react'
 import { Layout, Sider, Content } from 'micro-design'
+
+import FollowButton from './followButton';
 import './style.css'
 
 function AuthorInfo(props) {
@@ -22,9 +24,7 @@ function AuthorInfo(props) {
                     </Content>
                 </Content>
                 <Sider width="80px" className="attention-btn--box">
-                    {props.isAttention
-                        ? <div className="attention--btn grey" onClick={handleClickAttention}>已关注</div>
-                        : <div className="attention--btn" onClick={handleClickAttention}>关注</div>}
+                    <FollowButton onClick={handleClickAttention} isAttention={props.isAttention} />
                 </Sider>
             </Layout>
             <wx-p className="cookbook--description">{props.description}</wx-p>

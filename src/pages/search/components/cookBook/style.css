@@ -1,3 +1,5 @@
+@import 'mixins';
+
 .menu--icon {
     width: 80px;
     height: 80px;
@@ -15,8 +17,7 @@
 .menu-title--text {
     font-size: 16px;
     overflow: hidden;
-    height: 20px;
-    line-height: 16px;
+    @mixin height-middle 20px;
     text-overflow: ellipsis;
 }
 

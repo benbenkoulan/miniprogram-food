@@ -22,3 +22,5 @@ export const throttle = (func, wait = 0, trailing = false) => {
         return result;
     }
 }
+
+export default throttle;
