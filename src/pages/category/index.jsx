@@ -4,10 +4,10 @@ import { Row, Col } from 'micro-design';
 
 import router from '~/router';
 import { send } from '~/modules/request/proxy';
+import { getImageUrl } from '~/modules/utils/image'
 
 import SubCategory from './components/sub-category';
 
-import { categoryPicture } from './utils'
 import './style.css';
 
 function Category() {
@@ -17,8 +17,6 @@ function Category() {
         const fetchData = async () => {
             const { data: categories } = await send('getCategories');
             setCategories(categories);
-            console.log(categories,'categories');
-            console.log(categoryPicture.filter(path => path.id === 0),'categoryPicture');
         }
         fetchData();
     }, []);
@@ -27,7 +25,7 @@ function Category() {
 
     const renderSubCategories = (subCategories) => (subCategories.map((subCategory) => (
         <Col key={subCategory.id} span={4}>
-            <SubCategory onClickSubCategory={() => handleClickSubCategory(subCategory.id, subCategory.name)} name={subCategory.name} imagePath={categoryPicture.filter(path => path.id === subCategory.id).length? categoryPicture.filter(path => path.id === subCategory.id)[0].imagePath : ''} />
+            <SubCategory onClickSubCategory={() => handleClickSubCategory(subCategory.id, subCategory.name)} name={subCategory.name} imagePath={getImageUrl(subCategory.imageId)} />
         </Col>
     )));
 
