@@ -132,9 +132,30 @@ function Create(props) {
         });
     };
 
-    const handleSubmit = async (isPublish) => {
+    const getErrorMessage = (isPublish) => {
         if (!title.valid) {
-            showToast({ title: '请输入正确的标题', icon: 'none', mask: true });
+            return '菜谱必须要有标题的哦';
+        } else if (isPublish) {
+            if (!mainImageId) {
+                return '菜谱必须要有主图的哦';
+            }
+            if (ingredientList.some(ingredient => !ingredient.name || !ingredient.weight)) {
+                return '配料必须要注明食材和用量哦';
+            }
+            if (stepList.some(step => !step.description)) {
+                return '步骤必须要有描述的哦';
+            }
+            if (categories.length === 0) {
+                return '要选择合适的分类哦';
+            }
+        }
+        return null;
+    }
+
+    const handleSubmit = async (isPublish) => {
+        const errorMessage = getErrorMessage(isPublish);
+        if (errorMessage) {
+            showToast({ title: errorMessage, icon: 'none', mask: true });
             return;
         }
         const categoryProducts = categories.map(category => ({ categoryId: category.id }))
