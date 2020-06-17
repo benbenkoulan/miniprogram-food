@@ -149,8 +149,8 @@ function UserHome(props) {
                 starCount={statisticsInfo && statisticsInfo.starCount}
                 fansCount={statisticsInfo && statisticsInfo.fansCount}
                 isAttention={isAttention}
-                handleLookUpAttention = {() => handleLookUpAttention(userId)}
-                handleClickAttention = {handleClickAttention}/>
+                onClickLookUpAttention = {() => handleLookUpAttention(userId)}
+                onClickAttention = {handleClickAttention}/>
             <div>
                 <div>
                     <Row className="nav--wrap">

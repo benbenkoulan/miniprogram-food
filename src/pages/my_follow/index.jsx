@@ -10,7 +10,7 @@ const convertFollows = (follows) => follows.map((follow) => ({
     id: follow.id,
     userName: follow.username || '微信用户',
     avatarUrl: follow.avatarUrl,
-    isFollowed: true,
+    isFollowed: follow.isAttention,
 }));
 
 function MyFollow(props) {

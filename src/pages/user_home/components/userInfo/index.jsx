@@ -6,11 +6,11 @@ function UserInformation(props) {
 
     const { username, createdTime, gender, country, starCount, fansCount, avatarUrl, isAttention } = props
     const handleLookUpFollowEvent = () => {
-        props.handleLookUpAttention()
+        props.onClickLookUpAttention()
     }
 
     const handleClickFollowEvent = () => {
-        props.handleClickAttention()
+        props.onClickAttention()
     }
 
     return (
