@@ -8,6 +8,7 @@ import { send } from '~/modules/request/proxy';
 
 import OperationMenu from '~/components/operationMenu';
 import CookBook from '~/components/cookBook';
+import Empty from '~/components/empty'
 
 import router from '~/router'
 
@@ -15,8 +16,8 @@ const convertCollections = collections => collections.map((collection) => ({
     id: collection.id,
     title: collection.title,
     imagePath: getImageUrl(collection.mainImageId),
-    userName: nullSafeGet(collection, 'user.username'),
-    avatarUrl: nullSafeGet(collection, 'user.avatarUrl'),
+    userName: nullSafeGet(collection, 'userDto.username'),
+    avatarUrl: nullSafeGet(collection, 'userDto.avatarUrl'),
 }));
 
 const handleClickCookBook = (id) => router.push('cookbook', { id });
@@ -38,7 +39,7 @@ function Collection() {
     return (
         <div className="page">
             {
-                collections.map(collection => (
+                collections.length ? collections.map(collection => (
                     <OperationMenu
                         key={collection.id}
                         onMainMenuClick={getUnCollectHandler(collection.id)}
@@ -48,7 +49,7 @@ function Collection() {
                                 {...collection}
                             />)}
                     />
-                ))
+                )) : <Empty/>
             }
         </div>
     )

@@ -1,19 +1,19 @@
 import React, { useState, useEffect, } from 'react'
-import './style.css'
 import { Layout } from 'micro-design'
 
 import useToggle from '~/hooks/useToggle';
 import useShareAppMessage from '~/hooks/useShareAppMessage';
 import { send } from '~/modules/request/proxy'
-
-import AuthorOtherCookBook from './components/authorOtherCookBook/index.jsx'
-import Footer from './components/footer/index.jsx'
-import AuthorInfo from './components/authorInfo/index.jsx'
-import Ingredient from './components/ingredient/index.jsx'
-import Step from './components/step/index.jsx'
-import CollectionAndShare from './components/collectionAndShare/index.jsx'
-import { getImageUrl } from '../../modules/utils/image'
 import router from '~/router'
+import { getImageUrl } from '~/modules/utils/image'
+import Step from '~/pages/cookbook/components/step'
+import AuthorInfo from '~/pages/cookbook/components/authorInfo'
+import Ingredient from '~/pages/cookbook/components/ingredient'
+import Footer from '~/pages/cookbook/components/footer'
+import AuthorOtherCookBook from '~/pages/cookbook/components/authorOtherCookBook'
+import CollectionAndShare from '~/pages/cookbook/components/collectionAndShare'
+
+import './style.css'
 
 function CookBook(props) {
     const { id } = props.query || {};

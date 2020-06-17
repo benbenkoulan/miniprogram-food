@@ -5,7 +5,8 @@ import CookBook from '~/components/cookBook'
 import OperationMenu from '~/components/operationMenu';
 import router from '~/router';
 import { getDrafts, deleteDrafts } from '~/store/action/user';
-import { draftsSelector } from '~/store/selector'; 
+import { draftsSelector } from '~/store/selector';
+import Empty from '~/components/empty'
 
 const handleClickDraft = (id) => {
     router.push('create', { id });
@@ -23,16 +24,18 @@ function MyDraft() {
 
     return (
         <div className="page">
-            {drafts.map((draft) => (
-                <OperationMenu 
-                    key={draft.id}
-                    onMainMenuClick={() => handleDeleteDraft(draft.id)}
-                    mainMenuText="从草稿箱中删除"
-                    render={() => (
-                        <CookBook {...draft} onClick={() => handleClickDraft(draft.id)} />
-                    )}
-                />
-            ))}
+            {drafts.length
+                ? drafts.map((draft) => (
+                    <OperationMenu
+                        key={draft.id}
+                        onMainMenuClick={() => handleDeleteDraft(draft.id)}
+                        mainMenuText="从草稿箱中删除"
+                        render={() => (
+                            <CookBook {...draft} onClick={() => handleClickDraft(draft.id)} />
+                        )}
+                    />
+                ))
+                : <Empty/>}
         </div>
     )
 }

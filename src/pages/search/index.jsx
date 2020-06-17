@@ -3,7 +3,9 @@ import { Layout, Content, Header } from 'micro-design';
 
 import usePagingListApi from '~/hooks/usePagingListApi';
 import ScrollView from '~/components/scrollView';
+import Empty from '~/components/empty'
 import { SORT_TYPE } from '~/modules/constant/cookBook';
+
 
 import { convertCookbooks, renderDataList } from './utils';
 import SearchForm from './components/searchForm';
@@ -59,17 +61,7 @@ function Search (props) {
                 renderSort()
             }
             {
-                (cookBookList.length === 0 && !hasMore) ? (<div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    width: '100%',
-                    flex: 1,
-                }}>
-                    <wx-image style={{ width: '160px' }} mode="widthFix" src="/assets/images/search/empty.svg"/>
-                    <p className="empty-tip--text">抱歉～当前没有相关菜谱哦</p>
-                </div>) : renderDataList(cookBookList)
+                (cookBookList.length === 0 && !hasMore) ? <Empty/> : renderDataList(cookBookList)
             }
             <div style={{ textAlign: 'center', fontSize: '12px', color: '#666666' }}>
                 { hasMore ? '加载更多中' : '这就是全部啦' }

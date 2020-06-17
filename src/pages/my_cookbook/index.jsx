@@ -3,8 +3,9 @@ import React from 'react';
 import router from '~/router';
 import { getImageUrl } from '~/modules/utils/image';
 import useDataApi from '~/hooks/useDataApi';
+import Empty from '~/components/empty'
+import CookBook from '~/components/cookBook'
 
-import CookBook from '../../components/cookBook';
 
 const convertCookBook = (cookBooks) => cookBooks.map(cookBook => ({
     id: cookBook.id,
@@ -24,7 +25,11 @@ function MyCookBook() {
 
     return (
         <div className="page">
-            {cookBooks.map((cookBook) => (<CookBook onClick={() => handleClickCookBook(cookBook.id)} key={cookBook.id} {...cookBook} />))}
+            {
+                cookBooks.length
+                    ? cookBooks.map((cookBook) => (<CookBook onClick={() => handleClickCookBook(cookBook.id)} key={cookBook.id} {...cookBook} />))
+                    : <Empty/>
+            }
         </div>
     )
 }

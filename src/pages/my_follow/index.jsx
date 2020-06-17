@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import memoize from 'lodash/memoize';
 
 import { send } from '~/modules/request/proxy';
 import useDataApi from '~/hooks/useDataApi';
+import Empty from '~/components/empty';
+import router from '~/router';
+
 
 import Follow from './components/follow';
 
@@ -32,10 +35,16 @@ function MyFollow(props) {
         setFollows(newFollows);
     });
 
+    const handleClickUser = (id) => {
+        router.push("user_home",{ userId: id })
+    }
+
     return (
         <div className="page">
             {
-                follows.map(follow => (<Follow onFollow={getFollowHandler(follow.id, !follow.isFollowed)} key={follow.id} {...follow} />))
+                follows.length
+                    ? follows.map(follow => (<Follow onClickUser={() => handleClickUser(follow.id)} onFollow={getFollowHandler(follow.id, !follow.isFollowed)} key={follow.id} {...follow} />))
+                    : <Empty/>
             }
         </div>
     )

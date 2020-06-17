@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Row, Col } from 'micro-design'
-import './style.css'
+
 import ScrollView from '~/components/scrollView'
 import usePagingListApi from '~/hooks/usePagingListApi'
 import CookBook from '~/components/cookBook'
@@ -11,7 +11,9 @@ import UserInformation from '~/pages/user_home/components/userInfo'
 import useToggle from '~/hooks/useToggle'
 import { send } from '~/modules/request/proxy'
 import useShareAppMessage from '~/hooks/useShareAppMessage'
+import Empty from '~/components/empty'
 
+import './style.css'
 
 const convertUserCollection = (collections = []) => collections.map(collection => ({
     id: collection.id,
@@ -114,9 +116,12 @@ function UserHome(props) {
 
     const renderCollection = () =>
         (<div>
-            {cookBookCollectionList.map((collection) => (
-                <CookBook key={collection.id} {...collection}
-                          onClick={() => handleClickCookBook(collection.id)}/>))}
+            {cookBookCollectionList.length
+                ? cookBookCollectionList.map((collection) => (
+                    <CookBook key={collection.id} {...collection}
+                              onClick={() => handleClickCookBook(collection.id)}/>))
+                : <Empty/>
+            }
         </div>)
 
 
