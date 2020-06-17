@@ -31,7 +31,7 @@ const routes = [{
 }, {
     name: 'my_follow',
     path: '/pages/my_follow/index',
-    title: '我的关注'
+    title: '关注列表'
 }, {
     name: 'category',
     path: '/pages/category/index',
