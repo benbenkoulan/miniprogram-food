@@ -79,7 +79,7 @@ function Index() {
                     color: '#999999',
                     fontSize: '12px',
                     marginBottom: '10px'
-                }}>{ hasMore ? '加载更多中' : '这就是全部啦' }</div>
+                }}>{ hasMore ? '加载中' : '这就是全部啦' }</div>
             }
         </Fragment>
     ), [cookBookList, hasMore]);

@@ -18,8 +18,8 @@ export function Navigation(props) {
 
     const navigationProps = {
         navigationTitle,
-        shouldShowCreate,
         shouldShowHome,
+        shouldShowCreate: !shouldShowHome && shouldShowCreate,
         shouldShowBack: pageCount > 1,
         paddingVertical: rect.top,
         paddingHorizontal: systemInfo.windowWidth - rect.right,
