@@ -22,7 +22,7 @@
     font-size: 10px;
 }
 
-.share--btn, .attention--btn {
+.share--btn, .attention--btn, .grey{
     width: 60px;
     height: 30px;
     line-height: 30px;
@@ -40,6 +40,7 @@
 }
 
 .grey{
+    width: 80px;
     border: 1px solid orangered !important;
     color: orangered !important;
     background-color: #ffffff!important;

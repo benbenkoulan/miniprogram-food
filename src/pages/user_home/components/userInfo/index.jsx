@@ -50,7 +50,7 @@ function UserInformation(props) {
                 </Sider>
                 <Sider width="80px" class="margin-left">
                     {isAttention
-                        ? <wx-button className="attention--btn grey" onClick={handleClickFollowEvent}>已关注</wx-button>
+                        ? <wx-button className="grey" onClick={handleClickFollowEvent}>已关注</wx-button>
                         : <wx-button className="attention--btn" onClick={handleClickFollowEvent}>关注</wx-button>}
                 </Sider>
             </Layout>
