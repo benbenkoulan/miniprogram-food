@@ -16,7 +16,7 @@ function CookBook(props) {
                     <p className="menu-garnish--text">{ingredients}</p>
                     <p className="menu-author--text">
                         <wx-image src={avatarUrl} className="menu-author--avatar"/>{username}
-                        <p style={{display: 'flex', lineHeight: '20px', marginLeft:"10px"}}>
+                        <p className="menu-collection--box">
                             <wx-image className="menu-collection--avatar" src="/assets/images/collection_search.png"/>
                             {collectionCount}个收藏
                         </p>

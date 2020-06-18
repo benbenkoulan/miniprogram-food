@@ -31,11 +31,15 @@
     white-space: nowrap;
 }
 
-.menu-author--text{
+.menu-author--text, .menu-collection--box{
     display: flex;
     line-height: 20px;
     font-size: 10px;
     color: #777777
+}
+
+.menu-collection--box {
+    margin-left: 6px;
 }
 
 .menu-author--avatar {
@@ -47,10 +51,9 @@
 }
 
 .menu-collection--avatar{
-    width: 15px;
-    height: 15px;
-    margin-top: 3px;
-    margin-right: 2.5px;
+    width: 20px;
+    height: 20px;
+    margin-right: 3px;
 }
 
 .food-author--text {
