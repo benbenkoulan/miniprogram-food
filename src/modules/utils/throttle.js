@@ -1,5 +1,4 @@
 export const throttle = (func, wait = 0, trailing = false) => {
-    let ts;
     let result;
     let timer = null;
     const later = (context, args) => {

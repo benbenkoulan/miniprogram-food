@@ -12,11 +12,13 @@ import './style.css';
 
 function Category() {
     const [categories, setCategories] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
             const { data: categories } = await send('getCategories');
             setCategories(categories);
+            setIsLoading(true);
         }
         fetchData();
     }, []);
@@ -25,7 +27,7 @@ function Category() {
 
     const renderSubCategories = (subCategories) => (subCategories.map((subCategory) => (
         <Col key={subCategory.id} span={4}>
-            <SubCategory onClickSubCategory={() => handleClickSubCategory(subCategory.id, subCategory.name)} name={subCategory.name} imagePath={getImageUrl(subCategory.imageId)} />
+            <SubCategory isLoading onClickSubCategory={() => handleClickSubCategory(subCategory.id, subCategory.name)} name={subCategory.name} imagePath={getImageUrl(subCategory.imageId)} />
         </Col>
     )));
 

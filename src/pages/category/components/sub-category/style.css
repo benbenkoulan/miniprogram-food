@@ -1,6 +1,11 @@
 .sub-category--box {
     position: relative;
     font-size: 0;
+    height: 64px;
+}
+
+.isLoading{
+    background-color: #666666;
 }
 
 .sub-category--icon {
