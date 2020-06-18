@@ -62,6 +62,9 @@ module.exports = {
 		home: {
 			pullDownRefresh: true,
 		},
+		my: {
+			pullDownRefresh: true,
+		},
 		search: {
 			// pullDownRefresh: true,
 		}

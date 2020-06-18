@@ -1,10 +1,10 @@
-import React from 'react'
-import useDataApi from '~/hooks/useDataApi'
+import React, { useState, useEffect } from 'react'
 import router from '~/router'
+import { send } from '~/modules/request/proxy';
+import UserInfo from '~/components/userInfo'
 
 import Menu from './components/menu'
-
-import UserInfo from '~/components/userInfo'
+import './style.css';
 
 const menus = [{
     key: 'COLLECTION',
@@ -24,11 +24,31 @@ const menus = [{
     onClick: () => router.push('my_draft')
 }]
 
+
 function My() {
-    const [statisticsInfo] = useDataApi('getStatisticsInfo', {
-        initialData: {},
-        propertyName: 'data'
-    });
+    const [statisticsInfo, setStatisticsInfo] = useState({});
+    
+    useEffect(() => {
+        const fetchData = async () => {
+            const { data } = await send('getStatisticsInfo');
+            setStatisticsInfo(data);
+        };
+
+        const handlePullDownRefresh = async () => {
+            // wx.startPullDownRefresh();
+            try {
+                await fetchData();
+            } finally {
+                wx.stopPullDownRefresh();
+            }
+        };
+
+        window.addEventListener('pulldownrefresh', handlePullDownRefresh);
+
+        fetchData();
+
+        return () => window.removeEventListener('pulldownrefresh', handlePullDownRefresh);
+    }, []);
 
     return (
         <div className="page">
