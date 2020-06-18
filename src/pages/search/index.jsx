@@ -63,8 +63,8 @@ function Search (props) {
             {
                 (cookBookList.length === 0 && !hasMore) ? <Empty/> : renderDataList(cookBookList)
             }
-            <div style={{ textAlign: 'center', fontSize: '12px', color: '#666666' }}>
-                { hasMore ? '加载更多中' : '这就是全部啦' }
+            <div style={{ marginTop: '20px', textAlign: 'center', fontSize: '12px', color: '#666666' }}>
+                { hasMore ? '加载中' : '这就是全部啦' }
             </div>
         </Fragment>
     ), [hasMore, cookBookList, renderSort]);

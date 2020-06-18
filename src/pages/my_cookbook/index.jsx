@@ -17,7 +17,7 @@ const convertCookBook = (cookBooks) => cookBooks.map(cookBook => ({
 const handleClickCookBook = (id) => router.push('cookbook', { id });
 
 function MyCookBook() {
-    const [cookBooks] = useDataApi('getMyCookbooks', {
+    const [cookBooks, { isInited }] = useDataApi('getMyCookbooks', {
         initialQuery: { pageNumber: 0, pageSize: 20, },
         initialData: [],
         convertData: convertCookBook,
@@ -28,7 +28,7 @@ function MyCookBook() {
             {
                 cookBooks.length
                     ? cookBooks.map((cookBook) => (<CookBook onClick={() => handleClickCookBook(cookBook.id)} key={cookBook.id} {...cookBook} />))
-                    : <Empty/>
+                    : isInited && <Empty/>
             }
         </div>
     )

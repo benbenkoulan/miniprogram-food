@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import CookBook from '~/components/cookBook'
@@ -13,12 +13,20 @@ const handleClickDraft = (id) => {
 };
 
 function MyDraft() {
+    const [isInited, setIsInited] = useState(false);
     const drafts = useSelector(draftsSelector);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getDrafts({ pageNumber: 0, pageSize: 20 }));
-    }, []);
+        const fetchData = async () => {
+            try {
+                await dispatch(getDrafts({ pageNumber: 0, pageSize: 20 }));
+            } finally {
+                setIsInited(true);
+            }
+        }
+        fetchData();
+    }, [dispatch]);
 
     const handleDeleteDraft = (id) => dispatch(deleteDrafts([id]));
 
@@ -35,7 +43,7 @@ function MyDraft() {
                         )}
                     />
                 ))
-                : <Empty/>}
+                : isInited && <Empty/>}
         </div>
     )
 }

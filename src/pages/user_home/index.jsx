@@ -9,6 +9,7 @@ import nullSafeGet from 'lodash/get'
 import router from '~/router'
 import UserInformation from '~/pages/user_home/components/userInfo'
 import useToggle from '~/hooks/useToggle'
+import useMount from '~/hooks/useMount';
 import { send } from '~/modules/request/proxy'
 import useShareAppMessage from '~/hooks/useShareAppMessage'
 import Empty from '~/components/empty'
@@ -25,21 +26,17 @@ const convertUserCollection = (collections = []) => collections.map(collection =
 }))
 
 function UserHome(props) {
-
-    const { userId } = props.query || {}
+    const { userId } = props.query || {};
 
     const [statisticsInfo, setStatisticsInfo] = useState({})
     const [navActive, setNavActive] = useState('collection')
     const [isAttention, { toggle: toggleIsAttention }] = useToggle(false)
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const { data } = await send('getOtherUserInfo', { data: { userId } });
-            toggleIsAttention(data.isAttention);
-            setStatisticsInfo(data)
-        };
-        fetchData();
-    }, []);
+    useMount(async () => {
+        const { data } = await send('getOtherUserInfo', { data: { userId } });
+        toggleIsAttention(data.isAttention);
+        setStatisticsInfo(data)
+    });
 
     const [{
         data: cookBookCollectionList,
@@ -105,14 +102,6 @@ function UserHome(props) {
             userId,
         },
     });
-
-    // const renderCollection = useCallback(() =>
-    //         (<Fragment>
-    //             {cookBookList.map((cookBook) => (
-    //                 <CookBook key={cookBook.id} {...cookBook}
-    //                           handleClickEvent={() => getCookBookClickHandler(cookBook.id)}/>))}
-    //         </Fragment>)
-    //     , [hasMore, cookBookList])
 
     const renderCollection = () =>
         (<div>

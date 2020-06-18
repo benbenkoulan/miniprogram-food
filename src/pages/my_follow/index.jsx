@@ -20,7 +20,10 @@ function MyFollow(props) {
 
     const { userId } = props.query;
 
-    const [follows, setFollows] = useDataApi(userId? 'getUserFollows' : 'getMyFollows', {
+    const [follows, {
+        setData: setFollows,
+        isInited,
+    }] = useDataApi(userId? 'getUserFollows' : 'getMyFollows', {
         initialData: [],
         initialQuery: { pageNumber: 0, pageSize: 50, userId},
         convertData: convertFollows,
@@ -44,7 +47,7 @@ function MyFollow(props) {
             {
                 follows.length
                     ? follows.map(follow => (<Follow onClickUser={() => handleClickUser(follow.id)} onFollow={getFollowHandler(follow.id, !follow.isFollowed)} key={follow.id} {...follow} />))
-                    : <Empty/>
+                    : isInited && <Empty/>
             }
         </div>
     )

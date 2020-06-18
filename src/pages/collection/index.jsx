@@ -23,7 +23,10 @@ const convertCollections = collections => collections.map((collection) => ({
 const handleClickCookBook = (id) => router.push('cookbook', { id });
 
 function Collection() {
-    const [collections, setCollections] = useDataApi('getMyCollections', {
+    const [collections, {
+        setData: setCollections,
+        isInited,
+    }] = useDataApi('getMyCollections', {
         initialData: [],
         initialQuery: { pageNumber: 0, pageSize: 50 },
         convertData: convertCollections,
@@ -49,7 +52,7 @@ function Collection() {
                                 {...collection}
                             />)}
                     />
-                )) : <Empty/>
+                )) : isInited && <Empty/>
             }
         </div>
     )
