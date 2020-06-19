@@ -1,64 +1,35 @@
-import React, { Fragment, useRef, useEffect } from 'react';
+import React, { Fragment, useRef, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { settingSelector } from '~/store/selector';
-import { authorize, getSetting } from '~/store/action/user';
-import { upsertUserInfo } from '~/api';
-import { wxLogin } from '~/modules/login';
-import withLoading from '~/modules/hof/withLoading';
+import { getSetting } from '~/store/action/user';
+import { showAuthorizeModal, saveActionAfterAuthorized } from '~/store/action/app';
+import useMount from '~/hooks/useMount';
 
-const withUserInfoScope = (WrappedComponent, { needCheckLogin = true } = {}) => (props) => {
+const withUserInfoScope = (WrappedComponent) => (props) => {
     const { onClick, ...passThroughProps } = props;
     const dispatch = useDispatch();
     const setting = useSelector(settingSelector);
-    const wxButtonRef = useRef();
 
-    useEffect(() => {
-        const initSetting = () => {
+    useMount(() => {
+        if (!setting.userInfo) {
             dispatch(getSetting());
-        };
-        if (!setting.userInfo) initSetting();
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
-    
-    useEffect(() => {
-        const wxButtonElement = wxButtonRef && wxButtonRef.current;
-        const handleGetUserInfo = withLoading(async (e) => {
-            const { encryptedData, iv } = e.detail || {};
-            if (!encryptedData || !iv) {
-                return;
-            }
-            try {
-                if (needCheckLogin) await wxLogin();
-                dispatch(authorize());
-                await upsertUserInfo(encryptedData, iv);
-                onClick();
-            } catch (err) {
-                console.log(err);
-            }
-        }, { titile: '授权中' });
-        if (wxButtonElement) {
-            wxButtonElement.addEventListener('getuserinfo', handleGetUserInfo);
         }
-        return () => {
-            if (wxButtonElement) {
-                wxButtonElement.removeEventListener('getuserinfo', handleGetUserInfo);
-            }
+    });
+
+    const handleClickWithCheckAuthorization = useCallback(() => {
+        if (!setting.userInfo) {
+            dispatch(saveActionAfterAuthorized({
+                method: onClick,
+            }));
+            dispatch(showAuthorizeModal());
+        } else {
+            onClick();
         }
-    }, [wxButtonRef, setting.userInfo, onClick, dispatch]);
+    }, [dispatch, setting.userInfo, onClick]);
 
     return (
-        <Fragment>
-            {
-                setting.userInfo ? (
-                    <WrappedComponent onClick={onClick} {...passThroughProps} />
-                ) : (
-                    <wx-button open-type="getUserInfo" ref={wxButtonRef} >
-                        <WrappedComponent {...passThroughProps} />
-                    </wx-button>
-                )
-            }
-        </Fragment>
-        
+        <WrappedComponent onClick={handleClickWithCheckAuthorization} {...passThroughProps} />        
     )
 }
 

@@ -4,8 +4,8 @@ import { Row, Col } from 'micro-design';
 
 import Modal from '../modal';
 import { authorize } from '~/store/action/user';
-import { hideAuthorizeModal } from '~/store/action/app';
-import { shouldShowAuthorizeModalSelector } from '~/store/selector';
+import { hideAuthorizeModal, clearActionAfterAuthorized } from '~/store/action/app';
+import { shouldShowAuthorizeModalSelector, actionAfterAuthorizedSelector } from '~/store/selector';
 import { upsertUserInfo } from '~/api';
 import router from '~/router';
 
@@ -13,6 +13,7 @@ import './style.css';
 
 function AuthorizeModal() {
     const shouldShowAuthorizeModal = useSelector(shouldShowAuthorizeModalSelector);
+    const actionAfterAuthorized = useSelector(actionAfterAuthorizedSelector);
     const dispatch = useDispatch();
 
     const getUserInfoButton = useRef();
@@ -26,22 +27,34 @@ function AuthorizeModal() {
             getUserInfoButton.current.addEventListener('getuserinfo', async (res) => {
                 const { encryptedData, iv } = res.detail || {};
                 dispatch(authorize());
-                dispatch(hideAuthorizeModal());
                 await upsertUserInfo(encryptedData, iv);
-                router.switchTab('my');
+                console.log('actionAfterAuthorized: ', actionAfterAuthorized);
+                if (actionAfterAuthorized
+                    && actionAfterAuthorized.method
+                    && typeof actionAfterAuthorized.method === 'function') {
+                    actionAfterAuthorized.method();
+                    dispatch(clearActionAfterAuthorized());
+                }
+                dispatch(hideAuthorizeModal());
             });
         }
         if (shouldShowAuthorizeModal) {
             addEvent();
         }
-    }, [dispatch, shouldShowAuthorizeModal]);
+    }, [dispatch, shouldShowAuthorizeModal, actionAfterAuthorized]);
 
     return (
         shouldShowAuthorizeModal ? (
             <Modal>
                 <div class="authorize--box">
-                    <p className="authorize-tip--text">本应用申请获取以下权限:</p>
-                    <p className="authorize-tip--text">获取你的公开信息（昵称、头像等）</p>
+                    <div className="authorize-title--text">为了给你提供如下服务:</div>
+                    <Row wrap gutter={[10, 10]}>
+                        <Col className="func--text" span={12}>1.更全面展示您的菜谱</Col>
+                        <Col className="func--text" span={12}>2.个性化为您推荐菜谱</Col>
+                        <Col className="func--text" span={12}>3.方便分享您的菜谱</Col>
+                        <Col className="func--text" span={12}>4.方便他人了解您</Col>
+                    </Row>
+                    <div className="authorize-tip--text">本应用申请获取您的公开信息（昵称、头像等）</div>
                     <Row gutter={10}>
                         <Col span={12}>
                             <wx-button className="authorize-cancel--btn authorize--btn" onClick={handleAuthorizeCanceling}>取消</wx-button>

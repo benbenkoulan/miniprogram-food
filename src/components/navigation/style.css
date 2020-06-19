@@ -28,6 +28,7 @@
 
 .back--icon, .create--icon, .home--icon {
     width: 100%;
+    vertical-align: middle;
 }
 
 .home--btn {

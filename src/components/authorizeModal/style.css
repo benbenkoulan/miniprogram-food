@@ -2,13 +2,22 @@
     margin: 20px;
     padding: 20px;
     flex: 1;
-    max-width: 240px;
+    max-width: 300px;
     background-color: #ffffff;
     border-radius: 4px;
 }
 
-.authorize--box .authorize-tip--text {
-    margin: 16px 0;
+.func--text {
+    font-size: 12px;
+}
+
+.authorize-title--text {
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.authorize-tip--text {
+    margin: 20px 0;
     font-size: 14px;
 }
 
@@ -21,6 +30,7 @@
     color: #ffffff;
     background-color: #1296db;
     border: 1px solid #1296db;
+    font-size: 14px;
 }
 
 .authorize-cancel--btn {
