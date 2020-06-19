@@ -29,10 +29,10 @@ function IngredientFormItem(props) {
     return (
         <Row style={{ padding: '10px 0' }}>
             <Col span={12}>
-                <textarea fixed placeholder="食材：如面粉" {...name} style={{ width: '100%', height: '24px', lineHeight: '24px', verticalAlign: 'middle' }} />
+                <input placeholder="食材：如面粉" {...name} style={{ width: '100%', height: '24px', lineHeight: '24px', verticalAlign: 'middle' }} />
             </Col>
             <Col span={12}>
-                <textarea fixed placeholder="用量：如100g" {...weight} style={{ width: '100%', height: '24px', lineHeight: '24px', verticalAlign: 'middle' }} />
+                <input placeholder="用量：如100g" {...weight} style={{ width: '100%', height: '24px', lineHeight: '24px', verticalAlign: 'middle' }} />
             </Col>
         </Row>
     );
