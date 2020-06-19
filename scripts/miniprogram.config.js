@@ -51,7 +51,7 @@ module.exports = {
 		  }
     },
 	app: {
-		navigationBarTitleText: 'miniprogram-project',
+		navigationBarTitleText: '邻家飘香',
 		navigationStyle: 'custom',
 	},
 	appExtraConfig: {
