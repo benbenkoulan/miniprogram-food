@@ -6,9 +6,7 @@ function useMount(effect) {
 
     const effectFn = useCallback((...args) => ref.current(...args), [ref]);
 
-    useEffect(() => {
-        effectFn();
-    }, [effectFn]); // eslint-disable
+    useEffect(() => effectFn(), [effectFn]);
 }
 
 export default useMount;

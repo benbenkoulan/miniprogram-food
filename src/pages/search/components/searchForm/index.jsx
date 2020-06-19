@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Row, Col, Layout, Sider, Content } from 'micro-design';
+import React, { useState, useEffect, useRef } from 'react';
+import { Row, Col, Layout, Sider, Content, Flex } from 'micro-design';
 
 import useFormItem from '~/hooks/form/useFormItem';
 
@@ -9,9 +9,26 @@ function SearchForm(props) {
     const { keyword: initialKeyword, onSearch, } = props;
     const [shouldShowCancel, setShouldShowCancel] = useState(false);
 
+    const inputRef = useRef();
+
     const keyword = useFormItem('keyword', {
         initialValue: initialKeyword,
     });
+
+    const handleSearch = () => {
+        onSearch(keyword.value);
+    };
+
+    useEffect(() => {
+        const handleConfirm = () => {
+            onSearch(keyword.value);
+        };
+
+        const inputEle = inputRef.current;
+        inputEle.addEventListener('confirm', handleConfirm);
+
+        return () => inputEle.removeEventListener('confirm', handleConfirm);
+    }, [onSearch, keyword]);
 
     const handleFocus = () => {
         setShouldShowCancel(true);
@@ -21,17 +38,19 @@ function SearchForm(props) {
         setShouldShowCancel(false);
     };
 
-    const handleSearch = () => onSearch(keyword.value);
-
     return (
         <Layout hasSider className="search-form--box">
             <Content>
-                <input
-                    className="search-input--text"
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
-                    {...keyword}
-                />
+                <Flex>
+                    <wx-image mode="widthFix" src="/assets/images/search.png" className="search--icon"></wx-image>
+                    <input
+                        className="search-input--text"
+                        onFocus={handleFocus}
+                        onBlur={handleBlur}
+                        ref={inputRef}
+                        {...keyword}
+                    />
+                </Flex>
             </Content>
             <Sider width="100px">
                 <Row className="search-btn--box">

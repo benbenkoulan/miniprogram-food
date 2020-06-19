@@ -7,7 +7,7 @@ function SelectedCategoriesInput(props) {
     const { categories = [], onUncheck, } = props;
 
     return (
-        <Row wrap style={{ padding: '10px 20px', minHeight: '34px', borderBottom: '1px solid #f0f0f0' }} gutter={[10, 10]}>
+        <Row wrap style={{ width: '100%', padding: '10px 20px', boxSizing: 'border-box', minHeight: '60px', borderBottom: '1px solid #f0f0f0' }} gutter={[10, 10]}>
             {
                 categories.map(category => (
                     <Col key={category.id}>

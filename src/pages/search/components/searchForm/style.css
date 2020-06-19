@@ -3,6 +3,10 @@
     border-bottom: 1px solid #f0f0f0;
 }
 
+.search--icon {
+    width: 22px;
+}
+
 .search-input--text {
     margin-right: 10px;
     display: block;
