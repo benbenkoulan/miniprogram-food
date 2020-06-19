@@ -3,6 +3,7 @@ import { Layout } from 'micro-design'
 
 import useToggle from '~/hooks/useToggle';
 import useShareAppMessage from '~/hooks/useShareAppMessage';
+import useMount from '~/hooks/useMount';
 import { send } from '~/modules/request/proxy'
 import router from '~/router'
 import { getImageUrl } from '~/modules/utils/image'
@@ -22,15 +23,12 @@ function CookBook(props) {
     const [isCollection, { toggle: toggleIsCollection }] = useToggle(false);
     const [foodMaterials, setFoodMaterials] = useState({});
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const { data } = await send('getCookbookDetail', { data: { id } });
-            toggleIsAttention(data.isAttention);
-            toggleIsCollection(data.isCollection);
-            setFoodMaterials(data);
-        };
-        fetchData();
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    useMount(async () => {
+        const { data } = await send('getCookbookDetail', { data: { id } });
+        toggleIsAttention(data.isAttention);
+        toggleIsCollection(data.isCollection);
+        setFoodMaterials(data);
+    });
 
     useShareAppMessage({
         title: foodMaterials.title || '这个美食很不错',

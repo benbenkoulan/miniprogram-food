@@ -14,6 +14,7 @@ import useToggle from '~/hooks/useToggle';
 import useDataApi from '~/hooks/useDataApi';
 import useFormItem from '~/hooks/form/useFormItem';
 import useFormItemList from '~/hooks/form/useFormItemList';
+import useMount from '~/hooks/useMount';
 import { saveDraft } from '~/store/action/user';
 
 import ListForm from './components/listForm';
@@ -46,19 +47,16 @@ function Create(props) {
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        const initData = async () => {
-            if (id) {
-                const { data = {} } = await send('getCookbookDetail', { data:{ id } })
-                setDraft(data);
-                setMainImageId(data.mainImageId);
-                setIngredientList(data.ingredients);
-                setStepList(data.steps);
-                setCategoryIds(data.categoryProducts.map(categoryProduct => categoryProduct.categoryId));
-            }
+    useMount(async () => {
+        if (id) {
+            const { data = {} } = await send('getCookbookDetail', { data:{ id } })
+            setDraft(data);
+            setMainImageId(data.mainImageId);
+            setIngredientList(data.ingredients);
+            setStepList(data.steps);
+            setCategoryIds(data.categoryProducts.map(categoryProduct => categoryProduct.categoryId));
         }
-        initData();
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    });
 
     const [shouldShowCategorySelectionList, {
         toggle: toggleShouldShowCategorySelectionList

@@ -1,7 +1,11 @@
 import React, { Fragment } from 'react'
 import { Row, Col, Layout, Sider, Content } from 'micro-design'
+
+import router from '~/router';
+
 import './style.css'
 
+const handleClickFollow = () => router.push('my_follow');
 
 function UserInfo(props) {
 
@@ -25,7 +29,7 @@ function UserInfo(props) {
             <Layout hasSider align="center" justify="space-between" className="section">
                 <Content>
                     <Row>
-                        <Col span={6}>
+                        <Col span={6} onClick={handleClickFollow}>
                             <p style={{ textIndent: '2px' }}>{starCount}</p>
                             <p>关注</p>
                         </Col>
